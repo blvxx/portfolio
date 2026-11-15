@@ -6,15 +6,19 @@
     <title>Калинин Артём — IT-специалист и веб-разработчик</title>
     <meta name="description" content="IT-специалист с опытом QA и техподдержки. Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки. Портфолио и контакты.">
     <meta name="author" content="Калинин Артём Алексеевич">
+    
+    <!-- ВАЖНО: замените ссылку ниже на ваш реальный адрес сайта GitHub Pages -->
     <link rel="canonical" href="https://ваш-логин.github.io/имя-репозитория/">
 
+    <!-- Open Graph (для красивых ссылок в телеграме и соцсетях) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Калинин Артём — IT-специалист и веб-разработчик">
     <meta property="og:description" content="Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки.">
     <meta property="og:url" content="https://ваш-логин.github.io/имя-репозитория/">
-    <meta property="og:image" content="https://ваш-логин.github.io/имя-репозитория/assets/images/og-image.png">
+    <meta property="og:image" content="https://ваш-логин.github.io/имя-репозитория/image.jpg">
     <meta name="twitter:card" content="summary_large_image">
 
+    <!-- Микроразметка для поисковиков -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -67,7 +71,7 @@
     </header>
 
     <main id="main">
-        <!-- Hero -->
+        <!-- Главный экран (Hero) -->
         <section class="hero">
             <div class="hero-glow" aria-hidden="true"></div>
             <div class="container hero-inner">
@@ -84,8 +88,9 @@
                     </div>
                 </div>
                 <div class="hero-photo">
+                    <!-- Вставляем вашу картинку image.jpg -->
                     <img
-                        src="assets/images/avatar.svg"
+                        src="image.jpg"
                         alt="Калинин Артём"
                         class="avatar"
                         width="200"
@@ -96,18 +101,19 @@
             </div>
         </section>
 
-        <!-- Проекты -->
+        <!-- Секция проектов -->
         <section id="projects" class="section" aria-labelledby="projects-title">
             <div class="container">
                 <div class="section-head">
                     <h2 id="projects-title">Избранные проекты</h2>
                     <p class="section-sub">Реальные задачи и измеримые результаты</p>
                 </div>
+                <!-- Сюда JS автоматически вставит карточки проектов -->
                 <div id="projects-grid" class="projects-grid"></div>
             </div>
         </section>
 
-        <!-- Навыки -->
+        <!-- Секция навыков -->
         <section id="skills" class="section section-alt" aria-labelledby="skills-title">
             <div class="container">
                 <div class="section-head">
@@ -129,7 +135,7 @@
             </div>
         </section>
 
-        <!-- Контакты -->
+        <!-- Секция контактов -->
         <section id="contact" class="section" aria-labelledby="contact-title">
             <div class="container contact-inner">
                 <div class="section-head">
@@ -152,6 +158,7 @@
                         <textarea id="message" name="message" placeholder="Опишите задачу, сроки и бюджет" rows="5" required></textarea>
                     </div>
 
+                    <!-- Ловушка для спам-ботов -->
                     <div class="hp-field" aria-hidden="true">
                         <label for="website">Не заполняйте это поле</label>
                         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
@@ -188,7 +195,7 @@
         </div>
     </footer>
 
-    <!-- Модалка кейса -->
+    <!-- Модальное окно для проектов (всплывающее) -->
     <div id="case-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="case-title" hidden>
         <div class="modal-backdrop" data-close></div>
         <div class="modal-content">
@@ -204,7 +211,7 @@
         </div>
     </div>
 
-    <!-- Админ-панель -->
+    <!-- Админ-панель (скрытая) -->
     <div id="admin-panel" class="admin-panel" hidden>
         <div class="admin-content">
             <h3>Управление портфолио</h3>
