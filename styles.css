@@ -123,8 +123,20 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; c
 .project-card p { color: var(--text-muted); font-size: 14.5px; line-height: 1.55; flex: 1; }
 .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-2); }
 .tech-tag { background: var(--surface-alt); border: 1px solid var(--border); color: var(--text-muted); padding: 3px 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; }
-.delete-btn { position: absolute; top: var(--space-3); right: var(--space-3); background: var(--surface); border: 1px solid var(--border); color: var(--danger); width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 12px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity var(--transition); z-index: 3; }
-.project-card:hover .delete-btn, .project-card:focus-within .delete-btn { opacity: 1; }
+
+/* Кнопка удаления (крестик) - видна только админу */
+.delete-btn {
+    position: absolute; top: var(--space-3); right: var(--space-3);
+    background: var(--surface); border: 1px solid var(--border); color: var(--danger);
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    font-size: 12px; display: none; /* Скрыто по умолчанию для всех */
+    align-items: center; justify-content: center; z-index: 3;
+}
+/* Показываем крестик ТОЛЬКО если включен режим админа (is-admin) */
+body.is-admin .project-card:hover .delete-btn,
+body.is-admin .project-card:focus-within .delete-btn {
+    display: flex;
+}
 
 /* ===== 9. УСЛУГИ ===== */
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-5); }
