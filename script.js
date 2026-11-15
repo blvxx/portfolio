@@ -1,7 +1,12 @@
+/* =========================================================
+   Утилиты
+   ========================================================= */
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
-// ===== 1. Тема =====
+/* =========================================================
+   1. ТЕМА (светлая / тёмная)
+   ========================================================= */
 const THEME_KEY = 'portfolio_theme';
 const themeToggle = $('#theme-toggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
@@ -9,7 +14,8 @@ const themeIcon = themeToggle.querySelector('.theme-icon');
 function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
-    themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
+    themeToggle.setAttribute('aria-label',
+        theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
 }
 
 function initTheme() {
@@ -17,8 +23,8 @@ function initTheme() {
     if (saved) {
         applyTheme(saved);
     } else {
-        const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-        applyTheme(prefersLight ? 'light' : 'dark');
+        // по умолчанию — светлая (деловой стиль)
+        applyTheme('light');
     }
 }
 
@@ -31,7 +37,9 @@ themeToggle.addEventListener('click', () => {
 
 initTheme();
 
-// ===== 2. Данные проектов =====
+/* =========================================================
+   2. ДАННЫЕ (проекты и сообщения)
+   ========================================================= */
 let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
     {
         id: 1,
@@ -76,15 +84,19 @@ let messages = JSON.parse(localStorage.getItem('portfolio_messages')) || [];
 const saveProjects = () => localStorage.setItem('portfolio_projects', JSON.stringify(projects));
 const saveMessages = () => localStorage.setItem('portfolio_messages', JSON.stringify(messages));
 
-// ===== 3. Рендер проектов =====
+/* =========================================================
+   3. РЕНДЕР ПРОЕКТОВ
+   ========================================================= */
 const projectsGrid = $('#projects-grid');
 
 function renderProjects() {
     projectsGrid.innerHTML = '';
     if (projects.length === 0) {
-        projectsGrid.innerHTML = '<p style="text-align:center;grid-column:1/-1;">Пока нет проектов. Добавьте их через админ-панель (тройной клик по логотипу).</p>';
+        projectsGrid.innerHTML =
+            '<p style="text-align:center;grid-column:1/-1;">Пока нет проектов. Добавьте их через админ-панель (тройной клик по имени в шапке).</p>';
         return;
     }
+
     projects.forEach(p => {
         const card = document.createElement('button');
         card.type = 'button';
@@ -104,10 +116,12 @@ function renderProjects() {
                 <div class="tech-tags">${(p.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
             </div>
         `;
+
         card.addEventListener('click', (e) => {
             if (e.target.closest('.delete-btn')) return;
             openCase(p);
         });
+
         projectsGrid.appendChild(card);
     });
 
@@ -123,7 +137,9 @@ function renderProjects() {
     });
 }
 
-// ===== 4. Модалка кейса =====
+/* =========================================================
+   4. МОДАЛКА КЕЙСА (с фокус-трапом)
+   ========================================================= */
 const modal = $('#case-modal');
 let lastFocused = null;
 
@@ -133,7 +149,8 @@ function openCase(project) {
     $('#case-problem').textContent = project.problem || '—';
     $('#case-solution').textContent = project.solution || '—';
     $('#case-result').textContent = project.result || '—';
-    $('#case-tech').innerHTML = (project.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('');
+    $('#case-tech').innerHTML = (project.tech || [])
+        .map(t => `<span class="tech-tag">${t}</span>`).join('');
 
     const img = $('#case-image');
     if (project.image) {
@@ -165,23 +182,36 @@ document.addEventListener('keydown', (e) => {
         if (!modal.hidden) closeCase();
         else if (!adminPanel.hidden) adminPanel.hidden = true;
     }
+
+    // фокус-трап в модалке
     if (e.key === 'Tab' && !modal.hidden) {
-        const focusable = modal.querySelectorAll('button, [href], input, textarea, [tabindex]:not([tabindex="-1"])');
+        const focusable = modal.querySelectorAll(
+            'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
+        );
         if (focusable.length === 0) return;
         const first = focusable[0], last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
     }
 });
 
-// ===== 5. Форма =====
+/* =========================================================
+   5. ФОРМА ОБРАТНОЙ СВЯЗИ
+   ========================================================= */
 const contactForm = $('#contact-form');
 const formStatus = $('#form-status');
 
 function validateField(field) {
     let valid = true;
     if (!field.value.trim()) valid = false;
-    if (field.type === 'email' && valid) valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+    if (field.type === 'email' && valid) {
+        valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+    }
     field.setAttribute('aria-invalid', valid ? 'false' : 'true');
     return valid;
 }
@@ -192,7 +222,9 @@ contactForm.querySelectorAll('input[required], textarea[required]').forEach(f =>
 
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if ($('#website').value) return; // honeypot
+
+    // honeypot: бот заполнит скрытое поле
+    if ($('#website').value) return;
 
     const name = $('#name').value.trim();
     const email = $('#email').value.trim();
@@ -206,7 +238,11 @@ contactForm.addEventListener('submit', async (e) => {
         return;
     }
 
-    messages.push({ id: Date.now(), name, email, message, date: new Date().toLocaleString() });
+    messages.push({
+        id: Date.now(),
+        name, email, message,
+        date: new Date().toLocaleString()
+    });
     saveMessages();
 
     formStatus.textContent = 'Сообщение отправлено! Свяжусь с вами.';
@@ -217,12 +253,14 @@ contactForm.addEventListener('submit', async (e) => {
     if (!adminPanel.hidden) renderMessages();
 });
 
-// ===== 6. Админка (тройной клик по логотипу) =====
+/* =========================================================
+   6. АДМИНКА (тройной клик по имени в шапке)
+   ========================================================= */
 const adminPanel = $('#admin-panel');
 let logoClicks = 0;
 let logoTimeout;
 
-$('.logo').addEventListener('click', () => {
+$('.brand-name').addEventListener('click', () => {
     logoClicks++;
     clearTimeout(logoTimeout);
     if (logoClicks >= 3) {
@@ -254,12 +292,15 @@ $('#add-project-btn').addEventListener('click', () => {
         solution: solution || '—',
         result: result || '—',
         image: image || '',
-        tech: techInput ? techInput.split(',').map(t => t.trim()).filter(Boolean) : ['Без технологий']
+        tech: techInput
+            ? techInput.split(',').map(t => t.trim()).filter(Boolean)
+            : ['Без технологий']
     });
     saveProjects();
     renderProjects();
-    ['project-title', 'project-problem', 'project-solution', 'project-result', 'project-tech', 'project-image']
-        .forEach(id => $('#' + id).value = '');
+    ['project-title', 'project-problem', 'project-solution',
+     'project-result', 'project-tech', 'project-image']
+        .forEach(id => { $('#' + id).value = ''; });
 });
 
 function renderMessages() {
@@ -274,5 +315,29 @@ function renderMessages() {
             </div>`).join('');
 }
 
-// ===== Старт =====
+/* =========================================================
+   7. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
+   ========================================================= */
+(function initReveal() {
+    const targets = document.querySelectorAll('.section, .hero-inner, .site-footer');
+    if (!('IntersectionObserver' in window) || targets.length === 0) return;
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    targets.forEach(el => {
+        el.classList.add('reveal');
+        io.observe(el);
+    });
+})();
+
+/* =========================================================
+   СТАРТ
+   ========================================================= */
 renderProjects();
