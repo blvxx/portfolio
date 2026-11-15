@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ваше Имя — Веб-разработчик | Лендинги и сайты-визитки</title>
-    <meta name="description" content="Создаю быстрые, доступные и красивые сайты для бизнеса. Лендинги, сайты-визитки, доработка. Портфолио и контакты.">
-    <meta name="author" content="Ваше Имя">
-    <link rel="canonical" href="https://example.com/">
+    <title>Калинин Артём — IT-специалист и веб-разработчик</title>
+    <meta name="description" content="IT-специалист с опытом QA и техподдержки. Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки. Портфолио и контакты.">
+    <meta name="author" content="Калинин Артём Алексеевич">
+    <link rel="canonical" href="https://ваш-логин.github.io/имя-репозитория/">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ваше Имя — Веб-разработчик">
-    <meta property="og:description" content="Быстрые, доступные и красивые сайты для бизнеса.">
-    <meta property="og:url" content="https://example.com/">
-    <meta property="og:image" content="https://example.com/og-image.png">
+    <meta property="og:title" content="Калинин Артём — IT-специалист и веб-разработчик">
+    <meta property="og:description" content="Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки.">
+    <meta property="og:url" content="https://ваш-логин.github.io/имя-репозитория/">
+    <meta property="og:image" content="https://ваш-логин.github.io/имя-репозитория/assets/images/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
 
     <!-- JSON-LD: Person + WebSite -->
@@ -23,15 +23,19 @@
       "@graph": [
         {
           "@type": "Person",
-          "name": "Ваше Имя",
-          "jobTitle": "Веб-разработчик",
-          "url": "https://example.com/",
-          "sameAs": ["https://github.com/username", "https://t.me/username"]
+          "name": "Калинин Артём Алексеевич",
+          "jobTitle": "IT Specialist / Technical Support L2 / QA Engineer",
+          "url": "https://ваш-логин.github.io/имя-репозитория/",
+          "email": "blvxx@ya.ru",
+          "sameAs": [
+            "https://t.me/blvIxx",
+            "https://set.ki/account/LmXrzmU"
+          ]
         },
         {
           "@type": "WebSite",
-          "name": "Ваше Имя — Портфолио",
-          "url": "https://example.com/"
+          "name": "Калинин Артём — Портфолио",
+          "url": "https://ваш-логин.github.io/имя-репозитория/"
         }
       ]
     }
@@ -50,36 +54,70 @@
 
     <header class="glass-header">
         <nav aria-label="Основная навигация">
-            <div class="logo">Ваше Имя</div>
+            <div class="logo">Калинин Артём</div>
             <ul class="nav-links">
                 <li><a href="#projects">Проекты</a></li>
+                <li><a href="#skills">Навыки</a></li>
                 <li><a href="#contact">Связаться</a></li>
             </ul>
             <div class="nav-actions">
                 <button id="theme-toggle" class="icon-btn" aria-label="Переключить тему" title="Переключить тему">
                     <span class="theme-icon" aria-hidden="true">🌙</span>
                 </button>
-                <button id="admin-toggle" class="icon-btn" aria-label="Открыть админ-панель" title="Админ-панель">
-                    <span aria-hidden="true">⚙️</span>
-                </button>
+                <!-- Кнопка админки скрыта, открывается тройным кликом по логотипу -->
             </div>
         </nav>
     </header>
 
     <main id="main">
+        <!-- Hero -->
         <section class="hero">
             <div class="glass-card hero-card">
-                <h1>Привет, я <span class="highlight">Веб-разработчик</span></h1>
-                <p>Создаю быстрые, доступные и удобные сайты, которые помогают бизнесу расти. Специализируюсь на лендингах и сайтах-визитках.</p>
+                <img
+                    src="assets/images/avatar.svg"
+                    alt="Калинин Артём"
+                    class="avatar"
+                    width="120"
+                    height="120"
+                    loading="eager"
+                >
+                <h1>Привет, я <span class="highlight">Артём</span> — IT-специалист и веб-разработчик</h1>
+                <p>Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки. Опыт в QA и техподдержке L2 помогает находить проблемы до того, как их увидит клиент.</p>
                 <a href="#contact" class="cta-button">Обсудить проект</a>
             </div>
         </section>
 
+        <!-- Проекты -->
         <section id="projects" class="projects-section" aria-labelledby="projects-title">
             <h2 id="projects-title">Мои работы</h2>
             <div id="projects-grid" class="projects-grid"></div>
         </section>
 
+        <!-- Навыки -->
+        <section id="skills" class="skills-section" aria-labelledby="skills-title">
+            <h2 id="skills-title">Навыки</h2>
+            <div class="skills-cloud">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">PostgreSQL</span>
+                <span class="skill-tag">Postman</span>
+                <span class="skill-tag">REST API</span>
+                <span class="skill-tag">Jira</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Git</span>
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">QA</span>
+                <span class="skill-tag">Тестирование</span>
+                <span class="skill-tag">Active Directory</span>
+                <span class="skill-tag">Windows</span>
+                <span class="skill-tag">ChatGPT / Claude / Cursor</span>
+            </div>
+        </section>
+
+        <!-- Контакты -->
         <section id="contact" class="contact-section" aria-labelledby="contact-title">
             <div class="glass-card contact-card">
                 <h2 id="contact-title">Давайте работать вместе</h2>
@@ -94,7 +132,6 @@
                     <label class="sr-only" for="message">Сообщение</label>
                     <textarea id="message" name="message" placeholder="Опишите вашу задачу..." rows="4" required></textarea>
 
-                    <!-- honeypot: люди его не видят и не заполняют -->
                     <div class="hp-field" aria-hidden="true">
                         <label for="website">Не заполняйте это поле</label>
                         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
@@ -103,6 +140,11 @@
                     <button type="submit" class="cta-button">Отправить</button>
                     <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
                 </form>
+                <div class="contact-links">
+                    <a href="mailto:blvxx@ya.ru">blvxx@ya.ru</a>
+                    <a href="https://t.me/blvIxx" target="_blank" rel="noopener">Telegram @blvIxx</a>
+                    <a href="https://set.ki/account/LmXrzmU" target="_blank" rel="noopener">Профиль</a>
+                </div>
             </div>
         </section>
     </main>
@@ -112,6 +154,7 @@
         <div class="modal-backdrop" data-close></div>
         <div class="modal-content glass-card">
             <button class="modal-close icon-btn" data-close aria-label="Закрыть">✕</button>
+            <img id="case-image" class="case-image" src="" alt="" loading="lazy" hidden>
             <h2 id="case-title"></h2>
             <div class="case-block"><h3>Проблема</h3><p id="case-problem"></p></div>
             <div class="case-block"><h3>Решение</h3><p id="case-solution"></p></div>
@@ -134,6 +177,8 @@
                 <input type="text" id="project-solution" placeholder="Что сделали">
                 <label class="sr-only" for="project-result">Результат</label>
                 <input type="text" id="project-result" placeholder="Результат с метрикой">
+                <label class="sr-only" for="project-image">Картинка (имя файла)</label>
+                <input type="text" id="project-image" placeholder="Имя файла, например project-1.jpg">
                 <label class="sr-only" for="project-tech">Технологии</label>
                 <input type="text" id="project-tech" placeholder="Технологии (через запятую)">
                 <button id="add-project-btn" class="small-btn">Добавить</button>
