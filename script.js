@@ -23,8 +23,7 @@ function initTheme() {
     if (saved) {
         applyTheme(saved);
     } else {
-        // по умолчанию — светлая (деловой стиль)
-        applyTheme('light');
+        applyTheme('light'); // по умолчанию светлая
     }
 }
 
@@ -93,7 +92,7 @@ function renderProjects() {
     projectsGrid.innerHTML = '';
     if (projects.length === 0) {
         projectsGrid.innerHTML =
-            '<p style="text-align:center;grid-column:1/-1;">Пока нет проектов. Добавьте их через админ-панель (тройной клик по имени в шапке).</p>';
+            '<p style="text-align:center;grid-column:1/-1;">Пока нет проектов. Добавьте их через админ-панель.</p>';
         return;
     }
 
@@ -104,7 +103,7 @@ function renderProjects() {
         card.setAttribute('aria-label', `Открыть кейс: ${p.title}`);
 
         const imgHTML = p.image
-            ? `<img class="project-image" src="assets/images/${p.image}" alt="Скриншот проекта ${p.title}" loading="lazy" width="400" height="225">`
+            ? `<img class="project-image" src="${p.image}" alt="Скриншот проекта ${p.title}" loading="lazy" width="400" height="225">`
             : '';
 
         card.innerHTML = `
@@ -138,7 +137,7 @@ function renderProjects() {
 }
 
 /* =========================================================
-   4. МОДАЛКА КЕЙСА (с фокус-трапом)
+   4. МОДАЛКА КЕЙСА
    ========================================================= */
 const modal = $('#case-modal');
 let lastFocused = null;
@@ -154,7 +153,7 @@ function openCase(project) {
 
     const img = $('#case-image');
     if (project.image) {
-        img.src = `assets/images/${project.image}`;
+        img.src = project.image;
         img.alt = `Скриншот проекта ${project.title}`;
         img.hidden = false;
     } else {
@@ -183,7 +182,6 @@ document.addEventListener('keydown', (e) => {
         else if (!adminPanel.hidden) adminPanel.hidden = true;
     }
 
-    // фокус-трап в модалке
     if (e.key === 'Tab' && !modal.hidden) {
         const focusable = modal.querySelectorAll(
             'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
@@ -222,9 +220,7 @@ contactForm.querySelectorAll('input[required], textarea[required]').forEach(f =>
 
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-
-    // honeypot: бот заполнит скрытое поле
-    if ($('#website').value) return;
+    if ($('#website').value) return; // honeypot
 
     const name = $('#name').value.trim();
     const email = $('#email').value.trim();
@@ -254,20 +250,36 @@ contactForm.addEventListener('submit', async (e) => {
 });
 
 /* =========================================================
-   6. АДМИНКА (тройной клик по имени в шапке)
+   6. ЗАЩИЩЁННАЯ АДМИНКА
    ========================================================= */
 const adminPanel = $('#admin-panel');
 let logoClicks = 0;
 let logoTimeout;
 
+// ФУНКЦИЯ ЗАПРОСА ПАРОЛЯ
+function requestAdminAccess() {
+    // Пароль по умолчанию: admin
+    const password = prompt("Введите пароль для доступа к панели управления:");
+    
+    // Если нажали "Отмена" или ввели пустоту
+    if (password === null || password.trim() === '') return;
+
+    if (password === 'admin') {
+        adminPanel.hidden = false;
+        renderMessages();
+        $('#close-admin').focus();
+    } else {
+        alert("Неверный пароль! Доступ запрещён.");
+    }
+}
+
+// Секретный вход: 3 клика по имени в шапке
 $('.brand-name').addEventListener('click', () => {
     logoClicks++;
     clearTimeout(logoTimeout);
     if (logoClicks >= 3) {
         logoClicks = 0;
-        adminPanel.hidden = false;
-        renderMessages();
-        $('#close-admin').focus();
+        requestAdminAccess(); // Вызываем проверку пароля
         return;
     }
     logoTimeout = setTimeout(() => { logoClicks = 0; }, 1500);
