@@ -257,14 +257,12 @@ let logoClicks = 0;
 let logoTimeout;
 
 // ФУНКЦИЯ ЗАПРОСА ПАРОЛЯ
+// СТАЛО:
 function requestAdminAccess() {
-    // Пароль по умолчанию: admin
     const password = prompt("Введите пароль для доступа к панели управления:");
-    
-    // Если нажали "Отмена" или ввели пустоту
     if (password === null || password.trim() === '') return;
-
     if (password === 'admin') {
+        document.body.classList.add('is-admin'); // <-- ДОБАВИЛИ ЭТУ СТРОКУ
         adminPanel.hidden = false;
         renderMessages();
         $('#close-admin').focus();
