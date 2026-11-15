@@ -46,7 +46,7 @@ let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
         problem: 'Ручная проверка API перед каждым релизом занимала 4 часа и часто пропускала ошибки.',
         solution: 'Написал Python-скрипты и коллекции Postman для автоматической проверки ответов, кодов ошибок и таймингов. Интегрировал отчёты в Jira.',
         result: 'Время проверки сократилось до 40 минут, до релиза найдено 12 критичных багов.',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
         tech: ['Python', 'Postman', 'REST API', 'Jira']
     },
     {
@@ -55,7 +55,7 @@ let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
         problem: 'Клиенты жаловались на зависшие транзакции, причина неизвестна, поддержка L2 не могла воспроизвести.',
         solution: 'Проанализировал логи Linux, написал SQL-запросы с JOIN и GROUP BY, выявил рассинхронизацию микросервисов.',
         result: 'Первопричина найдена за 2 часа, восстановлено 100% транзакций, написан подробный баг-репорт.',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
         tech: ['Linux', 'PostgreSQL', 'SQL', 'Микросервисы']
     },
     {
@@ -64,7 +64,7 @@ let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
         problem: 'У кофейни не было сайта, клиенты не могли посмотреть меню и часы работы.',
         solution: 'Сделал адаптивный лендинг на HTML/CSS/JS с меню, картой и формой заявки.',
         result: '+18 заявок за первую неделю, владелец отказался от платного конструктора.',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80',
         tech: ['HTML', 'CSS', 'JavaScript']
     },
     {
@@ -73,7 +73,7 @@ let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
         problem: 'Нужно было показать навыки веб-разработки и QA в одном проекте.',
         solution: 'Статический сайт с localStorage-админкой, темами, модалками кейсов, SEO и доступностью.',
         result: 'Сайт прошёл Lighthouse на 95+ по доступности, демонстрирует полный цикл разработки.',
-        image: '',
+        image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
         tech: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages']
     }
 ];
