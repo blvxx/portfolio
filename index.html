@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваше Имя — Веб-разработчик | Лендинги и сайты-визитки</title>
+    <meta name="description" content="Создаю быстрые, доступные и красивые сайты для бизнеса. Лендинги, сайты-визитки, доработка. Портфолио и контакты.">
+    <meta name="author" content="Ваше Имя">
+    <link rel="canonical" href="https://example.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ваше Имя — Веб-разработчик">
+    <meta property="og:description" content="Быстрые, доступные и красивые сайты для бизнеса.">
+    <meta property="og:url" content="https://example.com/">
+    <meta property="og:image" content="https://example.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- JSON-LD: Person + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "Ваше Имя",
+          "jobTitle": "Веб-разработчик",
+          "url": "https://example.com/",
+          "sameAs": ["https://github.com/username", "https://t.me/username"]
+        },
+        {
+          "@type": "WebSite",
+          "name": "Ваше Имя — Портфолио",
+          "url": "https://example.com/"
+        }
+      ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <a href="#main" class="skip-link">Перейти к содержимому</a>
+
+    <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+    <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+    <header class="glass-header">
+        <nav aria-label="Основная навигация">
+            <div class="logo">Ваше Имя</div>
+            <ul class="nav-links">
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#contact">Связаться</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Переключить тему" title="Переключить тему">
+                    <span class="theme-icon" aria-hidden="true">🌙</span>
+                </button>
+                <button id="admin-toggle" class="icon-btn" aria-label="Открыть админ-панель" title="Админ-панель">
+                    <span aria-hidden="true">⚙️</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main">
+        <section class="hero">
+            <div class="glass-card hero-card">
+                <h1>Привет, я <span class="highlight">Веб-разработчик</span></h1>
+                <p>Создаю быстрые, доступные и удобные сайты, которые помогают бизнесу расти. Специализируюсь на лендингах и сайтах-визитках.</p>
+                <a href="#contact" class="cta-button">Обсудить проект</a>
+            </div>
+        </section>
+
+        <section id="projects" class="projects-section" aria-labelledby="projects-title">
+            <h2 id="projects-title">Мои работы</h2>
+            <div id="projects-grid" class="projects-grid"></div>
+        </section>
+
+        <section id="contact" class="contact-section" aria-labelledby="contact-title">
+            <div class="glass-card contact-card">
+                <h2 id="contact-title">Давайте работать вместе</h2>
+                <p>Есть идея или задача? Напишите, и я предложу решение.</p>
+                <form id="contact-form" novalidate>
+                    <label class="sr-only" for="name">Ваше имя</label>
+                    <input type="text" id="name" name="name" placeholder="Ваше имя" required autocomplete="name">
+
+                    <label class="sr-only" for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required autocomplete="email">
+
+                    <label class="sr-only" for="message">Сообщение</label>
+                    <textarea id="message" name="message" placeholder="Опишите вашу задачу..." rows="4" required></textarea>
+
+                    <!-- honeypot: люди его не видят и не заполняют -->
+                    <div class="hp-field" aria-hidden="true">
+                        <label for="website">Не заполняйте это поле</label>
+                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="cta-button">Отправить</button>
+                    <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модалка кейса -->
+    <div id="case-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="case-title" hidden>
+        <div class="modal-backdrop" data-close></div>
+        <div class="modal-content glass-card">
+            <button class="modal-close icon-btn" data-close aria-label="Закрыть">✕</button>
+            <h2 id="case-title"></h2>
+            <div class="case-block"><h3>Проблема</h3><p id="case-problem"></p></div>
+            <div class="case-block"><h3>Решение</h3><p id="case-solution"></p></div>
+            <div class="case-block"><h3>Результат</h3><p id="case-result"></p></div>
+            <div class="tech-tags" id="case-tech"></div>
+        </div>
+    </div>
+
+    <!-- Админ-панель -->
+    <div id="admin-panel" class="admin-panel" hidden>
+        <div class="admin-content">
+            <h3>Управление портфолио</h3>
+            <div class="admin-section">
+                <h4>Добавить проект</h4>
+                <label class="sr-only" for="project-title">Название</label>
+                <input type="text" id="project-title" placeholder="Название проекта">
+                <label class="sr-only" for="project-problem">Проблема</label>
+                <input type="text" id="project-problem" placeholder="Какая была задача/проблема">
+                <label class="sr-only" for="project-solution">Решение</label>
+                <input type="text" id="project-solution" placeholder="Что сделали">
+                <label class="sr-only" for="project-result">Результат</label>
+                <input type="text" id="project-result" placeholder="Результат с метрикой">
+                <label class="sr-only" for="project-tech">Технологии</label>
+                <input type="text" id="project-tech" placeholder="Технологии (через запятую)">
+                <button id="add-project-btn" class="small-btn">Добавить</button>
+            </div>
+            <div class="admin-section">
+                <h4>Сообщения</h4>
+                <div id="messages-list"></div>
+            </div>
+            <button id="close-admin" class="small-btn danger">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
