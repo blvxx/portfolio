@@ -7,18 +7,17 @@
     <meta name="description" content="IT-специалист с опытом QA и техподдержки. Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки. Портфолио и контакты.">
     <meta name="author" content="Калинин Артём Алексеевич">
     
-    <!-- ВАЖНО: замените ссылку ниже на ваш реальный адрес сайта GitHub Pages -->
-    <link rel="canonical" href="https://ваш-логин.github.io/имя-репозитория/">
+    <!-- Иконка сайта (Favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231e40af%22/><text x=%2250%22 y=%2255%22 font-size=%2250%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22>А</text></svg>">
 
-    <!-- Open Graph (для красивых ссылок в телеграме и соцсетях) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Калинин Артём — IT-специалист и веб-разработчик">
     <meta property="og:description" content="Делаю сайты, которые не ломаются: от вёрстки до тестирования и поддержки.">
-    <meta property="og:url" content="https://ваш-логин.github.io/имя-репозитория/">
-    <meta property="og:image" content="https://ваш-логин.github.io/имя-репозитория/image.jpg">
+    <meta property="og:image" content="image.jpg">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Микроразметка для поисковиков -->
+    <!-- Микроразметка -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -27,7 +26,6 @@
           "@type": "Person",
           "name": "Калинин Артём Алексеевич",
           "jobTitle": "IT Specialist / Technical Support L2 / QA Engineer",
-          "url": "https://ваш-логин.github.io/имя-репозитория/",
           "email": "blvxx@ya.ru",
           "sameAs": [
             "https://t.me/blvIxx",
@@ -36,8 +34,7 @@
         },
         {
           "@type": "WebSite",
-          "name": "Калинин Артём — Портфолио",
-          "url": "https://ваш-логин.github.io/имя-репозитория/"
+          "name": "Калинин Артём — Портфолио"
         }
       ]
     }
@@ -59,7 +56,8 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#projects">Проекты</a></li>
-                <li><a href="#skills">Навыки</a></li>
+                <li><a href="#experience">Опыт</a></li>
+                <li><a href="#services">Услуги</a></li>
                 <li><a href="#contact">Связаться</a></li>
             </ul>
             <div class="nav-actions">
@@ -88,15 +86,57 @@
                     </div>
                 </div>
                 <div class="hero-photo">
-                    <!-- Вставляем вашу картинку image.jpg -->
-                    <img
-                        src="image.jpg"
-                        alt="Калинин Артём"
-                        class="avatar"
-                        width="200"
-                        height="200"
-                        loading="eager"
-                    >
+                    <img src="image.jpg" alt="Калинин Артём" class="avatar" width="200" height="200" loading="eager">
+                </div>
+            </div>
+            
+            <!-- Блок со статистикой -->
+            <div class="container stats-row">
+                <div class="stat-item">
+                    <div class="stat-value">2+ года</div>
+                    <div class="stat-label">Опыт в IT</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">60+</div>
+                    <div class="stat-label">Обращений в смену</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">Покрытие тестами</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">L2</div>
+                    <div class="stat-label">Уровень поддержки</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Опыт работы (Timeline) -->
+        <section id="experience" class="section section-alt" aria-labelledby="exp-title">
+            <div class="container">
+                <div class="section-head">
+                    <h2 id="exp-title">Опыт работы</h2>
+                    <p class="section-sub">Где я применял свои навыки</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h3 class="timeline-title">Специалист технической поддержки L2 / QA Engineer</h3>
+                        <ul class="timeline-desc">
+                            <li>Поддержка B2B-клиентов (L2): интеграции, API, доступ к личному кабинету.</li>
+                            <li>Тестирование REST API (Postman), анализ логов Linux, написание SQL-запросов.</li>
+                            <li>Автоматизация рутинных проверок на Python, ведение задач в Jira.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <h3 class="timeline-title">Специалист технической поддержки (с QA)</h3>
+                        <ul class="timeline-desc">
+                            <li>Обработка до 60+ обращений в смену, глубокая диагностика сбоев.</li>
+                            <li>Составление баг-репортов и регрессионное тестирование мобильного приложения.</li>
+                            <li>Администрирование IT-инфраструктуры (Linux/Windows, Active Directory).</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -108,13 +148,39 @@
                     <h2 id="projects-title">Избранные проекты</h2>
                     <p class="section-sub">Реальные задачи и измеримые результаты</p>
                 </div>
-                <!-- Сюда JS автоматически вставит карточки проектов -->
                 <div id="projects-grid" class="projects-grid"></div>
             </div>
         </section>
 
+        <!-- Услуги -->
+        <section id="services" class="section section-alt" aria-labelledby="services-title">
+            <div class="container">
+                <div class="section-head">
+                    <h2 id="services-title">Чем я могу помочь</h2>
+                    <p class="section-sub">Услуги для бизнеса и частных клиентов</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">💻</div>
+                        <h3>Веб-разработка</h3>
+                        <p>Создание лендингов, сайтов-визиток и корпоративных страниц. Адаптивность, чистый код, высокая скорость загрузки.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🔍</div>
+                        <h3>Тестирование (QA)</h3>
+                        <p>Проверка сайтов и приложений перед запуском. Поиск багов, написание баг-репортов, тестирование API и UI.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🛠️</div>
+                        <h3>Техподдержка</h3>
+                        <p>Настройка интеграций, исправление ошибок на существующем сайте, настройка аналитики и форм связи.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Секция навыков -->
-        <section id="skills" class="section section-alt" aria-labelledby="skills-title">
+        <section id="skills" class="section" aria-labelledby="skills-title">
             <div class="container">
                 <div class="section-head">
                     <h2 id="skills-title">Навыки и инструменты</h2>
@@ -136,7 +202,7 @@
         </section>
 
         <!-- Секция контактов -->
-        <section id="contact" class="section" aria-labelledby="contact-title">
+        <section id="contact" class="section section-alt" aria-labelledby="contact-title">
             <div class="container contact-inner">
                 <div class="section-head">
                     <h2 id="contact-title">Обсудим задачу</h2>
@@ -158,7 +224,6 @@
                         <textarea id="message" name="message" placeholder="Опишите задачу, сроки и бюджет" rows="5" required></textarea>
                     </div>
 
-                    <!-- Ловушка для спам-ботов -->
                     <div class="hp-field" aria-hidden="true">
                         <label for="website">Не заполняйте это поле</label>
                         <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
@@ -195,7 +260,7 @@
         </div>
     </footer>
 
-    <!-- Модальное окно для проектов (всплывающее) -->
+    <!-- Модальное окно для проектов -->
     <div id="case-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="case-title" hidden>
         <div class="modal-backdrop" data-close></div>
         <div class="modal-content">
@@ -211,7 +276,7 @@
         </div>
     </div>
 
-    <!-- Админ-панель (скрытая) -->
+    <!-- Админ-панель -->
     <div id="admin-panel" class="admin-panel" hidden>
         <div class="admin-content">
             <h3>Управление портфолио</h3>
@@ -225,8 +290,8 @@
                 <input type="text" id="project-solution" placeholder="Что сделали">
                 <label class="sr-only" for="project-result">Результат</label>
                 <input type="text" id="project-result" placeholder="Результат с метрикой">
-                <label class="sr-only" for="project-image">Картинка (имя файла)</label>
-                <input type="text" id="project-image" placeholder="Имя файла, например project-1.jpg">
+                <label class="sr-only" for="project-image">Картинка (ссылка или имя файла)</label>
+                <input type="text" id="project-image" placeholder="Ссылка или image.jpg">
                 <label class="sr-only" for="project-tech">Технологии</label>
                 <input type="text" id="project-tech" placeholder="Технологии (через запятую)">
                 <button id="add-project-btn" class="btn btn-primary btn-sm">Добавить</button>
