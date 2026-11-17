@@ -37,12 +37,9 @@ themeToggle.addEventListener('click', () => {
 initTheme();
 
 /* =========================================================
-2. ДАННЫЕ (проекты из JSON, сообщения локально)
+ДАННЫЕ (проекты из JSON)
 ========================================================= */
 let projects = [];
-
-let messages = JSON.parse(localStorage.getItem('portfolio_messages')) || [];
-const saveMessages = () => localStorage.setItem('portfolio_messages', JSON.stringify(messages));
 
 async function loadProjects() {
   try {
@@ -57,7 +54,7 @@ async function loadProjects() {
 }
 
 /* =========================================================
-3. РЕНДЕР ПРОЕКТОВ
+РЕНДЕР ПРОЕКТОВ
 ========================================================= */
 const projectsGrid = $('#projects-grid');
 
@@ -98,7 +95,7 @@ function renderProjects() {
 }
 
 /* =========================================================
-4. МОДАЛКА КЕЙСА
+МОДАЛКА КЕЙСА
 ========================================================= */
 const modal = $('#case-modal');
 let lastFocused = null;
@@ -160,7 +157,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* =========================================================
-5. ФОРМА ОБРАТНОЙ СВЯЗИ (FormSubmit.co)
+ФОРМА ОБРАТНОЙ СВЯЗИ (FormSubmit.co)
 ========================================================= */
 const contactForm = $('#contact-form');
 const formStatus = $('#form-status');
@@ -236,7 +233,7 @@ contactForm.addEventListener('submit', async (e) => {
 });
 
 /* =========================================================
-6. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
+ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
 ========================================================= */
 (function initReveal() {
   const targets = document.querySelectorAll('.section, .hero-inner, .site-footer');
