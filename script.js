@@ -23,7 +23,7 @@ function initTheme() {
   if (saved) {
     applyTheme(saved);
   } else {
-    applyTheme('light'); // по умолчанию светлая
+    applyTheme('light');
   }
 }
 
@@ -37,16 +37,13 @@ themeToggle.addEventListener('click', () => {
 initTheme();
 
 /* =========================================================
-2. ДАННЫЕ (проекты и сообщения)
+2. ДАННЫЕ (проекты из JSON, сообщения локально)
 ========================================================= */
-// Проекты теперь загружаются из projects.json — одинаковые для всех
 let projects = [];
 
-// Сообщения пока храним локально (до подключения бэкенда)
 let messages = JSON.parse(localStorage.getItem('portfolio_messages')) || [];
 const saveMessages = () => localStorage.setItem('portfolio_messages', JSON.stringify(messages));
 
-// Загрузка проектов из JSON-файла
 async function loadProjects() {
   try {
     const response = await fetch('projects.json');
@@ -176,7 +173,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* =========================================================
-5. ФОРМА ОБРАТНОЙ СВЯЗИ
+5. ФОРМА ОБРАТНОЙ СВЯЗИ (FormSubmit.co)
 ========================================================= */
 const contactForm = $('#contact-form');
 const formStatus = $('#form-status');
@@ -185,7 +182,7 @@ function validateField(field) {
   let valid = true;
   if (!field.value.trim()) valid = false;
   if (field.type === 'email' && valid) {
-    valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+    valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(field.value);
   }
   field.setAttribute('aria-invalid', valid ? 'false' : 'true');
   return valid;
@@ -212,20 +209,43 @@ contactForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // Пока сохраняем локально — до подключения Formspree/Web3Forms
-  messages.push({
-    id: Date.now(),
-    name, email, message,
-    date: new Date().toLocaleString()
-  });
-  saveMessages();
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Отправка...';
 
-  formStatus.textContent = 'Сообщение отправлено! Свяжусь с вами.';
-  formStatus.className = 'form-status success';
-  contactForm.reset();
-  fields.forEach(f => f.removeAttribute('aria-invalid'));
+  try {
+    const response = await fetch(contactForm.action, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        message,
+        _subject: 'Новая заявка с портфолио!',
+        _captcha: 'true',
+        _template: 'table'
+      })
+    });
 
-  if (!adminPanel.hidden) renderMessages();
+    if (!response.ok) throw new Error('Ошибка сервера');
+
+    formStatus.textContent = 'Сообщение отправлено! Свяжусь с вами в течение дня.';
+    formStatus.className = 'form-status success';
+    contactForm.reset();
+    fields.forEach(f => f.removeAttribute('aria-invalid'));
+
+  } catch (error) {
+    console.error('Ошибка отправки:', error);
+    formStatus.textContent = 'Не удалось отправить. Напишите напрямую на blvxx@ya.ru';
+    formStatus.className = 'form-status error';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+  }
 });
 
 /* =========================================================
@@ -249,7 +269,6 @@ function requestAdminAccess() {
   }
 }
 
-// Секретный вход: 3 клика по имени в шапке
 $('.brand-name').addEventListener('click', () => {
   logoClicks++;
   clearTimeout(logoTimeout);
@@ -287,7 +306,6 @@ $('#add-project-btn').addEventListener('click', () => {
 
   renderProjects();
 
-  // Очищаем поля
   ['project-title', 'project-problem', 'project-solution',
    'project-result', 'project-tech', 'project-image']
     .forEach(id => { $('#' + id).value = ''; });
