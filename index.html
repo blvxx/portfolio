@@ -208,32 +208,35 @@
                     <h2 id="contact-title">Обсудим задачу</h2>
                     <p class="section-sub">Отвечу в течение рабочего дня</p>
                 </div>
-                <form id="contact-form" class="contact-form" novalidate>
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="name">Имя</label>
-                            <input type="text" id="name" name="name" placeholder="Как к вам обращаться" required autocomplete="name">
-                        </div>
-                        <div class="form-field">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
-                        </div>
-                    </div>
-                    <div class="form-field">
-                        <label for="message">Сообщение</label>
-                        <textarea id="message" name="message" placeholder="Опишите задачу, сроки и бюджет" rows="5" required></textarea>
-                    </div>
+<form id="contact-form" action="https://formsubmit.co/blvxx@ya.ru" method="POST" novalidate>
+  <input type="hidden" name="_subject" value="Новая заявка с портфолио!">
+  <input type="hidden" name="_captcha" value="true">
+  <input type="hidden" name="_template" value="table">
 
-                    <div class="hp-field" aria-hidden="true">
-                        <label for="website">Не заполняйте это поле</label>
-                        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                    </div>
+  <label class="hp-field" for="website">Не заполняйте это поле</label>
+  <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Отправить сообщение</button>
-                        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
-                    </div>
-                </form>
+  <div class="form-row">
+    <div class="form-field">
+      <label for="name">Имя</label>
+      <input type="text" id="name" name="name" required autocomplete="name" placeholder="Как к вам обращаться">
+    </div>
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="your@email.com">
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="message">Сообщение</label>
+    <textarea id="message" name="message" required rows="5" placeholder="Опишите задачу..."></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+    <p id="form-status" class="form-status" aria-live="polite"></p>
+  </div>
+</form>
 
                 <div class="contact-links">
                     <a href="mailto:blvxx@ya.ru">
