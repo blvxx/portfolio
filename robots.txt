@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://https://blvxx.github.io/portfolio/#projects/sitemap.xml
+Sitemap: https://https://https://blvxx.github.io/portfolio//sitemap.xml
