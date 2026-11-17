@@ -234,3 +234,15 @@ body.is-admin .project-card:focus-within .delete-btn {
     .btn-primary::after { display: none; }
     .reveal { opacity: 1; transform: none; }
 }
+/* ===== Скрытие honeypot-поля ===== */
+.hp-field,
+#website {
+  position: absolute !important;
+  left: -9999px !important;
+  top: -9999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
