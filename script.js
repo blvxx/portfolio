@@ -83,29 +83,17 @@ function renderProjects() {
     card.innerHTML = `
       ${imgHTML}
       <div class="project-card-body">
-        <button class="delete-btn" data-id="${p.id}" aria-label="Удалить проект ${p.title}" title="Удалить">✕</button>
         <h3>${p.title}</h3>
         <p>${p.problem || ''}</p>
         <div class="tech-tags">${(p.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
       </div>
     `;
 
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('.delete-btn')) return;
+    card.addEventListener('click', () => {
       openCase(p);
     });
 
     projectsGrid.appendChild(card);
-  });
-
-  $$('.delete-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const id = Number(e.currentTarget.dataset.id);
-      if (!confirm('Удалить проект? Это действие временно (до перезагрузки). Для постоянного удаления отредактируйте projects.json.')) return;
-      projects = projects.filter(p => p.id !== id);
-      renderProjects();
-    });
   });
 }
 
@@ -151,9 +139,8 @@ modal.addEventListener('click', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (!modal.hidden) closeCase();
-    else if (!adminPanel.hidden) adminPanel.hidden = true;
+  if (e.key === 'Escape' && !modal.hidden) {
+    closeCase();
   }
 
   if (e.key === 'Tab' && !modal.hidden) {
@@ -249,85 +236,7 @@ contactForm.addEventListener('submit', async (e) => {
 });
 
 /* =========================================================
-6. ЗАЩИЩЁННАЯ АДМИНКА
-========================================================= */
-const adminPanel = $('#admin-panel');
-let logoClicks = 0;
-let logoTimeout;
-
-function requestAdminAccess() {
-  const password = prompt("Введите пароль для доступа к панели управления:");
-  if (password === null || password.trim() === '') return;
-
-  if (password === 'admin') {
-    document.body.classList.add('is-admin');
-    adminPanel.hidden = false;
-    renderMessages();
-    $('#close-admin').focus();
-  } else {
-    alert("Неверный пароль! Доступ запрещён.");
-  }
-}
-
-$('.brand-name').addEventListener('click', () => {
-  logoClicks++;
-  clearTimeout(logoTimeout);
-  if (logoClicks >= 3) {
-    logoClicks = 0;
-    requestAdminAccess();
-    return;
-  }
-  logoTimeout = setTimeout(() => { logoClicks = 0; }, 1500);
-});
-
-$('#close-admin').addEventListener('click', () => { adminPanel.hidden = true; });
-
-$('#add-project-btn').addEventListener('click', () => {
-  const title = $('#project-title').value.trim();
-  const problem = $('#project-problem').value.trim();
-  const solution = $('#project-solution').value.trim();
-  const result = $('#project-result').value.trim();
-  const techInput = $('#project-tech').value.trim();
-  const image = $('#project-image').value.trim();
-
-  if (!title) { alert('Название обязательно.'); return; }
-
-  projects.push({
-    id: Date.now(),
-    title,
-    problem: problem || '—',
-    solution: solution || '—',
-    result: result || '—',
-    image: image || '',
-    tech: techInput
-      ? techInput.split(',').map(t => t.trim()).filter(Boolean)
-      : ['Без технологий']
-  });
-
-  renderProjects();
-
-  ['project-title', 'project-problem', 'project-solution',
-   'project-result', 'project-tech', 'project-image']
-    .forEach(id => { $('#' + id).value = ''; });
-
-  alert('Проект добавлен (временно, до перезагрузки). Для постоянного добавления отредактируйте projects.json.');
-});
-
-function renderMessages() {
-  const list = $('#messages-list');
-  list.innerHTML = messages.length === 0
-    ? '<p>Сообщений пока нет.</p>'
-    : messages.map(m => `
-        <div class="message-item">
-          <strong>${m.name}</strong> (${m.email})<br>
-          <small>${m.date}</small>
-          <p>${m.message}</p>
-        </div>
-      `).join('');
-}
-
-/* =========================================================
-7. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
+6. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
 ========================================================= */
 (function initReveal() {
   const targets = document.querySelectorAll('.section, .hero-inner, .site-footer');
