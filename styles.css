@@ -124,19 +124,6 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; c
 .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-2); }
 .tech-tag { background: var(--surface-alt); border: 1px solid var(--border); color: var(--text-muted); padding: 3px 10px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 500; }
 
-/* Кнопка удаления (крестик) - видна только админу */
-.delete-btn {
-    position: absolute; top: var(--space-3); right: var(--space-3);
-    background: var(--surface); border: 1px solid var(--border); color: var(--danger);
-    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
-    font-size: 12px; display: none; /* Скрыто по умолчанию для всех */
-    align-items: center; justify-content: center; z-index: 3;
-}
-/* Показываем крестик ТОЛЬКО если включен режим админа (is-admin) */
-body.is-admin .project-card:hover .delete-btn,
-body.is-admin .project-card:focus-within .delete-btn {
-    display: flex;
-}
 
 /* ===== 9. УСЛУГИ ===== */
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-5); }
@@ -193,17 +180,6 @@ body.is-admin .project-card:focus-within .delete-btn {
 .case-block h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: var(--space-1); font-weight: 600; }
 .case-block p { color: var(--text-muted); font-size: 15px; }
 
-/* ===== 14. АДМИНКА ===== */
-.admin-panel { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 300; }
-.admin-panel[hidden] { display: none; }
-.admin-content { background: var(--surface); border: 1px solid var(--border); padding: var(--space-6); border-radius: var(--radius-lg); width: 92%; max-width: 520px; max-height: 82vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3); }
-.admin-content h3 { margin-bottom: var(--space-4); }
-.admin-section { margin: var(--space-5) 0; }
-.admin-section h4 { font-size: 14px; color: var(--text-muted); margin-bottom: var(--space-3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-.admin-section input { width: 100%; padding: 8px 12px; margin-bottom: var(--space-2); border-radius: var(--radius-md); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-family: inherit; font-size: 14px; }
-.admin-section input:focus { outline: none; border-color: var(--accent); }
-.message-item { background: var(--bg); border: 1px solid var(--border); padding: var(--space-3); border-radius: var(--radius-md); margin-bottom: var(--space-2); font-size: 14px; color: var(--text-muted); }
-.message-item strong { color: var(--text); }
 
 /* ===== 15. АНИМАЦИИ И АДАПТИВ ===== */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; will-change: opacity, transform; }
