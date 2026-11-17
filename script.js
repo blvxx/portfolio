@@ -1,353 +1,336 @@
 /* =========================================================
-   Утилиты
-   ========================================================= */
+Утилиты
+========================================================= */
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
 /* =========================================================
-   1. ТЕМА (светлая / тёмная)
-   ========================================================= */
+ТЕМА (светлая / тёмная)
+========================================================= */
 const THEME_KEY = 'portfolio_theme';
 const themeToggle = $('#theme-toggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
 
 function applyTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
-    themeToggle.setAttribute('aria-label',
-        theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
+  document.documentElement.setAttribute('data-theme', theme);
+  themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+  themeToggle.setAttribute('aria-label',
+    theme === 'dark' ? 'Включить светлую тему' : 'Включить тёмную тему');
 }
 
 function initTheme() {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved) {
-        applyTheme(saved);
-    } else {
-        applyTheme('light'); // по умолчанию светлая
-    }
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved) {
+    applyTheme(saved);
+  } else {
+    applyTheme('light'); // по умолчанию светлая
+  }
 }
 
 themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    localStorage.setItem(THEME_KEY, next);
+  const current = document.documentElement.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  localStorage.setItem(THEME_KEY, next);
 });
 
 initTheme();
 
 /* =========================================================
-   2. ДАННЫЕ (проекты и сообщения)
-   ========================================================= */
-let projects = JSON.parse(localStorage.getItem('portfolio_projects')) || [
-    {
-        id: 1,
-        title: 'Автоматизация регрессионного тестирования API',
-        problem: 'Ручная проверка API перед каждым релизом занимала 4 часа и часто пропускала ошибки.',
-        solution: 'Написал Python-скрипты и коллекции Postman для автоматической проверки ответов, кодов ошибок и таймингов. Интегрировал отчёты в Jira.',
-        result: 'Время проверки сократилось до 40 минут, до релиза найдено 12 критичных багов.',
-        image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80',
-        tech: ['Python', 'Postman', 'REST API', 'Jira']
-    },
-    {
-        id: 2,
-        title: 'Диагностика инцидента с транзакциями в B2B SaaS',
-        problem: 'Клиенты жаловались на зависшие транзакции, причина неизвестна, поддержка L2 не могла воспроизвести.',
-        solution: 'Проанализировал логи Linux, написал SQL-запросы с JOIN и GROUP BY, выявил рассинхронизацию микросервисов.',
-        result: 'Первопричина найдена за 2 часа, восстановлено 100% транзакций, написан подробный баг-репорт.',
-        image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80',
-        tech: ['Linux', 'PostgreSQL', 'SQL', 'Микросервисы']
-    },
-    {
-        id: 3,
-        title: 'Лендинг для локального бизнеса',
-        problem: 'У кофейни не было сайта, клиенты не могли посмотреть меню и часы работы.',
-        solution: 'Сделал адаптивный лендинг на HTML/CSS/JS с меню, картой и формой заявки.',
-        result: '+18 заявок за первую неделю, владелец отказался от платного конструктора.',
-        image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80',
-        tech: ['HTML', 'CSS', 'JavaScript']
-    },
-    {
-        id: 4,
-        title: 'Портфолио-сайт с админкой',
-        problem: 'Нужно было показать навыки веб-разработки и QA в одном проекте.',
-        solution: 'Статический сайт с localStorage-админкой, темами, модалками кейсов, SEO и доступностью.',
-        result: 'Сайт прошёл Lighthouse на 95+ по доступности, демонстрирует полный цикл разработки.',
-        image: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
-        tech: ['HTML', 'CSS', 'JavaScript', 'GitHub Pages']
-    }
-];
+2. ДАННЫЕ (проекты и сообщения)
+========================================================= */
+// Проекты теперь загружаются из projects.json — одинаковые для всех
+let projects = [];
 
+// Сообщения пока храним локально (до подключения бэкенда)
 let messages = JSON.parse(localStorage.getItem('portfolio_messages')) || [];
-
-const saveProjects = () => localStorage.setItem('portfolio_projects', JSON.stringify(projects));
 const saveMessages = () => localStorage.setItem('portfolio_messages', JSON.stringify(messages));
 
-/* =========================================================
-   3. РЕНДЕР ПРОЕКТОВ
-   ========================================================= */
-const projectsGrid = $('#projects-grid');
-
-function renderProjects() {
-    projectsGrid.innerHTML = '';
-    if (projects.length === 0) {
-        projectsGrid.innerHTML =
-            '<p style="text-align:center;grid-column:1/-1;">Пока нет проектов. Добавьте их через админ-панель.</p>';
-        return;
-    }
-
-    projects.forEach(p => {
-        const card = document.createElement('button');
-        card.type = 'button';
-        card.className = 'project-card';
-        card.setAttribute('aria-label', `Открыть кейс: ${p.title}`);
-
-        const imgHTML = p.image
-            ? `<img class="project-image" src="${p.image}" alt="Скриншот проекта ${p.title}" loading="lazy" width="400" height="225">`
-            : '';
-
-        card.innerHTML = `
-            ${imgHTML}
-            <div class="project-card-body">
-                <button class="delete-btn" data-id="${p.id}" aria-label="Удалить проект ${p.title}" title="Удалить">✕</button>
-                <h3>${p.title}</h3>
-                <p>${p.problem || ''}</p>
-                <div class="tech-tags">${(p.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
-            </div>
-        `;
-
-        card.addEventListener('click', (e) => {
-            if (e.target.closest('.delete-btn')) return;
-            openCase(p);
-        });
-
-        projectsGrid.appendChild(card);
-    });
-
-    $$('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const id = Number(e.currentTarget.dataset.id);
-            if (!confirm('Удалить проект?')) return;
-            projects = projects.filter(p => p.id !== id);
-            saveProjects();
-            renderProjects();
-        });
-    });
+// Загрузка проектов из JSON-файла
+async function loadProjects() {
+  try {
+    const response = await fetch('projects.json');
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    projects = await response.json();
+  } catch (error) {
+    console.error('Ошибка загрузки projects.json:', error);
+    projects = [];
+  }
+  renderProjects();
 }
 
 /* =========================================================
-   4. МОДАЛКА КЕЙСА
-   ========================================================= */
+3. РЕНДЕР ПРОЕКТОВ
+========================================================= */
+const projectsGrid = $('#projects-grid');
+
+function renderProjects() {
+  projectsGrid.innerHTML = '';
+
+  if (projects.length === 0) {
+    projectsGrid.innerHTML =
+      '<p style="text-align:center;grid-column:1/-1;">Проекты не найдены. Проверьте projects.json.</p>';
+    return;
+  }
+
+  projects.forEach(p => {
+    const card = document.createElement('button');
+    card.type = 'button';
+    card.className = 'project-card';
+    card.setAttribute('aria-label', `Открыть кейс: ${p.title}`);
+
+    const imgHTML = p.image
+      ? `<img class="project-image" src="${p.image}" alt="Скриншот проекта ${p.title}" loading="lazy" width="400" height="225">`
+      : '';
+
+    card.innerHTML = `
+      ${imgHTML}
+      <div class="project-card-body">
+        <button class="delete-btn" data-id="${p.id}" aria-label="Удалить проект ${p.title}" title="Удалить">✕</button>
+        <h3>${p.title}</h3>
+        <p>${p.problem || ''}</p>
+        <div class="tech-tags">${(p.tech || []).map(t => `<span class="tech-tag">${t}</span>`).join('')}</div>
+      </div>
+    `;
+
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.delete-btn')) return;
+      openCase(p);
+    });
+
+    projectsGrid.appendChild(card);
+  });
+
+  $$('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = Number(e.currentTarget.dataset.id);
+      if (!confirm('Удалить проект? Это действие временно (до перезагрузки). Для постоянного удаления отредактируйте projects.json.')) return;
+      projects = projects.filter(p => p.id !== id);
+      renderProjects();
+    });
+  });
+}
+
+/* =========================================================
+4. МОДАЛКА КЕЙСА
+========================================================= */
 const modal = $('#case-modal');
 let lastFocused = null;
 
 function openCase(project) {
-    lastFocused = document.activeElement;
-    $('#case-title').textContent = project.title;
-    $('#case-problem').textContent = project.problem || '—';
-    $('#case-solution').textContent = project.solution || '—';
-    $('#case-result').textContent = project.result || '—';
-    $('#case-tech').innerHTML = (project.tech || [])
-        .map(t => `<span class="tech-tag">${t}</span>`).join('');
+  lastFocused = document.activeElement;
 
-    const img = $('#case-image');
-    if (project.image) {
-        img.src = project.image;
-        img.alt = `Скриншот проекта ${project.title}`;
-        img.hidden = false;
-    } else {
-        img.hidden = true;
-        img.removeAttribute('src');
-    }
+  $('#case-title').textContent = project.title;
+  $('#case-problem').textContent = project.problem || '—';
+  $('#case-solution').textContent = project.solution || '—';
+  $('#case-result').textContent = project.result || '—';
+  $('#case-tech').innerHTML = (project.tech || [])
+    .map(t => `<span class="tech-tag">${t}</span>`).join('');
 
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    modal.querySelector('.modal-close').focus();
+  const img = $('#case-image');
+  if (project.image) {
+    img.src = project.image;
+    img.alt = `Скриншот проекта ${project.title}`;
+    img.hidden = false;
+  } else {
+    img.hidden = true;
+    img.removeAttribute('src');
+  }
+
+  modal.hidden = false;
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.modal-close').focus();
 }
 
 function closeCase() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-    if (lastFocused) lastFocused.focus();
+  modal.hidden = true;
+  document.body.style.overflow = '';
+  if (lastFocused) lastFocused.focus();
 }
 
 modal.addEventListener('click', (e) => {
-    if (e.target.hasAttribute('data-close')) closeCase();
+  if (e.target.hasAttribute('data-close')) closeCase();
 });
 
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        if (!modal.hidden) closeCase();
-        else if (!adminPanel.hidden) adminPanel.hidden = true;
-    }
+  if (e.key === 'Escape') {
+    if (!modal.hidden) closeCase();
+    else if (!adminPanel.hidden) adminPanel.hidden = true;
+  }
 
-    if (e.key === 'Tab' && !modal.hidden) {
-        const focusable = modal.querySelectorAll(
-            'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        if (focusable.length === 0) return;
-        const first = focusable[0], last = focusable[focusable.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-            e.preventDefault();
-            last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-            e.preventDefault();
-            first.focus();
-        }
+  if (e.key === 'Tab' && !modal.hidden) {
+    const focusable = modal.querySelectorAll(
+      'button, [href], input, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
+  }
 });
 
 /* =========================================================
-   5. ФОРМА ОБРАТНОЙ СВЯЗИ
-   ========================================================= */
+5. ФОРМА ОБРАТНОЙ СВЯЗИ
+========================================================= */
 const contactForm = $('#contact-form');
 const formStatus = $('#form-status');
 
 function validateField(field) {
-    let valid = true;
-    if (!field.value.trim()) valid = false;
-    if (field.type === 'email' && valid) {
-        valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
-    }
-    field.setAttribute('aria-invalid', valid ? 'false' : 'true');
-    return valid;
+  let valid = true;
+  if (!field.value.trim()) valid = false;
+  if (field.type === 'email' && valid) {
+    valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+  }
+  field.setAttribute('aria-invalid', valid ? 'false' : 'true');
+  return valid;
 }
 
 contactForm.querySelectorAll('input[required], textarea[required]').forEach(f => {
-    f.addEventListener('blur', () => validateField(f));
+  f.addEventListener('blur', () => validateField(f));
 });
 
 contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if ($('#website').value) return; // honeypot
+  e.preventDefault();
 
-    const name = $('#name').value.trim();
-    const email = $('#email').value.trim();
-    const message = $('#message').value.trim();
-    const fields = [$('#name'), $('#email'), $('#message')];
-    const allValid = fields.map(validateField).every(Boolean);
+  if ($('#website').value) return; // honeypot
 
-    if (!allValid) {
-        formStatus.textContent = 'Проверьте поля формы.';
-        formStatus.className = 'form-status error';
-        return;
-    }
+  const name = $('#name').value.trim();
+  const email = $('#email').value.trim();
+  const message = $('#message').value.trim();
+  const fields = [$('#name'), $('#email'), $('#message')];
 
-    messages.push({
-        id: Date.now(),
-        name, email, message,
-        date: new Date().toLocaleString()
-    });
-    saveMessages();
+  const allValid = fields.map(validateField).every(Boolean);
+  if (!allValid) {
+    formStatus.textContent = 'Проверьте поля формы.';
+    formStatus.className = 'form-status error';
+    return;
+  }
 
-    formStatus.textContent = 'Сообщение отправлено! Свяжусь с вами.';
-    formStatus.className = 'form-status success';
-    contactForm.reset();
-    fields.forEach(f => f.removeAttribute('aria-invalid'));
+  // Пока сохраняем локально — до подключения Formspree/Web3Forms
+  messages.push({
+    id: Date.now(),
+    name, email, message,
+    date: new Date().toLocaleString()
+  });
+  saveMessages();
 
-    if (!adminPanel.hidden) renderMessages();
+  formStatus.textContent = 'Сообщение отправлено! Свяжусь с вами.';
+  formStatus.className = 'form-status success';
+  contactForm.reset();
+  fields.forEach(f => f.removeAttribute('aria-invalid'));
+
+  if (!adminPanel.hidden) renderMessages();
 });
 
 /* =========================================================
-   6. ЗАЩИЩЁННАЯ АДМИНКА
-   ========================================================= */
+6. ЗАЩИЩЁННАЯ АДМИНКА
+========================================================= */
 const adminPanel = $('#admin-panel');
 let logoClicks = 0;
 let logoTimeout;
 
-// ФУНКЦИЯ ЗАПРОСА ПАРОЛЯ
-// СТАЛО:
 function requestAdminAccess() {
-    const password = prompt("Введите пароль для доступа к панели управления:");
-    if (password === null || password.trim() === '') return;
-    if (password === 'admin') {
-        document.body.classList.add('is-admin'); // <-- ДОБАВИЛИ ЭТУ СТРОКУ
-        adminPanel.hidden = false;
-        renderMessages();
-        $('#close-admin').focus();
-    } else {
-        alert("Неверный пароль! Доступ запрещён.");
-    }
+  const password = prompt("Введите пароль для доступа к панели управления:");
+  if (password === null || password.trim() === '') return;
+
+  if (password === 'admin') {
+    document.body.classList.add('is-admin');
+    adminPanel.hidden = false;
+    renderMessages();
+    $('#close-admin').focus();
+  } else {
+    alert("Неверный пароль! Доступ запрещён.");
+  }
 }
 
 // Секретный вход: 3 клика по имени в шапке
 $('.brand-name').addEventListener('click', () => {
-    logoClicks++;
-    clearTimeout(logoTimeout);
-    if (logoClicks >= 3) {
-        logoClicks = 0;
-        requestAdminAccess(); // Вызываем проверку пароля
-        return;
-    }
-    logoTimeout = setTimeout(() => { logoClicks = 0; }, 1500);
+  logoClicks++;
+  clearTimeout(logoTimeout);
+  if (logoClicks >= 3) {
+    logoClicks = 0;
+    requestAdminAccess();
+    return;
+  }
+  logoTimeout = setTimeout(() => { logoClicks = 0; }, 1500);
 });
 
 $('#close-admin').addEventListener('click', () => { adminPanel.hidden = true; });
 
 $('#add-project-btn').addEventListener('click', () => {
-    const title = $('#project-title').value.trim();
-    const problem = $('#project-problem').value.trim();
-    const solution = $('#project-solution').value.trim();
-    const result = $('#project-result').value.trim();
-    const techInput = $('#project-tech').value.trim();
-    const image = $('#project-image').value.trim();
+  const title = $('#project-title').value.trim();
+  const problem = $('#project-problem').value.trim();
+  const solution = $('#project-solution').value.trim();
+  const result = $('#project-result').value.trim();
+  const techInput = $('#project-tech').value.trim();
+  const image = $('#project-image').value.trim();
 
-    if (!title) { alert('Название обязательно.'); return; }
+  if (!title) { alert('Название обязательно.'); return; }
 
-    projects.push({
-        id: Date.now(),
-        title,
-        problem: problem || '—',
-        solution: solution || '—',
-        result: result || '—',
-        image: image || '',
-        tech: techInput
-            ? techInput.split(',').map(t => t.trim()).filter(Boolean)
-            : ['Без технологий']
-    });
-    saveProjects();
-    renderProjects();
-    ['project-title', 'project-problem', 'project-solution',
-     'project-result', 'project-tech', 'project-image']
-        .forEach(id => { $('#' + id).value = ''; });
+  projects.push({
+    id: Date.now(),
+    title,
+    problem: problem || '—',
+    solution: solution || '—',
+    result: result || '—',
+    image: image || '',
+    tech: techInput
+      ? techInput.split(',').map(t => t.trim()).filter(Boolean)
+      : ['Без технологий']
+  });
+
+  renderProjects();
+
+  // Очищаем поля
+  ['project-title', 'project-problem', 'project-solution',
+   'project-result', 'project-tech', 'project-image']
+    .forEach(id => { $('#' + id).value = ''; });
+
+  alert('Проект добавлен (временно, до перезагрузки). Для постоянного добавления отредактируйте projects.json.');
 });
 
 function renderMessages() {
-    const list = $('#messages-list');
-    list.innerHTML = messages.length === 0
-        ? '<p>Сообщений пока нет.</p>'
-        : messages.map(m => `
-            <div class="message-item">
-                <strong>${m.name}</strong> (${m.email})<br>
-                <small>${m.date}</small>
-                <p>${m.message}</p>
-            </div>`).join('');
+  const list = $('#messages-list');
+  list.innerHTML = messages.length === 0
+    ? '<p>Сообщений пока нет.</p>'
+    : messages.map(m => `
+        <div class="message-item">
+          <strong>${m.name}</strong> (${m.email})<br>
+          <small>${m.date}</small>
+          <p>${m.message}</p>
+        </div>
+      `).join('');
 }
 
 /* =========================================================
-   7. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
-   ========================================================= */
+7. ПЛАВНОЕ ПОЯВЛЕНИЕ СЕКЦИЙ ПРИ СКРОЛЛЕ
+========================================================= */
 (function initReveal() {
-    const targets = document.querySelectorAll('.section, .hero-inner, .site-footer');
-    if (!('IntersectionObserver' in window) || targets.length === 0) return;
+  const targets = document.querySelectorAll('.section, .hero-inner, .site-footer');
+  if (!('IntersectionObserver' in window) || targets.length === 0) return;
 
-    const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
-                io.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.12 });
-
-    targets.forEach(el => {
-        el.classList.add('reveal');
-        io.observe(el);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        io.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.12 });
+
+  targets.forEach(el => {
+    el.classList.add('reveal');
+    io.observe(el);
+  });
 })();
 
 /* =========================================================
-   СТАРТ
-   ========================================================= */
-renderProjects();
+СТАРТ
+========================================================= */
+loadProjects();
