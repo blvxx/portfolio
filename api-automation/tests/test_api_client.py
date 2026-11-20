@@ -159,3 +159,18 @@ def test_context_manager_closes_session():
         pass
 
     session.close.assert_called_once_with()
+
+
+def test_get_post_comments_builds_nested_resource_url():
+    session = make_session()
+    client = PostsApiClient(
+        session=session,
+        base_url="https://api.example.test",
+    )
+
+    client.get_post_comments(42)
+
+    session.get.assert_called_once_with(
+        "https://api.example.test/posts/42/comments",
+        timeout=10.0,
+    )
