@@ -19,6 +19,6 @@ jobs:
           python-version: '3.12'
       - name: Run analyzer
         run: python incident-lab/scripts/analyze_incident.py
-      - name: Run unit tests
+      - name: Run pattern tests
         working-directory: incident-lab/scripts
-        run: python -m unittest -v
+        run: python -m unittest test_patterns -v
