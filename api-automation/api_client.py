@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any
+from typing import Any, Mapping
 
 import requests
 
@@ -55,6 +55,41 @@ class PostsApiClient:
         and unknown values are useful inputs for API negative tests.
         """
         return self.session.get(
+            f"{self.base_url}/posts/{post_id}",
+            timeout=self.timeout,
+        )
+
+    def create_post(self, payload: Mapping[str, Any]) -> requests.Response:
+        """Send POST /posts with a JSON payload."""
+        return self.session.post(
+            f"{self.base_url}/posts",
+            json=dict(payload),
+            timeout=self.timeout,
+        )
+
+    def replace_post(
+        self, post_id: int, payload: Mapping[str, Any]
+    ) -> requests.Response:
+        """Send PUT /posts/{id} with a complete replacement payload."""
+        return self.session.put(
+            f"{self.base_url}/posts/{post_id}",
+            json=dict(payload),
+            timeout=self.timeout,
+        )
+
+    def patch_post(
+        self, post_id: int, payload: Mapping[str, Any]
+    ) -> requests.Response:
+        """Send PATCH /posts/{id} with a partial update payload."""
+        return self.session.patch(
+            f"{self.base_url}/posts/{post_id}",
+            json=dict(payload),
+            timeout=self.timeout,
+        )
+
+    def delete_post(self, post_id: int) -> requests.Response:
+        """Send DELETE /posts/{id}. The demo API simulates the deletion."""
+        return self.session.delete(
             f"{self.base_url}/posts/{post_id}",
             timeout=self.timeout,
         )
