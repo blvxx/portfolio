@@ -10,7 +10,7 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 
 | Area | Scenarios |
 |---|---|
-| Read | `GET /posts`, `GET /posts/{id}`, response status, content type, filtering and response schema |
+| Read | `GET /posts`, `GET /posts/{id}`, `GET /posts/{id}/comments`, response status, content type, filtering and response schema |
 | Create | `POST /posts`, request payload validation, `201 Created`, generated ID and response fields |
 | Replace | `PUT /posts/{id}`, full JSON payload and response contract |
 | Partial update | `PATCH /posts/{id}`, partial JSON payload and updated resource representation |
@@ -24,7 +24,8 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - API behavior tests call a public demo endpoint and require internet access.
 - API-client unit tests use mocked `requests.Session` objects and do not require network access.
 - Positive, negative and CRUD scenarios are grouped with pytest markers.
-- Request and response payloads are validated against JSON Schema (Draft 2020-12).
+- Post and comment response payloads plus create-request bodies are validated against JSON Schema (Draft 2020-12).
+- Nested-resource tests verify that comment records belong to the requested parent post.
 - Parametrization checks several values without duplicating test functions.
 - Allure feature/story labels and JSON attachments make request/response evidence easier to inspect.
 - Ruff checks the Python code for common errors and unused imports.
@@ -144,7 +145,8 @@ api-automation/
 ├── .gitignore
 ├── schemas/
 │   ├── post.schema.json
-│   └── post-create-request.schema.json
+│   ├── post-create-request.schema.json
+│   └── comment.schema.json
 ├── postman/
 │   ├── JSONPlaceholder-Posts.postman_collection.json
 │   └── README.md
