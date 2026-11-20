@@ -32,6 +32,10 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - The Postman collection mirrors the main Posts API scenarios for manual execution.
 - Transport exceptions such as request timeouts are not swallowed by the client.
 
+## Test documentation
+
+- [Test Plan](docs/test-plan.md) — scope, test types, environment, test data, risks, entry/exit criteria and coverage traceability.
+
 ## Postman collection
 
 Import [`postman/JSONPlaceholder-Posts.postman_collection.json`](postman/JSONPlaceholder-Posts.postman_collection.json) into Postman. It contains GET, filtering, POST, PUT, PATCH, DELETE and a negative 404 check with built-in test scripts. See the [Postman import notes](postman/README.md).
@@ -144,6 +148,8 @@ api-automation/
 ├── requirements.txt
 ├── requirements-dev.txt
 ├── .gitignore
+├── docs/
+│   └── test-plan.md
 ├── schemas/
 │   ├── post.schema.json
 │   ├── post-create-request.schema.json
