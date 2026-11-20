@@ -27,6 +27,14 @@ def test_client_sets_default_headers_and_timeout():
     assert client.base_url == PostsApiClient.DEFAULT_BASE_URL
 
 
+def test_environment_variable_overrides_default_base_url(monkeypatch):
+    monkeypatch.setenv("API_BASE_URL", "https://staging.example.test/")
+
+    client = PostsApiClient(session=make_session())
+
+    assert client.base_url == "https://staging.example.test"
+
+
 def test_get_posts_passes_query_params_and_timeout():
     session = make_session()
     expected_response = object()
@@ -71,6 +79,60 @@ def test_get_post_builds_expected_resource_url():
 
     session.get.assert_called_once_with(
         "https://api.example.test/posts/42",
+        timeout=10.0,
+    )
+
+
+def test_create_post_sends_json_payload():
+    session = make_session()
+    client = PostsApiClient(session=session, timeout=5)
+    payload = {"userId": 1, "title": "Title", "body": "Body"}
+
+    client.create_post(payload)
+
+    session.post.assert_called_once_with(
+        "https://jsonplaceholder.typicode.com/posts",
+        json=payload,
+        timeout=5,
+    )
+
+
+def test_put_replaces_post_with_full_json_payload():
+    session = make_session()
+    client = PostsApiClient(session=session)
+    payload = {"id": 7, "userId": 2, "title": "New title", "body": "New body"}
+
+    client.replace_post(7, payload)
+
+    session.put.assert_called_once_with(
+        "https://jsonplaceholder.typicode.com/posts/7",
+        json=payload,
+        timeout=10.0,
+    )
+
+
+def test_patch_sends_partial_json_payload():
+    session = make_session()
+    client = PostsApiClient(session=session)
+    payload = {"title": "Updated title"}
+
+    client.patch_post(12, payload)
+
+    session.patch.assert_called_once_with(
+        "https://jsonplaceholder.typicode.com/posts/12",
+        json=payload,
+        timeout=10.0,
+    )
+
+
+def test_delete_uses_expected_resource_url():
+    session = make_session()
+    client = PostsApiClient(session=session)
+
+    client.delete_post(15)
+
+    session.delete.assert_called_once_with(
+        "https://jsonplaceholder.typicode.com/posts/15",
         timeout=10.0,
     )
 
