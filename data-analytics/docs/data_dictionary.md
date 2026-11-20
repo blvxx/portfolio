@@ -1,6 +1,6 @@
 # Data dictionary
 
-All records are synthetic and created for demonstration.
+All records are synthetic and created for demonstration. Monetary values are arbitrary synthetic units and do not represent a real currency.
 
 | Column | Type | Description | Validation |
 |---|---|---|---|
@@ -12,7 +12,7 @@ All records are synthetic and created for demonstration.
 | category | text | Product category | Not null |
 | product | text | Product name | Not null |
 | quantity | integer | Number of units in the order | Greater than 0 |
-| unit_price | numeric | Unit price before discount | Greater than 0 |
+| unit_price | numeric | Unit price before discount, in synthetic monetary units | Greater than 0 |
 | discount_pct | numeric | Discount fraction (0.15 = 15%) | Between 0 and 1 |
 | payment_status | text | Payment/order state | paid, cancelled or pending |
 | delivery_days | integer | Delivery duration for paid orders | Positive for paid; blank otherwise |
