@@ -6,7 +6,7 @@ A reproducible end-to-end analytics case study built with **PostgreSQL, Python a
 
 ## Business task
 
-An online store wants to understand sales performance across time, regions, product categories and acquisition channels. The analysis should answer:
+An online store wants to understand sales performance across time, regions, product categories and acquisition channels. The analysis answers:
 
 1. How do order volume and recognised revenue change month to month?
 2. Which regions and product categories contribute the most revenue?
@@ -29,24 +29,17 @@ See [data dictionary](docs/data_dictionary.md) for field definitions and metric 
 
 ### SQL (PostgreSQL)
 
-The SQL layer contains a table definition and three business-oriented analyses:
-
-- Monthly sales funnel and revenue KPIs.
+- Monthly order funnel and revenue KPIs.
 - Revenue, completed orders and return rate by region/category.
 - Customer activity, repeat purchase rate and top customers.
 
 ### Python (pandas)
 
-The Python pipeline:
-
-- Loads and validates the raw CSV.
-- Calculates recognised revenue only for paid, non-returned orders.
-- Produces a KPI summary, monthly trend and region/category breakdowns.
-- Exports reproducible CSV and JSON reports.
+The pipeline validates the CSV, calculates recognised revenue only for paid/non-returned orders, and exports KPI, monthly, region, category and channel reports.
 
 ### Data quality and tests
 
-Validation checks required columns, unique order IDs, valid dates, positive quantities/prices, discount range, allowed payment statuses and return flags. Unit tests cover revenue rules, KPI calculations and invalid input.
+Validation checks required columns, unique order IDs, valid dates, positive numeric quantities/prices, discount range, allowed statuses, boolean return flags and delivery duration for paid orders. Unit tests cover revenue rules, KPI calculations, segment return rates and invalid input.
 
 ## Key metric definitions
 
@@ -55,7 +48,7 @@ Validation checks required columns, unique order IDs, valid dates, positive quan
 | Recognised revenue | `quantity × unit_price × (1 − discount_pct)` for paid, non-returned orders; otherwise 0 |
 | Completed orders | Paid orders that were not returned |
 | Average order value | Recognised revenue / completed orders |
-| Return rate | Returned orders / paid orders |
+| Return rate | Returned paid orders / all paid orders |
 | Repeat customer rate | Customers with more than one order / all distinct customers |
 
 These are demonstration definitions chosen for this dataset. A real business would confirm accounting treatment, refund timing and cohort rules before using the metrics for reporting.
@@ -93,6 +86,7 @@ Generated files are written to `reports/`:
 - `monthly_kpis.csv`
 - `revenue_by_region.csv`
 - `revenue_by_category.csv`
+- `revenue_by_channel.csv`
 
 Run the tests:
 
@@ -143,7 +137,7 @@ data-analytics/
 
 ## Skills demonstrated
 
-**SQL:** filtering, aggregation, CASE, CTEs, date functions, conditional aggregation, joins and window functions.
+**SQL:** filtering, aggregation, CASE, CTEs, date functions and conditional aggregation.
 
 **Python:** pandas, data validation, reusable functions, CLI workflow, JSON/CSV export and exception handling.
 
