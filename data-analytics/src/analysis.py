@@ -15,6 +15,7 @@ REQUIRED_COLUMNS = {
     "payment_status", "delivery_days", "is_returned",
 }
 ALLOWED_STATUSES = {"paid", "cancelled", "pending"}
+TEXT_COLUMNS = ("order_id", "customer_id", "region", "channel", "category", "product")
 
 
 def validate_orders(df: pd.DataFrame) -> None:
@@ -22,29 +23,43 @@ def validate_orders(df: pd.DataFrame) -> None:
     missing = REQUIRED_COLUMNS.difference(df.columns)
     if missing:
         raise ValueError(f"Missing required columns: {sorted(missing)}")
-
     if df.empty:
         raise ValueError("The orders dataset is empty")
-    if df["order_id"].isna().any() or df["order_id"].duplicated().any():
-        raise ValueError("order_id must be populated and unique")
-    if df["customer_id"].isna().any():
-        raise ValueError("customer_id must be populated")
+
+    for column in TEXT_COLUMNS:
+        if df[column].isna().any() or df[column].astype(str).str.strip().eq("").any():
+            raise ValueError(f"{column} must be populated")
+
+    if df["order_id"].duplicated().any():
+        raise ValueError("order_id must be unique")
     if pd.to_datetime(df["order_date"], errors="coerce").isna().any():
         raise ValueError("order_date contains invalid dates")
-    if (pd.to_numeric(df["quantity"], errors="coerce") <= 0).any():
-        raise ValueError("quantity must be greater than zero")
-    if (pd.to_numeric(df["unit_price"], errors="coerce") <= 0).any():
+
+    quantity = pd.to_numeric(df["quantity"], errors="coerce")
+    if quantity.isna().any() or (quantity <= 0).any() or (quantity % 1 != 0).any():
+        raise ValueError("quantity must be a positive integer")
+
+    unit_price = pd.to_numeric(df["unit_price"], errors="coerce")
+    if unit_price.isna().any() or (unit_price <= 0).any():
         raise ValueError("unit_price must be greater than zero")
 
     discount = pd.to_numeric(df["discount_pct"], errors="coerce")
     if discount.isna().any() or not discount.between(0, 1).all():
         raise ValueError("discount_pct must be between 0 and 1")
-    if not set(df["payment_status"].dropna().unique()).issubset(ALLOWED_STATUSES):
+
+    if df["payment_status"].isna().any() or not set(
+        df["payment_status"].unique()
+    ).issubset(ALLOWED_STATUSES):
         raise ValueError(f"payment_status must be one of {sorted(ALLOWED_STATUSES)}")
-    if df["payment_status"].isna().any():
-        raise ValueError("payment_status cannot be null")
+
     if not df["is_returned"].isin([True, False]).all():
         raise ValueError("is_returned must contain boolean values")
+
+    paid_delivery_days = pd.to_numeric(
+        df.loc[df["payment_status"].eq("paid"), "delivery_days"], errors="coerce"
+    )
+    if paid_delivery_days.isna().any() or (paid_delivery_days <= 0).any():
+        raise ValueError("paid orders must have a positive delivery_days value")
 
 
 def load_orders(path: str | Path) -> pd.DataFrame:
@@ -59,13 +74,18 @@ def prepare_orders(df: pd.DataFrame) -> pd.DataFrame:
     validate_orders(df)
     prepared = df.copy()
     prepared["order_date"] = pd.to_datetime(prepared["order_date"])
+    for column in ("quantity", "unit_price", "discount_pct"):
+        prepared[column] = pd.to_numeric(prepared[column], errors="raise")
+
     prepared["gross_value"] = prepared["quantity"] * prepared["unit_price"]
     prepared["discounted_value"] = (
         prepared["gross_value"] * (1 - prepared["discount_pct"])
     )
-    is_completed = (prepared["payment_status"] == "paid") & (~prepared["is_returned"])
+    is_paid = prepared["payment_status"].eq("paid")
+    is_completed = is_paid & (~prepared["is_returned"])
     prepared["recognised_revenue"] = prepared["discounted_value"].where(is_completed, 0.0)
     prepared["is_completed"] = is_completed
+    prepared["is_paid_returned"] = is_paid & prepared["is_returned"]
     prepared["order_month"] = prepared["order_date"].dt.to_period("M").astype(str)
     return prepared
 
@@ -75,7 +95,7 @@ def calculate_kpis(df: pd.DataFrame) -> dict[str, Any]:
     data = prepare_orders(df)
     paid_orders = int(data["payment_status"].eq("paid").sum())
     completed_orders = int(data["is_completed"].sum())
-    returned_orders = int((data["payment_status"].eq("paid") & data["is_returned"]).sum())
+    returned_orders = int(data["is_paid_returned"].sum())
     revenue = float(data["recognised_revenue"].sum())
     customer_orders = data.groupby("customer_id")["order_id"].count()
     unique_customers = int(customer_orders.size)
@@ -109,13 +129,16 @@ def monthly_kpis(df: pd.DataFrame) -> pd.DataFrame:
             paid_orders=("payment_status", lambda values: values.eq("paid").sum()),
             completed_orders=("is_completed", "sum"),
             recognised_revenue=("recognised_revenue", "sum"),
-            returned_orders=("is_returned", lambda values: values.sum()),
+            returned_orders=("is_paid_returned", "sum"),
         )
         .sort_values("order_month")
     )
     result["average_order_value"] = (
         result["recognised_revenue"] / result["completed_orders"].replace(0, pd.NA)
     ).fillna(0).round(2)
+    result["return_rate"] = (
+        result["returned_orders"] / result["paid_orders"].replace(0, pd.NA)
+    ).fillna(0).round(4)
     result["recognised_revenue"] = result["recognised_revenue"].round(2)
     return result
 
@@ -129,13 +152,17 @@ def segment_kpis(df: pd.DataFrame, dimension: str) -> pd.DataFrame:
         data.groupby(dimension, as_index=False)
         .agg(
             total_orders=("order_id", "count"),
+            paid_orders=("payment_status", lambda values: values.eq("paid").sum()),
             completed_orders=("is_completed", "sum"),
             recognised_revenue=("recognised_revenue", "sum"),
-            returned_orders=("is_returned", "sum"),
+            returned_orders=("is_paid_returned", "sum"),
         )
         .sort_values("recognised_revenue", ascending=False)
     )
     result["recognised_revenue"] = result["recognised_revenue"].round(2)
+    result["return_rate"] = (
+        result["returned_orders"] / result["paid_orders"].replace(0, pd.NA)
+    ).fillna(0).round(4)
     return result
 
 
