@@ -86,6 +86,29 @@
               }
             }
           ]
+        },
+        {
+          "name": "Get comments for post",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/posts/1/comments",
+            "description": "Checks the nested comments relationship for a post."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200', () => pm.response.to.have.status(200));",
+                  "pm.test('Returns five comments for post 1', () => pm.expect(pm.response.json()).to.have.lengthOf(5));",
+                  "pm.test('Every comment belongs to post 1', () => pm.response.json().forEach((comment) => pm.expect(comment.postId).to.eql(1)));",
+                  "pm.test('Comment objects contain required fields', () => pm.response.json().forEach((comment) => pm.expect(comment).to.have.all.keys('postId', 'id', 'name', 'email', 'body')));"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
