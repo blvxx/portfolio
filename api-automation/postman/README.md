@@ -21,7 +21,7 @@ Change `baseUrl` in the collection variables to point to another compatible envi
 
 ## Included requests
 
-- Read: list posts, get post by ID, filter by user.
+- Read: list posts, get post by ID, filter by user, and retrieve comments through the nested `/posts/{id}/comments` route.
 - CRUD: create, replace with PUT, partially update with PATCH, delete.
 - Negative: unknown post ID.
 
