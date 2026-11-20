@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import sys
 
-TIMESTAMP_RE = re.compile(r"^(\\S+)\\s+(INFO|WARN|ERROR)\\s+(.*)$")
+TIMESTAMP_RE = re.compile(r"^(\S+)\s+(INFO|WARN|ERROR)\s+(.*)$")
 PATTERNS = {
     "signature_validation_failed": ("Signature/authentication failures", "Check webhook secret/version and signature configuration."),
     "webhook_timeout": ("Webhook timeouts", "Check handler latency, network, dependencies, and retry policy."),
@@ -21,8 +21,7 @@ def analyze(path: Path) -> int:
     levels, events, categories = Counter(), Counter(), Counter()
     malformed = 0
     processed = 0
-    lines = path.read_text(encoding="utf-8").splitlines()
-    for line_number, line in enumerate(lines, 1):
+    for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
         match = TIMESTAMP_RE.match(line)
         if not match:
             malformed += 1
@@ -42,18 +41,18 @@ def analyze(path: Path) -> int:
     print(f"Malformed lines: {malformed}")
     print(f"Log levels: {dict(levels)}")
     print(f"Successfully processed webhooks: {processed}")
-    print("\\nDetected patterns:")
+    print("\nDetected patterns:")
     if not categories:
         print("  No known incident patterns detected.")
     for event, count in sorted(categories.items()):
         label, action = PATTERNS[event]
         print(f"  [{count}] {label} ({event})")
         print(f"      Suggested check: {action}")
-    print("\\nEvent counts:")
+    print("\nEvent counts:")
     for event, count in sorted(events.items()):
         print(f"  {event}: {count}")
     if categories:
-        print("\\nTriage recommendation:")
+        print("\nTriage recommendation:")
         if "signature_validation_failed" in categories:
             print("  Priority: HIGH — webhook authentication/configuration failures can block state updates.")
         elif "downstream_5xx" in categories or "webhook_timeout" in categories:
