@@ -2,7 +2,7 @@
 
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 
-Portfolio project demonstrating REST API test automation: a reusable HTTP client, CRUD request coverage, strict JSON Schema checks, parametrized positive and negative scenarios, isolated unit tests, Allure labels, and GitHub Actions CI.
+Portfolio project demonstrating REST API test automation: a reusable HTTP client, CRUD request coverage, strict JSON Schema checks, parametrized positive and negative scenarios, isolated unit tests, static analysis, Allure labels, and GitHub Actions CI.
 
 > This is an independent portfolio project against the public JSONPlaceholder demo API. It is not a commercial client delivery or a production API contract.
 
@@ -26,6 +26,7 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - Request and response payloads are validated against JSON Schema (Draft 2020-12).
 - Parametrization checks several values without duplicating test functions.
 - Allure feature/story labels and JSON attachments make request/response evidence easier to inspect.
+- Ruff checks the Python code for common errors and unused imports.
 - Transport exceptions such as request timeouts are not swallowed by the client.
 
 ## Important limitation of the demo API
@@ -41,6 +42,7 @@ See the [official JSONPlaceholder guide](https://jsonplaceholder.typicode.com/gu
 - requests
 - jsonschema
 - allure-pytest
+- Ruff
 - GitHub Actions
 
 ## Run locally
@@ -57,11 +59,22 @@ python -m venv .venv
 source .venv/bin/activate
 ```
 
-Install dependencies and run the complete suite:
+Install runtime and development dependencies:
 
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+Run static checks:
+
+```bash
+ruff check api_client.py tests/
+```
+
+Run the complete suite:
+
+```bash
 pytest -ra
 ```
 
@@ -105,7 +118,7 @@ The client also accepts `base_url` in its constructor. The request timeout defau
 
 ## CI
 
-GitHub Actions runs the suite on Python 3.10 and 3.12 when files under `api-automation/` or the workflow change. JUnit and Allure result files are uploaded as artifacts, including when tests fail.
+GitHub Actions runs static checks, isolated unit tests and the complete suite on Python 3.10 and 3.12 when files under `api-automation/` or the workflow change. JUnit and Allure result files are uploaded as artifacts, including when tests fail.
 
 - [Latest workflow runs](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 - [Workflow definition](../../.github/workflows/api-automation.yml)
@@ -118,7 +131,9 @@ Check the Actions tab for the actual result of each run; workflow configuration 
 api-automation/
 ├── api_client.py
 ├── pytest.ini
+├── pyproject.toml
 ├── requirements.txt
+├── requirements-dev.txt
 ├── .gitignore
 ├── schemas/
 │   ├── post.schema.json
