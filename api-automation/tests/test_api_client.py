@@ -8,6 +8,9 @@ import requests
 from api_client import PostsApiClient
 
 
+pytestmark = pytest.mark.unit
+
+
 def make_session():
     session = Mock(spec=requests.Session)
     session.headers = {}
