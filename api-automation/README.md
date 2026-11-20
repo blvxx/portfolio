@@ -2,7 +2,7 @@
 
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 
-Portfolio project demonstrating REST API test automation: a reusable HTTP client, CRUD request coverage, strict JSON Schema checks, parametrized positive and negative scenarios, isolated unit tests, static analysis, Allure labels, and GitHub Actions CI.
+Portfolio project demonstrating REST API test automation: a reusable HTTP client, CRUD request coverage, strict JSON Schema checks, parametrized positive and negative scenarios, isolated unit tests, a Postman collection, static analysis, Allure labels, and GitHub Actions CI.
 
 > This is an independent portfolio project against the public JSONPlaceholder demo API. It is not a commercial client delivery or a production API contract.
 
@@ -17,6 +17,7 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 | Delete | `DELETE /posts/{id}`, successful deletion response |
 | Negative | Unknown IDs, invalid filters, incorrect types, missing fields and unexpected request/response properties |
 | Unit | HTTP method, URL, headers, query parameters, JSON body, timeout propagation, environment configuration and session lifecycle |
+| Postman | Importable collection with read, CRUD and negative requests plus response assertions |
 
 ## Test design
 
@@ -27,7 +28,12 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - Parametrization checks several values without duplicating test functions.
 - Allure feature/story labels and JSON attachments make request/response evidence easier to inspect.
 - Ruff checks the Python code for common errors and unused imports.
+- The Postman collection mirrors the main Posts API scenarios for manual execution.
 - Transport exceptions such as request timeouts are not swallowed by the client.
+
+## Postman collection
+
+Import [`postman/JSONPlaceholder-Posts.postman_collection.json`](postman/JSONPlaceholder-Posts.postman_collection.json) into Postman. It contains GET, filtering, POST, PUT, PATCH, DELETE and a negative 404 check with built-in test scripts. See the [Postman import notes](postman/README.md).
 
 ## Important limitation of the demo API
 
@@ -42,6 +48,7 @@ See the [official JSONPlaceholder guide](https://jsonplaceholder.typicode.com/gu
 - requests
 - jsonschema
 - allure-pytest
+- Postman
 - Ruff
 - GitHub Actions
 
@@ -138,6 +145,9 @@ api-automation/
 ├── schemas/
 │   ├── post.schema.json
 │   └── post-create-request.schema.json
+├── postman/
+│   ├── JSONPlaceholder-Posts.postman_collection.json
+│   └── README.md
 └── tests/
     ├── test_api_client.py
     └── test_posts_api.py
