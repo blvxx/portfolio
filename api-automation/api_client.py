@@ -59,6 +59,13 @@ class PostsApiClient:
             timeout=self.timeout,
         )
 
+    def get_post_comments(self, post_id: int) -> requests.Response:
+        """Return comments related to a post through the nested resource route."""
+        return self.session.get(
+            f"{self.base_url}/posts/{post_id}/comments",
+            timeout=self.timeout,
+        )
+
     def create_post(self, payload: Mapping[str, Any]) -> requests.Response:
         """Send POST /posts with a JSON payload."""
         return self.session.post(
