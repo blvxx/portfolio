@@ -18,10 +18,11 @@ An online store wants to understand sales performance across time, regions, prod
 ## Dataset
 
 - **360 synthetic orders** covering January–December 2025.
-- 95 reusable synthetic customer IDs.
+- **120 synthetic customer IDs**, including both one-time and repeat customers.
 - Five regions, three sales channels and four product categories.
 - Order status: `paid`, `cancelled`, `pending`.
 - Discounts, quantities, unit prices, delivery time and return flag.
+- Prices and revenue are expressed in arbitrary synthetic monetary units, not a real currency.
 
 See [data dictionary](docs/data_dictionary.md) for field definitions and metric rules.
 
@@ -36,6 +37,10 @@ See [data dictionary](docs/data_dictionary.md) for field definitions and metric 
 ### Python (pandas)
 
 The pipeline validates the CSV, calculates recognised revenue only for paid/non-returned orders, and exports KPI, monthly, region, category and channel reports.
+
+### Findings
+
+See [Analysis Findings](docs/analysis_findings.md) for the calculated KPI snapshot, segment comparisons, interpretation and limitations.
 
 ### Data quality and tests
 
@@ -97,10 +102,16 @@ python -m pytest -q
 
 ## Run SQL in PostgreSQL
 
-From the `data-analytics` directory, create the table and import the CSV:
+From the `data-analytics` directory, create the table:
 
 ```bash
 psql -d analytics -f sql/00_schema.sql
+```
+
+Connect to the same database:
+
+```bash
+psql -d analytics
 ```
 
 Then, inside `psql`:
@@ -121,6 +132,7 @@ data-analytics/
 ├── data/
 │   └── orders.csv
 ├── docs/
+│   ├── analysis_findings.md
 │   └── data_dictionary.md
 ├── sql/
 │   ├── 00_schema.sql
