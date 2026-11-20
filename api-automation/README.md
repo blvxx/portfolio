@@ -55,9 +55,10 @@ See the [official JSONPlaceholder guide](https://jsonplaceholder.typicode.com/gu
 
 ## Run locally
 
-Create and activate a virtual environment:
+From the repository root, enter the project directory, then create and activate a virtual environment:
 
 ```bash
+cd api-automation
 python -m venv .venv
 
 # Windows PowerShell
