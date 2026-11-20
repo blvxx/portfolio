@@ -1,7 +1,13 @@
 import pandas as pd
 import pytest
 
-from src.analysis import calculate_kpis, prepare_orders, segment_kpis, validate_orders
+from src.analysis import (
+    calculate_kpis,
+    monthly_kpis,
+    prepare_orders,
+    segment_kpis,
+    validate_orders,
+)
 
 
 @pytest.fixture
@@ -56,6 +62,18 @@ def test_repeat_customer_rate(sample_orders):
     assert result["repeat_customer_rate"] == 0.5
 
 
+def test_monthly_kpis_calculate_return_rate(sample_orders):
+    monthly = monthly_kpis(sample_orders).set_index("order_month")
+    assert monthly.loc["2025-01", "return_rate"] == 0.5
+    assert monthly.loc["2025-02", "return_rate"] == 0.0
+
+
+def test_segment_kpis_calculate_return_rate(sample_orders):
+    segments = segment_kpis(sample_orders, "region").set_index("region")
+    assert segments.loc["Kazan", "return_rate"] == 1.0
+    assert segments.loc["Moscow", "return_rate"] == 0.0
+
+
 def test_duplicate_order_id_is_rejected(sample_orders):
     duplicated = pd.concat([sample_orders, sample_orders.iloc[[0]]], ignore_index=True)
     with pytest.raises(ValueError, match="unique"):
@@ -66,6 +84,13 @@ def test_discount_outside_range_is_rejected(sample_orders):
     invalid = sample_orders.copy()
     invalid.loc[0, "discount_pct"] = 1.2
     with pytest.raises(ValueError, match="between 0 and 1"):
+        validate_orders(invalid)
+
+
+def test_non_numeric_quantity_is_rejected(sample_orders):
+    invalid = sample_orders.copy()
+    invalid.loc[0, "quantity"] = "unknown"
+    with pytest.raises(ValueError, match="positive integer"):
         validate_orders(invalid)
 
 
