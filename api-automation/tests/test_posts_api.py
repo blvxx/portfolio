@@ -5,7 +5,7 @@ from pathlib import Path
 
 import allure
 import pytest
-from jsonschema import Draft202012Validator, ValidationError, validate
+from jsonschema import Draft202012Validator, FormatChecker, ValidationError, validate
 
 from api_client import PostsApiClient
 
@@ -14,6 +14,9 @@ SCHEMA_DIR = Path(__file__).parent.parent / "schemas"
 POST_SCHEMA = json.loads((SCHEMA_DIR / "post.schema.json").read_text(encoding="utf-8"))
 CREATE_POST_SCHEMA = json.loads(
     (SCHEMA_DIR / "post-create-request.schema.json").read_text(encoding="utf-8")
+)
+COMMENT_SCHEMA = json.loads(
+    (SCHEMA_DIR / "comment.schema.json").read_text(encoding="utf-8")
 )
 
 
@@ -31,6 +34,11 @@ def schema():
 @pytest.fixture
 def create_post_schema():
     return CREATE_POST_SCHEMA
+
+
+@pytest.fixture
+def comment_schema():
+    return COMMENT_SCHEMA
 
 
 def assert_json_response(response, expected_status=200):
@@ -102,6 +110,37 @@ def test_filter_posts_by_user_id(api_client, schema, user_id):
     for post in posts:
         Draft202012Validator(schema).validate(post)
 
+
+
+
+@allure.feature("Post relationships")
+@allure.story("Retrieve comments for a post")
+@pytest.mark.contract
+@pytest.mark.parametrize("post_id", [1, 10, 100])
+def test_get_post_comments_returns_related_comments(api_client, comment_schema, post_id):
+    response = api_client.get_post_comments(post_id)
+    assert_json_response(response)
+
+    comments = response.json()
+    assert isinstance(comments, list)
+    assert len(comments) == 5
+
+    validator = Draft202012Validator(
+        comment_schema,
+        format_checker=FormatChecker(),
+    )
+    for comment in comments:
+        assert comment["postId"] == post_id
+        validator.validate(comment)
+
+
+@allure.feature("Post relationships")
+@allure.story("Unknown parent resource")
+@pytest.mark.negative
+def test_unknown_post_has_no_related_comments(api_client):
+    response = api_client.get_post_comments(999999)
+    assert_json_response(response)
+    assert response.json() == []
 
 @allure.feature("Posts API")
 @allure.story("Create post")
@@ -200,9 +239,10 @@ def test_filter_with_unknown_user_returns_empty_list(api_client, user_id):
 @allure.feature("JSON Schema")
 @allure.story("Schema definitions are valid")
 @pytest.mark.unit
-def test_post_schema_definition_is_valid(schema, create_post_schema):
+def test_post_schema_definition_is_valid(schema, create_post_schema, comment_schema):
     Draft202012Validator.check_schema(schema)
     Draft202012Validator.check_schema(create_post_schema)
+    Draft202012Validator.check_schema(comment_schema)
 
 
 @allure.feature("JSON Schema")
