@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+import allure
 import pytest
 from jsonschema import ValidationError, validate
 
@@ -25,6 +26,8 @@ def schema():
     return POST_SCHEMA
 
 
+@allure.feature("Posts API")
+@allure.story("List posts")
 @pytest.mark.smoke
 def test_get_posts_returns_success_and_schema_valid_list(api_client, schema):
     response = api_client.get_posts()
@@ -37,6 +40,8 @@ def test_get_posts_returns_success_and_schema_valid_list(api_client, schema):
         validate(instance=post, schema=schema)
 
 
+@allure.feature("Posts API")
+@allure.story("Get post details")
 @pytest.mark.smoke
 def test_get_single_post_has_required_fields_and_schema(api_client, schema):
     response = api_client.get_post(1)
@@ -46,6 +51,8 @@ def test_get_single_post_has_required_fields_and_schema(api_client, schema):
     validate(instance=post, schema=schema)
 
 
+@allure.feature("Posts API")
+@allure.story("Valid post IDs")
 @pytest.mark.parametrize("post_id", [1, 10, 100])
 def test_get_post_by_valid_ids(api_client, schema, post_id):
     response = api_client.get_post(post_id)
@@ -55,6 +62,8 @@ def test_get_post_by_valid_ids(api_client, schema, post_id):
     validate(instance=post, schema=schema)
 
 
+@allure.feature("Posts API")
+@allure.story("Filter by user")
 @pytest.mark.parametrize("user_id", [1, 2, 10])
 def test_filter_posts_by_user_id(api_client, schema, user_id):
     response = api_client.get_posts(userId=user_id)
@@ -65,6 +74,9 @@ def test_filter_posts_by_user_id(api_client, schema, user_id):
     for post in posts:
         validate(instance=post, schema=schema)
 
+
+@allure.feature("Posts API")
+@allure.story("Negative post ID scenarios")
 @pytest.mark.parametrize("post_id", [0, -1, 999999])
 def test_unknown_or_invalid_post_id_returns_404(api_client, post_id):
     response = api_client.get_post(post_id)
@@ -72,6 +84,8 @@ def test_unknown_or_invalid_post_id_returns_404(api_client, post_id):
     assert response.json() == {}
 
 
+@allure.feature("Posts API")
+@allure.story("Unknown user filter")
 @pytest.mark.parametrize("user_id", [0, 999, -5])
 def test_filter_with_unknown_user_returns_empty_list(api_client, user_id):
     response = api_client.get_posts(userId=user_id)
@@ -79,7 +93,14 @@ def test_filter_with_unknown_user_returns_empty_list(api_client, user_id):
     assert response.json() == []
 
 
+@allure.feature("JSON Schema")
+@allure.story("Reject invalid response payload")
 def test_schema_rejects_invalid_post(schema):
-    invalid_post = {"userId": "not-an-integer", "id": 101, "title": "", "body": ""}
+    invalid_post = {
+        "userId": "not-an-integer",
+        "id": 101,
+        "title": "",
+        "body": "",
+    }
     with pytest.raises(ValidationError):
         validate(instance=invalid_post, schema=schema)
