@@ -1,6 +1,6 @@
-# QA & Development Portfolio
+# QA, Data Analytics & Development Portfolio
 
-Selected practical projects in REST API testing, UI automation and frontend development.
+Selected practical projects in REST API testing, data analysis, UI automation and frontend development.
 
 ## Featured QA projects
 
@@ -21,6 +21,25 @@ REST API test suite for the JSONPlaceholder Posts resource.
 **Stack:** Python · pytest · requests · jsonschema · Allure · Postman · Ruff · GitHub Actions
 
 > JSONPlaceholder simulates write operations; this project tests HTTP contracts and does not claim persistent data changes.
+
+## Featured Data Analytics project
+
+### [SQL + Python Data Analytics — E-commerce Sales](./data-analytics/)
+
+End-to-end analytics case study using a transparent synthetic dataset of 360 orders.
+
+- PostgreSQL schema and three SQL analysis scripts.
+- pandas pipeline for revenue, order and customer KPIs.
+- Monthly, regional, category and channel breakdowns.
+- Input validation and unit tests for business rules.
+- Reproducible CSV and JSON report exports.
+- GitHub Actions workflow for Python 3.10 and 3.12.
+
+**Stack:** PostgreSQL · SQL · Python · pandas · pytest · GitHub Actions
+
+> Dataset is synthetic and created for demonstration; it does not represent real client or company data.
+
+## UI automation
 
 ### [Todo Test — Playwright UI Automation](https://github.com/blvxx/todo-test)
 
