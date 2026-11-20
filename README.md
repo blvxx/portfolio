@@ -72,6 +72,22 @@ Responsive website concepts demonstrating HTML, CSS and JavaScript:
 - [Treker](https://github.com/blvxx/Treker) — standalone responsive recovery milestone tracker (single-page HTML app).
 - [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker concept; implementation is not yet complete.
 
+## Incident investigation
+
+### [Incident Investigation Lab — Payment Webhook Failure](./incident-lab/)
+
+Simulated production incident: successful payments are not reflected in order status due to webhook signature validation failure.
+
+- Incident ticket, scope and timeline.
+- Application logs and Python log-analysis script.
+- SQL checks for order/payment mismatches and duplicate records.
+- HTTP webhook troubleshooting matrix.
+- Root Cause Analysis (5 Whys), corrective actions and recovery runbook.
+
+**Stack:** HTTP · Webhooks · Python · PostgreSQL / SQL · Incident Management · RCA
+
+> Fictional scenario and generated evidence for practice; not a real production incident.
+
 ## About
 
 Artem Kalinin — [GitHub profile](https://github.com/blvxx) · [Web portfolio](https://blvxx.github.io/portfolio/)
