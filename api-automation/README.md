@@ -2,29 +2,37 @@
 
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 
-Portfolio project demonstrating a maintainable approach to REST API testing: a reusable HTTP client, contract validation with JSON Schema, parametrized positive and negative scenarios, isolated unit tests, Allure labels, and GitHub Actions CI.
+Portfolio project demonstrating REST API test automation: a reusable HTTP client, CRUD request coverage, strict JSON Schema checks, parametrized positive and negative scenarios, isolated unit tests, Allure labels, and GitHub Actions CI.
 
 > This is an independent portfolio project against the public JSONPlaceholder demo API. It is not a commercial client delivery or a production API contract.
 
-## What is covered
+## Coverage
 
-| Area | Checks |
+| Area | Scenarios |
 |---|---|
-| Collection endpoint | `GET /posts`, HTTP status, JSON content type, expected collection size, schema validation for each item |
-| Resource endpoint | `GET /posts/{id}`, required fields and response schema for IDs 1, 10, 50 and 100 |
-| Query filters | `GET /posts?userId={id}`, returned records match the requested user IDs |
-| Negative scenarios | Unknown and invalid post IDs return 404; unknown user filters return an empty collection |
-| JSON Schema | Schema definition validation; rejection of incorrect types, missing properties, invalid values and unexpected properties |
-| API client unit tests | Headers, base URL override, query parameters, timeout propagation, transport exceptions and session lifecycle |
+| Read | `GET /posts`, `GET /posts/{id}`, response status, content type, filtering and response schema |
+| Create | `POST /posts`, request payload validation, `201 Created`, generated ID and response fields |
+| Replace | `PUT /posts/{id}`, full JSON payload and response contract |
+| Partial update | `PATCH /posts/{id}`, partial JSON payload and updated resource representation |
+| Delete | `DELETE /posts/{id}`, successful deletion response |
+| Negative | Unknown IDs, invalid filters, incorrect types, missing fields and unexpected request/response properties |
+| Unit | HTTP method, URL, headers, query parameters, JSON body, timeout propagation, environment configuration and session lifecycle |
 
 ## Test design
 
-- API behavior tests use a real public demo endpoint and therefore require internet access.
-- API-client unit tests use mocked sessions and do not require network access.
-- Test data is parameterized to cover several valid and invalid inputs.
-- Response payloads are checked against a strict JSON Schema (Draft 2020-12).
-- Allure feature/story labels help group test results in a report.
-- Transport-level exceptions such as request timeouts are allowed to propagate so failures are visible to the test layer.
+- API behavior tests call a public demo endpoint and require internet access.
+- API-client unit tests use mocked `requests.Session` objects and do not require network access.
+- Positive, negative and CRUD scenarios are grouped with pytest markers.
+- Request and response payloads are validated against JSON Schema (Draft 2020-12).
+- Parametrization checks several values without duplicating test functions.
+- Allure feature/story labels and JSON attachments make request/response evidence easier to inspect.
+- Transport exceptions such as request timeouts are not swallowed by the client.
+
+## Important limitation of the demo API
+
+JSONPlaceholder simulates write operations. A successful `POST`, `PUT`, `PATCH` or `DELETE` response demonstrates the HTTP contract, but the change is not persisted in the server's data. For example, a created post may be returned with an ID, but fetching that generated ID later still returns 404. This is expected demo-service behavior, not a defect in the test suite.
+
+See the [official JSONPlaceholder guide](https://jsonplaceholder.typicode.com/guide.html) for examples and the write-operation limitation.
 
 ## Tech stack
 
@@ -37,7 +45,7 @@ Portfolio project demonstrating a maintainable approach to REST API testing: a r
 
 ## Run locally
 
-Create and activate a virtual environment, then install the dependencies:
+Create and activate a virtual environment:
 
 ```bash
 python -m venv .venv
@@ -47,24 +55,29 @@ python -m venv .venv
 
 # macOS / Linux
 source .venv/bin/activate
-
-python -m pip install --upgrade pip
-pip install -r requirements.txt
 ```
 
-Run the complete suite:
+Install dependencies and run the complete suite:
 
 ```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt
 pytest -ra
 ```
 
-Run isolated unit tests (no network required):
+Run tests that do not call the external API:
 
 ```bash
 pytest -m unit
 ```
 
-Run API smoke checks:
+Run CRUD scenarios only:
+
+```bash
+pytest -m crud
+```
+
+Run the smoke checks:
 
 ```bash
 pytest -m smoke
@@ -78,7 +91,7 @@ pytest --junitxml=reports/junit.xml --alluredir=allure-results
 
 ## Configuration
 
-The default API base URL is `https://jsonplaceholder.typicode.com`. It can be overridden without editing source code:
+The default base URL is `https://jsonplaceholder.typicode.com`. Override it without editing source code:
 
 ```bash
 # macOS / Linux
@@ -88,13 +101,16 @@ export API_BASE_URL=https://your-test-environment.example
 $env:API_BASE_URL = "https://your-test-environment.example"
 ```
 
-You can also pass `base_url` directly when creating `PostsApiClient`. The request timeout defaults to 10 seconds and can be configured in the constructor.
+The client also accepts `base_url` in its constructor. The request timeout defaults to 10 seconds and can be set when creating the client.
 
 ## CI
 
-GitHub Actions runs the suite on Python 3.10 and 3.12 when files under `api-automation/` or the workflow itself change. The workflow uploads JUnit and Allure result files as build artifacts, including when tests fail.
+GitHub Actions runs the suite on Python 3.10 and 3.12 when files under `api-automation/` or the workflow change. JUnit and Allure result files are uploaded as artifacts, including when tests fail.
 
-Workflow: [API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
+- [Latest workflow runs](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
+- [Workflow definition](../../.github/workflows/api-automation.yml)
+
+Check the Actions tab for the actual result of each run; workflow configuration alone does not prove that a run passed.
 
 ## Project structure
 
@@ -103,19 +119,21 @@ api-automation/
 ├── api_client.py
 ├── pytest.ini
 ├── requirements.txt
+├── .gitignore
 ├── schemas/
-│   └── post.schema.json
+│   ├── post.schema.json
+│   └── post-create-request.schema.json
 └── tests/
     ├── test_api_client.py
     └── test_posts_api.py
 ```
 
-## Known limitations
+## Known limitations and next steps
 
-- JSONPlaceholder is a demo service; its behavior should not be treated as a production service-level guarantee.
-- Live API tests can fail temporarily due to public-service availability or network restrictions.
-- CI results should be checked in the Actions tab; adding tests or a workflow does not itself prove that a run passed.
-- The suite focuses on the Posts resource and does not claim authentication, database, load, security or end-to-end coverage.
+- The public demo API may be temporarily unavailable or slow; live API tests can therefore fail because of external conditions.
+- Demo write operations are not persistent and must not be treated as database persistence checks.
+- The project currently focuses on the Posts resource; it does not claim authentication, database, load, security or end-to-end coverage.
+- Future extensions can add relationship endpoints, pagination checks, reusable test data builders and a local mock API for deterministic failure scenarios.
 
 ## Maintainer
 
