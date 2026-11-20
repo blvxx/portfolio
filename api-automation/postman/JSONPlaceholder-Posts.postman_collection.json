@@ -20,15 +20,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts"
-              ]
-            },
+            "url": "{{baseUrl}}/posts",
             "description": "Checks collection status, JSON response, expected size and required object fields."
           },
           "event": [
@@ -57,16 +49,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts",
-                "1"
-              ]
-            },
+            "url": "{{baseUrl}}/posts/1",
             "description": "Reads a single post and validates its main fields."
           },
           "event": [
@@ -88,15 +71,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts?userId=1",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts?userId=1"
-              ]
-            },
+            "url": "{{baseUrl}}/posts?userId=1",
             "description": "Checks query parameter filtering."
           },
           "event": [
@@ -136,15 +111,7 @@
                 }
               }
             },
-            "url": {
-              "raw": "{{baseUrl}}/posts",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts"
-              ]
-            },
+            "url": "{{baseUrl}}/posts",
             "description": "Creates a simulated resource. JSONPlaceholder does not persist the created post."
           },
           "event": [
@@ -187,16 +154,7 @@
                 }
               }
             },
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts",
-                "1"
-              ]
-            },
+            "url": "{{baseUrl}}/posts/1",
             "description": "Sends a complete replacement payload."
           },
           "event": [
@@ -236,16 +194,7 @@
                 }
               }
             },
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts",
-                "1"
-              ]
-            },
+            "url": "{{baseUrl}}/posts/1",
             "description": "Sends a partial update and checks the returned representation."
           },
           "event": [
@@ -272,16 +221,7 @@
           "request": {
             "method": "DELETE",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts/1",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts",
-                "1"
-              ]
-            },
+            "url": "{{baseUrl}}/posts/1",
             "description": "Checks successful simulated deletion. The source data remains unchanged on JSONPlaceholder."
           },
           "event": [
@@ -306,16 +246,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/posts/999999",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "posts",
-                "999999"
-              ]
-            },
+            "url": "{{baseUrl}}/posts/999999",
             "description": "Negative check for a non-existent resource."
           },
           "event": [
