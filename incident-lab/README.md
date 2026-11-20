@@ -24,6 +24,19 @@ This repository demonstrates a structured incident investigation—not a claim o
 5. [Root cause analysis](docs/rca.md) — cause, contributing factors, corrective and preventive actions
 6. [Recovery runbook](docs/recovery-runbook.md) — safe operational steps
 7. [Log analysis script](scripts/analyze_incident.py) — summarizes error patterns from the supplied log
+8. [Investigation findings](docs/investigation-findings.md) — evidence summary and recommended operational controls
+9. [Recovery runbook](docs/recovery-runbook.md) — safe operational steps
+
+## Run and test
+
+From the repository root:
+
+```bash
+python incident-lab/scripts/analyze_incident.py
+python -m unittest discover -s incident-lab/scripts -v
+```
+
+The analyzer uses only the Python standard library. Unit tests cover successful parsing, webhook failure/success counts, empty logs, malformed lines, and missing files. GitHub Actions runs the analyzer and tests on pushes and pull requests affecting this project.
 
 ## Architecture (simplified)
 
