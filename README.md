@@ -69,8 +69,8 @@ Responsive website concepts demonstrating HTML, CSS and JavaScript:
 
 ## Additional experiments
 
-- [Treker](https://github.com/blvxx/Treker) — standalone interactive web application.
-- [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker prototype.
+- [Treker](https://github.com/blvxx/Treker) — standalone responsive recovery milestone tracker (single-page HTML app).
+- [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker concept; implementation is not yet complete.
 
 ## About
 
