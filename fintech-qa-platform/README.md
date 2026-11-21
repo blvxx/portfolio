@@ -51,6 +51,12 @@ Services:
 - Payment UI: http://localhost:8080
 - Payment API docs: http://localhost:8000/docs
 - Ledger API docs: http://localhost:8001/docs
+- Prometheus: http://localhost:9090
+- Grafana: http://localhost:3000 (demo credentials: admin / admin_demo_password)
+- Payment metrics: http://localhost:8000/metrics
+- Ledger metrics: http://localhost:8001/metrics
+
+Monitoring setup, dashboard queries and outage exercise: [Observability Lab](observability/README.md).
 
 ## Run tests locally
 
