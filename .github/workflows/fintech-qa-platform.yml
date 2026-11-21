@@ -26,9 +26,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint
-        run: ruff check services tests
-      - name: Automated tests
-        run: pytest --junitxml=reports/junit.xml
+        run: ruff check services tests e2e
+      - name: Automated API tests
+        run: pytest tests --junitxml=reports/junit.xml
       - name: Upload JUnit report
         if: always()
         uses: actions/upload-artifact@v4
@@ -79,3 +79,58 @@ jobs:
           merchant=$(curl --silent --show-error --fail http://localhost:8001/accounts/ci-merchant/balance)
           python -c 'import json,sys; c=json.loads(sys.argv[1]); m=json.loads(sys.argv[2]); assert c["balance_minor"] == -2500; assert m["balance_minor"] == 2500; assert c["balance_minor"] + m["balance_minor"] == 0' "$customer" "$merchant"
           echo "Payment-to-ledger Compose smoke test passed."
+
+  ui-e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: fintech-qa-platform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: fintech-qa-platform/requirements.txt
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+      - name: Build and start demo stack
+        run: docker compose up --build -d
+      - name: Wait for frontend
+        run: |
+          for attempt in $(seq 1 40); do
+            if curl --silent --fail http://localhost:8080/ >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          docker compose logs
+          exit 1
+      - name: Run Playwright E2E tests
+        run: pytest e2e --alluredir=allure-results --junitxml=reports/ui-junit.xml
+      - name: Generate Allure HTML report
+        if: always()
+        run: |
+          if [ -d allure-results ] && [ "$(find allure-results -type f | wc -l)" -gt 0 ]; then
+            sudo apt-get update
+            sudo apt-get install -y default-jre
+            sudo npm install --global allure-commandline
+            allure generate allure-results --clean --output allure-report
+          fi
+      - name: Upload Allure report and raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fintech-qa-platform-allure
+          path: |
+            fintech-qa-platform/allure-report
+            fintech-qa-platform/allure-results
+          if-no-files-found: ignore
+      - name: Collect service logs
+        if: failure()
+        run: docker compose logs
+      - name: Stop demo stack
+        if: always()
+        run: docker compose down -v
