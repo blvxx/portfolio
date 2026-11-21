@@ -189,3 +189,5 @@ h2{font-size:clamp(34px,4.2vw,54px);line-height:1.13;letter-spacing:-.065em;marg
  .project-title{font-size:21px}
  .project-actions{gap:8px}
 }
+
+.service-detail-link{display:inline-flex;align-items:center;gap:9px;margin-top:20px;padding-top:13px;border-top:1px solid #ffffff30;color:#fff;font-size:11px;font-weight:800}.service-detail-link span{color:#9eafff}.service-detail-link:hover{color:#bfcaff}
