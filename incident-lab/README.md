@@ -22,7 +22,7 @@ A fictional payment provider reports successful payments, but some storefront or
 8. [SQL reconciliation report](docs/sql-reconciliation-report.md) — sample findings from synthetic data
 9. [Investigation findings](docs/investigation-findings.md)
 10. [Python log analyzer](scripts/analyze_incident.py) — classify patterns and recommend triage checks
-11. [Automated reconciliation](scripts/reconcile_payments.py) — compare order/payment exports and produce CSV findings
+11. [Automated reconciliation](scripts/reconcile_payments.py) — compare order/payment exports and produce CSV + HTML findings
 12. [Reconciliation utility documentation](docs/automated-reconciliation.md
 
 ## Sample dataset
@@ -33,7 +33,7 @@ From the repository root:
 
 \`\`\`bash
 python incident-lab/scripts/analyze_incident.py
-python incident-lab/scripts/reconcile_payments.py
+python incident-lab/scripts/reconcile_payments.py  # CSV + HTML reports
 python -m unittest discover -s incident-lab/scripts -v
 \`\`\`
 
