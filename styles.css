@@ -161,3 +161,31 @@ h2{font-size:clamp(34px,4.2vw,54px);line-height:1.13;letter-spacing:-.065em;marg
  .footer-inner{display:grid;grid-template-columns:1fr 1fr;gap:14px}.footer-inner span:nth-child(3){grid-column:1/-1}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+/* Project previews: real demos and clearly-labelled engineering artifacts */
+.project-preview{height:220px;background:#171b24;border-bottom:1px solid #d9d8d2;overflow:hidden;position:relative}
+.preview-toolbar{height:27px;background:#202631;color:#aeb5c1;display:flex;align-items:center;gap:12px;padding:0 12px;font:9px var(--mono);letter-spacing:.04em}
+.preview-dots{color:#8e98a8;letter-spacing:2px}
+.preview-address{opacity:.8}
+.preview-frame{display:block;width:100%;height:193px;border:0;background:#f4f3ef}
+.preview-image{display:block;width:100%;height:193px;object-fit:cover;object-position:top center;background:#222936}
+.artifact-preview{height:193px;padding:19px 24px 16px;background:linear-gradient(125deg,#1a202b,#252d3a);color:white;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.artifact-preview:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #ffffff16;border-radius:50%;right:-65px;bottom:-100px;box-shadow:0 0 0 22px #ffffff08,0 0 0 44px #ffffff05}
+.artifact-label{font:9px var(--mono);letter-spacing:.11em;color:#9eafff;text-transform:uppercase;position:relative;z-index:1}
+.artifact-preview strong{font-size:21px;line-height:1.2;letter-spacing:-.05em;margin:12px 0 9px;position:relative;z-index:1}
+.artifact-preview ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;position:relative;z-index:1}
+.artifact-preview li{font-size:10px;color:#c1c8d3}
+.artifact-preview li:before{content:"↳";color:#9eafff;margin-right:8px}
+.artifact-footer{font:8px var(--mono);color:#929cab;margin-top:auto;padding-top:8px;position:relative;z-index:1}
+.project-kicker-body{display:block;margin-bottom:8px;font:9px var(--mono);letter-spacing:.1em;color:var(--blue)}
+.project-title{font-size:23px;line-height:1.2;letter-spacing:-.055em;margin:0 0 11px}
+.project-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+.project-link-primary{background:var(--blue);color:#fff;padding:7px 10px}
+.project-link-primary:hover{background:var(--blue-dark);text-decoration:none}
+@media(max-width:680px){
+ .project-preview{height:205px}.preview-frame,.preview-image{height:178px}
+ .artifact-preview{height:178px;padding:16px 19px 13px}
+ .artifact-preview strong{font-size:19px}
+ .project-title{font-size:21px}
+ .project-actions{gap:8px}
+}
