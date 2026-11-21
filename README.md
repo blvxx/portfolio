@@ -72,6 +72,13 @@ Responsive website concepts demonstrating HTML, CSS and JavaScript:
 - [Treker](https://github.com/blvxx/Treker) — standalone responsive recovery milestone tracker (single-page HTML app).
 - [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker concept; implementation is not yet complete.
 
+
+## Fintech Support & QA Lab
+
+A local payment API sandbox combining FastAPI, SQLAlchemy, PostgreSQL, pytest and support documentation. Includes payment lifecycle checks, API tests, Docker Compose and a GitHub Actions workflow. Demo data only; no real payment processing.
+
+[Open Fintech Support & QA Lab](./fintech-support-qa-lab/)
+
 ## Incident investigation
 
 ### [Incident Investigation Lab — Payment Webhook Failure](./incident-lab/)
