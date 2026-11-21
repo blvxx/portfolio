@@ -179,3 +179,69 @@
 .portfolio-corporate .service-contact-actions>a:not(.button){color:#d4d8de}
 .portfolio-corporate .service-contact-actions>span{color:#9ca4af}
 @media(max-width:680px){.portfolio-corporate .service-hero h1{font-size:clamp(43px,12vw,66px)}}
+
+
+/* Graphite / Burgundy / Champagne — service page palette */
+.portfolio-corporate .service-hero{background:radial-gradient(ellipse at 82% 30%,#594044 0%,transparent 42%),linear-gradient(125deg,#242426,#302B2C);color:#F0ECE5}
+.portfolio-corporate .service-hero .eyebrow{color:#D5B99E}
+.portfolio-corporate .service-hero .eyebrow-dot{background:#B99C80}
+.portfolio-corporate .service-hero h1 span{color:#D5B99E}
+.portfolio-corporate .service-lead{color:#D2C8C1}
+.portfolio-corporate .service-proof{color:#C4B9B1}
+.portfolio-corporate .service-proof i{background:#B99C80}
+.portfolio-corporate .service-hero-card{background:#302D2D;border-color:#655356}
+.portfolio-corporate .service-hero-card>.mono{color:#D5B99E}
+.portfolio-corporate .graphic-window{background:#F0ECE5;box-shadow:18px 18px 0 #B99C801A}
+.portfolio-corporate .graphic-note{background:#744B50;color:#fff}
+.portfolio-corporate .graphic-content em{background:#744B50}
+.portfolio-corporate .service-hero-card-foot{border-color:#FFFFFF25;color:#C4B9B1}
+.portfolio-corporate .service-section{background:#F0ECE5;border-color:#D8CFC5}
+.portfolio-corporate .service-section-heading>p{color:#6D625D}
+.portfolio-corporate .service-offers article{background:#FAF8F3;border-color:#DED5CB}
+.portfolio-corporate .service-offers article:first-child{background:#242426;border-color:#242426}
+.portfolio-corporate .service-offers .mono{color:#744B50}
+.portfolio-corporate .service-offers article:first-child .mono{color:#D5B99E}
+.portfolio-corporate .service-offers p{color:#6D625D}
+.portfolio-corporate .service-offers article:first-child p{color:#D2C8C1}
+.portfolio-corporate .service-offers ul{border-color:#DED5CB}
+.portfolio-corporate .service-offers article:first-child ul{border-color:#FFFFFF25}
+.portfolio-corporate .service-offers li{color:#625A55}
+.portfolio-corporate .service-offers article:first-child li{color:#E1D8D1}
+.portfolio-corporate .service-offers li:before,
+.portfolio-corporate .requirements-grid li:before{color:#B99C80}
+.portfolio-corporate .service-pricing{background:linear-gradient(135deg,#E7DED5,#F3EFE9 60%,#E5DCD3);border-color:#D8CFC5}
+.portfolio-corporate .service-price-card{background:#FAF8F3;border-color:#DED5CB;color:#242426}
+.portfolio-corporate .service-price-card>span{color:#744B50}
+.portfolio-corporate .service-price-card h3{color:#242426}
+.portfolio-corporate .service-price-card p{color:#6D625D}
+.portfolio-corporate .service-price-featured{background:linear-gradient(150deg,#744B50,#5D393E);border-color:#744B50;color:#fff}
+.portfolio-corporate .service-price-featured>span{color:#E6CDBA}
+.portfolio-corporate .service-price-featured h3{color:#fff}
+.portfolio-corporate .service-price-featured p{color:#F0DED2}
+.portfolio-corporate .service-pricing-note{color:#6D625D}
+.portfolio-corporate .service-examples{background:#E9E1D8}
+.portfolio-corporate .example-card{background:#FAF8F3;border-color:#D8CFC5}
+.portfolio-corporate .example-card:hover{border-color:#B99C80}
+.portfolio-corporate .example-iron{background:linear-gradient(130deg,#242426,#625052);filter:none}
+.portfolio-corporate .example-noir{background:linear-gradient(130deg,#282322,#765D4B);filter:none}
+.portfolio-corporate .example-vera{background:linear-gradient(130deg,#382D30,#967C7B);filter:none}
+.portfolio-corporate .example-frame{background:linear-gradient(130deg,#292729,#625052);filter:none}
+.portfolio-corporate .example-visual small{color:#E6D8CC}
+.portfolio-corporate .example-info>span{color:#744B50}
+.portfolio-corporate .service-steps{border-color:#D8CFC5}
+.portfolio-corporate .service-steps article{border-color:#D8CFC5}
+.portfolio-corporate .service-steps article>span{color:#744B50}
+.portfolio-corporate .service-steps p{color:#6D625D}
+.portfolio-corporate .service-requirements{background:#E6DED5}
+.portfolio-corporate .requirements-grid p,
+.portfolio-corporate .requirements-grid li{color:#6D625D}
+.portfolio-corporate .requirements-grid ul{border-color:#D0C5BA}
+.portfolio-corporate .service-contact{background:radial-gradient(ellipse at 82% 45%,#624449 0%,transparent 38%),linear-gradient(115deg,#201F20,#30292A)}
+.portfolio-corporate .service-contact .eyebrow,
+.portfolio-corporate .service-contact h2 span{color:#D5B99E}
+.portfolio-corporate .service-contact-inner>div:first-child>p:not(.eyebrow){color:#D2C8C1}
+.portfolio-corporate .service-contact-actions>a:not(.button){color:#E5DCD4}
+.portfolio-corporate .service-contact-actions>a:not(.button):hover{color:#D5B99E}
+.portfolio-corporate .service-contact-actions>span{color:#C4B9B1}
+.portfolio-corporate .service-back{color:#D2C8C1}
+.portfolio-corporate .service-back:hover{color:#D5B99E}
