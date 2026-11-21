@@ -81,3 +81,44 @@
 @media(max-width:900px){.service-hero-grid{grid-template-columns:1fr .8fr;gap:35px}.service-offers{grid-template-columns:1fr 1fr}.service-offers article:last-child{grid-column:span 2}.service-steps{grid-template-columns:1fr 1fr}.service-steps article:nth-child(2){border-right:0;margin-right:0}.service-steps article:nth-child(3),.service-steps article:nth-child(4){border-top:1px solid #d9d8d2}.service-section-heading{align-items:flex-start;flex-direction:column;gap:15px}.requirements-grid{gap:40px}}
 @media(max-width:680px){.service-back{display:none}.service-hero{padding:58px 0 55px}.service-hero-grid{grid-template-columns:1fr;gap:36px}.service-hero h1{font-size:clamp(43px,12vw,66px)}.service-lead{font-size:14px;margin-top:20px}.service-hero-card{min-height:350px}.service-card-graphic{height:220px}.service-section,.service-examples{padding:68px 0}.service-section-heading{margin-bottom:28px}.service-section-heading h2{font-size:35px}.service-offers{grid-template-columns:1fr}.service-offers article:last-child{grid-column:auto}.service-offers article{min-height:0;padding:24px}.service-offers p{min-height:0}.example-grid{grid-template-columns:1fr}.example-visual{height:185px}.service-steps{grid-template-columns:1fr 1fr}.service-steps article{padding:20px 13px 20px 0;margin-right:13px}.service-steps article:nth-child(2){margin-right:0}.service-steps h3{font-size:13px;margin-top:18px}.service-steps p{font-size:10px}.requirements-grid{grid-template-columns:1fr;gap:22px}.service-requirements{padding:60px 0}.service-contact{padding:68px 0}.service-contact-inner{align-items:flex-start;flex-direction:column;gap:32px}.service-contact h2{font-size:43px}}
 @media(prefers-reduced-motion:reduce){.example-card{transition:none}}
+
+/* Matching warm editorial service page */
+.portfolio-editorial .service-hero{padding-top:88px}
+.portfolio-editorial .service-hero h1{font:600 clamp(60px,7vw,92px)/.9 'Cormorant Garamond',Georgia,serif;letter-spacing:-.04em}
+.portfolio-editorial .service-hero h1 span{color:#687456;font-style:italic}
+.portfolio-editorial .service-lead{color:#55564d;font-size:15px;line-height:1.9}
+.portfolio-editorial .service-hero-card{background:#292b24;border:1px solid #292b24;border-radius:2px}
+.portfolio-editorial .service-hero-card>.mono{color:#c6cbb8}
+.portfolio-editorial .graphic-window{background:#fcfaf5}
+.portfolio-editorial .graphic-content em{background:#687456}
+.portfolio-editorial .graphic-note{background:#687456;border-radius:2px}
+.portfolio-editorial .service-section-heading>p{color:#55564d}
+.portfolio-editorial .service-offers article{background:#fcfaf5;border-color:#ded7cb;border-radius:2px}
+.portfolio-editorial .service-offers article:first-child{background:#292b24;border-color:#292b24}
+.portfolio-editorial .service-offers h3{font:600 29px/1.05 'Cormorant Garamond',Georgia,serif}
+.portfolio-editorial .service-offers p,.portfolio-editorial .service-offers li{color:#505148}
+.portfolio-editorial .service-offers article:first-child p{color:#d0cec3}
+.portfolio-editorial .service-offers article:first-child li{color:#e3e0d6}
+.service-pricing{padding:96px 0;background:#f7f4ed;border-top:1px solid #ded7cb;border-bottom:1px solid #ded7cb}
+.service-price-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.service-price-card{background:#fcfaf5;border:1px solid #ded7cb;padding:24px 22px;min-height:250px}
+.service-price-card>span{font:9px var(--mono);letter-spacing:.09em;color:#687456}
+.service-price-card h3{font:600 25px/1.05 'Cormorant Garamond',Georgia,serif;margin:25px 0 10px}
+.service-price-card strong{display:block;font-size:19px;letter-spacing:-.04em;margin-bottom:12px}
+.service-price-card p{font-size:11px;line-height:1.75;color:#55564d;margin:0}
+.service-price-featured{background:#292b24;border-color:#292b24;color:#fff}
+.service-price-featured>span{color:#c6cbb8}
+.service-price-featured p{color:#d0cec3}
+.service-pricing-note{font-size:10px;line-height:1.7;color:#5c5d53;margin:17px 0 0}
+.portfolio-editorial .service-examples{background:#e9e3d8}
+.portfolio-editorial .example-card{background:#fcfaf5;border-color:#d9d1c5;border-radius:2px;overflow:hidden}
+.portfolio-editorial .example-info>span{color:#4c5b43}
+.portfolio-editorial .service-steps h3{font:600 22px/1.1 'Cormorant Garamond',Georgia,serif}
+.portfolio-editorial .service-steps p,.portfolio-editorial .requirements-grid p,.portfolio-editorial .requirements-grid li{color:#55564d}
+.portfolio-editorial .service-contact{background:#292b24}
+.portfolio-editorial .service-contact .eyebrow,.portfolio-editorial .service-contact h2 span{color:#c6cbb8}
+.portfolio-editorial .service-contact h2{font:600 clamp(48px,5.5vw,72px)/.95 'Cormorant Garamond',Georgia,serif}
+.portfolio-editorial .service-contact-inner>div:first-child>p:not(.eyebrow){color:#e0ded4}
+.portfolio-editorial .service-contact-actions>a:not(.button){color:#e0ded4}
+@media(max-width:1000px){.service-price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.service-pricing{padding:66px 0}.service-price-grid{grid-template-columns:1fr}.service-price-card{min-height:0}.portfolio-editorial .service-hero h1{font-size:clamp(52px,13vw,72px)}}
