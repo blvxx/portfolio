@@ -5,11 +5,11 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from services.common.database import Base, engine, get_db
-from services.ledger_service.models import LedgerEntry, LedgerTransfer
+from services.ledger_service.models import LedgerEntry, LedgerTransfer\nfrom services.common.metrics import install_metrics
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Ledger Service", version="1.0.0")
+app = FastAPI(title="Ledger Service", version="1.0.0")\ninstall_metrics(app, "ledger")
 
 
 class TransferCreate(BaseModel):
