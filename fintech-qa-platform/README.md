@@ -18,7 +18,8 @@ Demo environment only. No real money, banks, customer records or production syst
 - Playwright covers browser-level payment submission, UI validation and balance verification.
 - Postman provides an executable manual API collection.
 - GitHub Actions runs linting, API tests, a Docker Compose integration smoke test and browser E2E tests.
-- Allure generates an HTML report and preserves raw result files as CI artifacts.\n- Prometheus scrapes service-level HTTP metrics; Grafana is provisioned with an operational dashboard.
+- Allure generates an HTML report and preserves raw result files as CI artifacts.
+- Prometheus scrapes service-level HTTP metrics; Grafana is provisioned with an operational dashboard.
 
 ## Architecture diagram
 
