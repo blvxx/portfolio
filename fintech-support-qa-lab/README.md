@@ -13,7 +13,7 @@ A practical sandbox for demonstrating API testing, SQL investigation, incident t
 - Idempotent webhook processing with event-ID uniqueness and payload-hash conflict detection.
 - SQL investigation playbook with practical support queries.
 - Synthetic JSONL logs and a Python CLI for filtering by correlation ID or severity.
-- GitHub Actions CI for automated tests, including a live PostgreSQL service integration check.
+- GitHub Actions CI for automated tests, including a live PostgreSQL API integration check and a Docker Compose build/start/health/payment smoke test.
 
 ## Quick start (local)
 
@@ -88,7 +88,8 @@ scripts/       Log analysis CLI
 - [x] Idempotent webhook processing and event conflict detection
 - [x] SQL investigation playbook
 - [x] Synthetic incident logs and analysis CLI
-- [x] PostgreSQL persistence integration test in CI
+- [x] PostgreSQL API and signed-webhook integration test in CI
+- [x] Docker Compose build and API smoke test in CI
 - [ ] Local Docker Compose smoke test
 - [x] Postman collection with signed webhook request
 
