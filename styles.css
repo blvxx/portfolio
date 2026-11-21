@@ -895,3 +895,9 @@ body.portfolio-corporate{
 .portfolio-corporate .work-section .section-intro{
   color:#514743;
 }
+
+
+/* Slightly deepen the projects section heading while keeping strong contrast */
+.portfolio-corporate .work-section .section-heading h2{
+  color:#D8CFC8;
+}
