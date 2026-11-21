@@ -69,7 +69,7 @@ Import `postman/fintech-support-qa-lab.postman_collection.json` into Postman. Se
 | PATCH | `/payments/{payment_id}/status` | Change payment status |
 | POST | `/webhooks/payment-status` | Receive signed, idempotent payment events |
 
-Webhook details are documented in [docs/webhooks.md](docs/webhooks.md). SQL support queries are in [docs/sql-investigation.md](docs/sql-investigation.md), and payment states are in [docs/payment-lifecycle.md](docs/payment-lifecycle.md).
+Webhook details are documented in [docs/webhooks.md](docs/webhooks.md). SQL support queries are in [docs/sql-investigation.md](docs/sql-investigation.md), payment states are in [docs/payment-lifecycle.md](docs/payment-lifecycle.md), and incident diagnosis/recovery steps are in [docs/incident-runbook.md](docs/incident-runbook.md).
 
 ## Project structure
 
