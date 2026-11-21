@@ -41,3 +41,40 @@ jobs:
           cache-dependency-path: fintech-support-qa-lab/requirements.txt
       - run: pip install -r requirements.txt
       - run: pytest -q
+
+  compose-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and start Docker Compose stack
+        run: docker compose -f fintech-support-qa-lab/docker-compose.yml up --build -d
+      - name: Verify API health and payment persistence
+        shell: bash
+        run: |
+          set -euo pipefail
+          COMPOSE="docker compose -f fintech-support-qa-lab/docker-compose.yml"
+          cleanup() {
+            $COMPOSE down -v
+          }
+          trap cleanup EXIT
+
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://localhost:8000/health; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              $COMPOSE logs
+              exit 1
+            fi
+            sleep 2
+          done
+
+          response=$(curl --silent --show-error --fail \
+            -H "Content-Type: application/json" \
+            -d '{"customer_reference":"COMPOSE-SMOKE-001","amount_minor":9900,"currency":"RUB"}' \
+            http://localhost:8000/payments)
+          payment_id=$(python -c 'import json,sys; print(json.load(sys.stdin)["id"])' <<< "$response")
+          test -n "$payment_id"
+          fetched=$(curl --silent --show-error --fail "http://localhost:8000/payments/$payment_id")
+          python -c 'import json,sys; data=json.load(sys.stdin); assert data["status"] == "pending"; assert data["customer_reference"] == "COMPOSE-SMOKE-001"'
+          echo "Docker Compose API smoke test passed for payment $payment_id"
