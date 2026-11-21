@@ -59,7 +59,7 @@ jobs:
           trap cleanup EXIT
 
           for attempt in $(seq 1 30); do
-            if curl --silent --fail http://localhost:8000/health; then
+            if curl --silent --fail http://localhost:8000/health/ready; then
               break
             fi
             if [ "$attempt" -eq 30 ]; then
