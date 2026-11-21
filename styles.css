@@ -889,3 +889,9 @@ body.portfolio-corporate{
   background:#242426;
   border-color:#514749;
 }
+
+
+/* Improve readability of the projects section introduction on light backgrounds */
+.portfolio-corporate .work-section .section-intro{
+  color:#514743;
+}
