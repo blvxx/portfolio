@@ -1,5 +1,7 @@
 import unittest
-from reconcile_payments import reconcile
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from reconcile_payments import reconcile, write_html_report
 
 class ReconciliationTests(unittest.TestCase):
     def test_detects_missing_payment(self):
@@ -31,6 +33,28 @@ class ReconciliationTests(unittest.TestCase):
         orders = [{"order_id":"A","status":"paid"}]
         payments = [{"payment_id":"P1","order_id":"A","provider_payment_id":"X","status":"succeeded"}]
         self.assertEqual(reconcile(orders, payments), [])
+
+    def test_html_report_summary_and_escaping(self):
+        findings = [
+            {"severity":"HIGH","issue":"PAYMENT_ORDER_STATUS_MISMATCH","order_id":"A","payment_ids":"P1","details":"Mismatch <script>","recommended_action":"Check webhook"},
+            {"severity":"MEDIUM","issue":"FAILED_PAYMENT","order_id":"B","payment_ids":"P2","details":"Failed","recommended_action":"Review provider"},
+        ]
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "report.html"
+            write_html_report(findings, path, orders_checked=3)
+            html = path.read_text(encoding="utf-8")
+        self.assertIn("Affected orders", html)
+        self.assertIn("Issue types", html)
+        self.assertIn("PAYMENT_ORDER_STATUS_MISMATCH", html)
+        self.assertNotIn("<script>", html)
+
+    def test_html_report_empty_findings(self):
+        with TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "empty.html"
+            write_html_report([], path, orders_checked=0)
+            html = path.read_text(encoding="utf-8")
+        self.assertIn("No findings. Data appears consistent.", html)
+        self.assertIn("No issues detected.", html)
 
     def test_multiple_payment_records_flagged(self):
         orders = [{"order_id":"A","status":"paid"}]
