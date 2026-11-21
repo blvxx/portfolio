@@ -864,3 +864,28 @@ body.portfolio-corporate{
 @media(max-width:680px){
   .portfolio-corporate .hero{background:radial-gradient(ellipse at 80% 52%,#594044 0%,transparent 58%),linear-gradient(145deg,#242426,#302B2C)}
 }
+
+
+/* Header contrast correction — deep graphite bar */
+.portfolio-corporate .header{
+  background:rgba(36,36,38,.98);
+  border-color:#514749;
+  color:#F0ECE5;
+  box-shadow:0 8px 24px #17141518;
+}
+.portfolio-corporate .brand{color:#F0ECE5}
+.portfolio-corporate .brand span{color:#D5B99E}
+.portfolio-corporate .nav a,
+.portfolio-corporate .mobile-nav a{color:#E0D8D1}
+.portfolio-corporate .nav a:hover,
+.portfolio-corporate .mobile-nav a:hover{color:#D5B99E}
+.portfolio-corporate .header-cta{
+  color:#F0ECE5;
+  border-color:#B99C80;
+}
+.portfolio-corporate .header-cta span{color:#D5B99E}
+.portfolio-corporate .menu-toggle{color:#F0ECE5}
+.portfolio-corporate .mobile-nav{
+  background:#242426;
+  border-color:#514749;
+}
