@@ -6,6 +6,8 @@ An end-to-end QA engineering portfolio project for a fictional payment product. 
 
 Demo environment only. No real money, banks, customer records or production systems are involved.
 
+**Recruiter presentation:** [Open the project overview](overview.html) · [Live GitHub Pages version](https://blvxx.github.io/portfolio/fintech-qa-platform/overview.html)
+
 ## Architecture
 
 - Payment Service accepts payment requests, validates business rules and coordinates ledger posting.
