@@ -245,3 +245,15 @@
 .portfolio-corporate .service-contact-actions>span{color:#C4B9B1}
 .portfolio-corporate .service-back{color:#D2C8C1}
 .portfolio-corporate .service-back:hover{color:#D5B99E}
+
+
+/* Clear project rules and scope boundaries */
+.portfolio-corporate .service-rules{padding:88px 0;background:#FAF8F3;border-top:1px solid #D8CFC5;border-bottom:1px solid #D8CFC5}
+.portfolio-corporate .rules-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.portfolio-corporate .rules-grid article{padding:25px 24px;background:#F0ECE5;border:1px solid #DED5CB;min-height:220px}
+.portfolio-corporate .rules-grid article>span{font:9px var(--mono);letter-spacing:.1em;color:#744B50}
+.portfolio-corporate .rules-grid h3{font-size:18px;letter-spacing:-.04em;margin:24px 0 10px;color:#242426}
+.portfolio-corporate .rules-grid p{font-size:11px;line-height:1.8;color:#6D625D;margin:0}
+.portfolio-corporate .rules-footnote{font-size:10px;line-height:1.8;color:#6D625D;margin:22px 0 0;max-width:900px}
+@media(max-width:900px){.portfolio-corporate .rules-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.portfolio-corporate .service-rules{padding:64px 0}.portfolio-corporate .rules-grid{grid-template-columns:1fr}.portfolio-corporate .rules-grid article{min-height:0;padding:22px}}
