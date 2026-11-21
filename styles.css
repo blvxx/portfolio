@@ -577,3 +577,150 @@ body.portfolio-corporate{
   .portfolio-corporate .hero{background:radial-gradient(ellipse at 80% 52%,#344477 0%,transparent 58%),linear-gradient(145deg,#111622,#1c2540)}
   .portfolio-corporate .price-featured{box-shadow:0 10px 24px #536dfe2b}
 }
+
+
+/* Editorial portfolio pass — stronger section rhythm, visual storytelling and depth */
+.portfolio-corporate .section{position:relative;isolation:isolate;overflow:hidden;padding-top:128px;padding-bottom:128px}
+.portfolio-corporate .section-heading{position:relative;margin-bottom:54px;align-items:end}
+.portfolio-corporate .section-heading>div{max-width:720px}
+.portfolio-corporate .section-heading h2{font-size:clamp(42px,5.2vw,68px);line-height:1.02;max-width:720px}
+.portfolio-corporate .section-heading .eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.portfolio-corporate .section-heading .eyebrow:after{content:"";display:inline-block;width:46px;height:1px;background:#536dfe}
+.portfolio-corporate .section-intro{max-width:340px;font-size:14px;line-height:1.9}
+.portfolio-corporate .services-section{background:linear-gradient(180deg,#f7f8fc 0%,#eef1f8 100%)}
+.portfolio-corporate .services-section:before{
+ content:"01";position:absolute;z-index:-1;right:3%;top:25px;font:800 clamp(170px,24vw,340px)/1 var(--font);letter-spacing:-.12em;color:#e5e9f3
+}
+.portfolio-corporate .services-grid{gap:18px;align-items:stretch}
+.portfolio-corporate .service-card{position:relative;overflow:hidden;min-height:390px;padding:34px 30px 30px;border-radius:3px;background:rgba(255,255,255,.88);box-shadow:0 12px 34px #202b4810}
+.portfolio-corporate .service-card:after{content:"";position:absolute;width:170px;height:170px;border:1px solid #536dfe20;border-radius:50%;right:-92px;top:100px;box-shadow:0 0 0 22px #536dfe08,0 0 0 44px #536dfe05;pointer-events:none}
+.portfolio-corporate .service-card h3{font-size:27px;line-height:1.12;margin:46px 0 16px;max-width:260px}
+.portfolio-corporate .service-card p{font-size:13px;line-height:1.9;max-width:320px}
+.portfolio-corporate .service-card ul{padding-top:22px;margin-top:25px;gap:12px}
+.portfolio-corporate .service-card li{font-size:12px}
+.portfolio-corporate .service-card.service-primary{background:linear-gradient(145deg,#171d2b 0%,#26365b 100%);box-shadow:0 22px 48px #1b2c5a25}
+.portfolio-corporate .service-primary:after{border-color:#aebaff30;box-shadow:0 0 0 22px #aebaff0b,0 0 0 44px #aebaff07}
+.portfolio-corporate .service-detail-link{display:inline-flex;gap:12px;margin-top:24px;padding-bottom:8px;border-bottom:1px solid #6f7da4;font-size:11px;font-weight:800;color:#fff}
+.portfolio-corporate .pricing-section{background:linear-gradient(135deg,#e9edf7 0%,#f5f6fa 58%,#e7ebf5 100%)}
+.portfolio-corporate .pricing-section:after{content:"";position:absolute;z-index:-1;width:480px;height:480px;border:1px solid #536dfe18;border-radius:50%;right:-210px;bottom:-250px;box-shadow:0 0 0 45px #536dfe06,0 0 0 90px #536dfe05}
+.portfolio-corporate .pricing-grid{gap:14px;align-items:stretch}
+.portfolio-corporate .price-card{position:relative;overflow:hidden;min-height:300px;padding:27px 24px 25px;border-radius:3px;box-shadow:0 10px 28px #1c29400b}
+.portfolio-corporate .price-card:before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:#cbd2e3}
+.portfolio-corporate .price-card h3{font-size:24px;line-height:1.15;margin:42px 0 13px}
+.portfolio-corporate .price-value{font-size:27px;letter-spacing:-.06em;margin-bottom:15px}
+.portfolio-corporate .price-card>p:not(.price-value){font-size:12px;line-height:1.85}
+.portfolio-corporate .price-card>a{display:flex;align-items:center;justify-content:space-between;padding-top:24px;font-size:11px}
+.portfolio-corporate .price-featured{background:linear-gradient(150deg,#536dfe 0%,#394fc8 100%);box-shadow:0 20px 42px #536dfe3b;transform:translateY(-9px)}
+.portfolio-corporate .price-featured:before{background:#bfcaff}
+.portfolio-corporate .price-featured .price-value{color:#fff}
+.portfolio-corporate .price-featured h3{color:#fff}
+.portfolio-corporate .work-section{background:#151a27;color:#fff;padding-top:132px;padding-bottom:132px}
+.portfolio-corporate .work-section:before{content:"SELECTED WORK";position:absolute;z-index:-1;right:-10px;top:35px;font:800 clamp(80px,13vw,190px)/1 var(--font);letter-spacing:-.09em;color:#ffffff06;white-space:nowrap}
+.portfolio-corporate .work-section .section-heading h2{color:#fff}
+.portfolio-corporate .work-section .section-intro{color:#b7c0d0}
+.portfolio-corporate .work-section .section-heading .eyebrow{color:#aebaff}
+.portfolio-corporate .work-toolbar{margin-bottom:28px}
+.portfolio-corporate .filter-btn{border-color:#46516a;color:#c1c9d8;padding:10px 16px;border-radius:2px}
+.portfolio-corporate .filter-btn:hover,.portfolio-corporate .filter-btn[aria-pressed="true"]{background:#536dfe;border-color:#536dfe}
+.portfolio-corporate .project-count{color:#9ca9c1}
+.portfolio-corporate .projects-grid{gap:22px}
+.portfolio-corporate .project-card{overflow:hidden;border:1px solid #35405a;background:#20283a;color:#fff;border-radius:3px;box-shadow:0 18px 45px #080d1a30}
+.portfolio-corporate .project-card:hover{transform:translateY(-7px);border-color:#788cff;box-shadow:0 26px 55px #080d1a65}
+.portfolio-corporate .project-preview{height:260px;border:0;border-bottom:1px solid #3c4864;background:#111827;overflow:hidden}
+.portfolio-corporate .preview-toolbar{height:30px;background:#101522;border-bottom:1px solid #34405a;color:#8e9bb7}
+.portfolio-corporate .preview-dots{color:#7183b2}
+.portfolio-corporate .preview-address{font-size:9px;color:#aab5cc}
+.portfolio-corporate .preview-frame{height:calc(100% - 30px);background:#fff}
+.portfolio-corporate .preview-image{width:100%;height:calc(100% - 30px);object-fit:cover;object-position:top}
+.portfolio-corporate .artifact-preview{height:100%;padding:28px 30px;background:radial-gradient(circle at 85% 20%,#3c4d7c 0%,transparent 35%),linear-gradient(135deg,#1a2234,#2b3959)}
+.portfolio-corporate .artifact-label{font-size:10px;letter-spacing:.14em;color:#aebaff}
+.portfolio-corporate .artifact-preview strong{font-size:30px;line-height:1.05;max-width:390px}
+.portfolio-corporate .artifact-preview ul{display:grid;gap:8px;margin:18px 0}
+.portfolio-corporate .artifact-preview li{font-size:11px;color:#d0d8e9}
+.portfolio-corporate .artifact-footer{color:#aebaff;font-size:9px}
+.portfolio-corporate .project-body{padding:27px 29px 25px}
+.portfolio-corporate .project-kicker-body{color:#9eaeff;font-size:9px;letter-spacing:.12em}
+.portfolio-corporate .project-title{font-size:27px;line-height:1.12;color:#fff;margin:13px 0}
+.portfolio-corporate .project-description{font-size:12px;line-height:1.85;color:#c0c8d7;min-height:68px}
+.portfolio-corporate .project-highlights{padding:17px 0 0;border-top:1px solid #3b465e}
+.portfolio-corporate .project-highlights li{color:#d0d6e2;font-size:11px}
+.portfolio-corporate .project-highlights li:before{color:#9eaeff}
+.portfolio-corporate .project-tag{border-color:#48536b;color:#bfc8d9;background:#ffffff05}
+.portfolio-corporate .project-footer{border-color:#3b465e}
+.portfolio-corporate .project-status{color:#9da9bd}
+.portfolio-corporate .project-link{color:#cbd5ff}
+.portfolio-corporate .project-link-primary{background:#536dfe;color:#fff;padding:9px 11px;border-radius:2px}
+.portfolio-corporate .project-link:not(.project-link-primary){color:#d1d9e8}
+.portfolio-corporate .transparency-note{color:#aab5c9;margin-top:30px}
+.portfolio-corporate .transparency-note span{color:#fff}
+.portfolio-corporate .case-study-section{background:linear-gradient(120deg,#e8ecf6 0%,#f7f8fb 65%,#e4e9f5 100%);padding-top:130px;padding-bottom:130px}
+.portfolio-corporate .case-study-layout{gap:80px;align-items:center}
+.portfolio-corporate .case-study-heading{position:relative;padding:48px 42px;background:linear-gradient(145deg,#182139,#2d3c65);color:#fff;box-shadow:0 28px 60px #17213d30}
+.portfolio-corporate .case-study-heading:after{content:"NOIR";position:absolute;right:18px;bottom:-22px;font:800 112px/.8 var(--font);letter-spacing:-.1em;color:#ffffff0a;pointer-events:none}
+.portfolio-corporate .case-study-heading .eyebrow{color:#aebaff}
+.portfolio-corporate .case-study-heading h2{font-size:clamp(40px,4.5vw,60px);color:#fff;position:relative;z-index:1}
+.portfolio-corporate .case-study-heading h2 span{color:#aebaff}
+.portfolio-corporate .case-study-heading>p:not(.eyebrow){color:#d0d8e8;font-size:13px;line-height:1.9;position:relative;z-index:1}
+.portfolio-corporate .case-study-link{position:relative;z-index:1;color:#fff;border-color:#8e9bc0}
+.portfolio-corporate .case-study-points{border-color:#c7cfdf}
+.portfolio-corporate .case-study-points article{padding:28px 0;border-color:#c7cfdf}
+.portfolio-corporate .case-study-points article>span{color:#536dfe}
+.portfolio-corporate .case-study-points h3{font-size:25px;letter-spacing:-.04em;margin:14px 0 9px}
+.portfolio-corporate .case-study-points p{font-size:13px;line-height:1.85;color:#626d80}
+.portfolio-corporate .approach-section{background:#fff;padding-top:125px;padding-bottom:125px}
+.portfolio-corporate .steps-grid{border:0;gap:12px;counter-reset:step}
+.portfolio-corporate .step{position:relative;overflow:hidden;margin:0;padding:30px 25px 32px;border:1px solid #dfe4ef;background:#f7f8fc;min-height:250px;transition:transform .25s,box-shadow .25s,border-color .25s}
+.portfolio-corporate .step:hover{transform:translateY(-5px);border-color:#aebaff;box-shadow:0 18px 36px #1b2a5012}
+.portfolio-corporate .step:after{content:"0" counter(step);counter-increment:step;position:absolute;right:12px;bottom:-22px;font:800 94px/1 var(--font);letter-spacing:-.1em;color:#e9edf6}
+.portfolio-corporate .step>.mono{position:relative;z-index:1;color:#536dfe;font-size:11px}
+.portfolio-corporate .step h3{position:relative;z-index:1;font-size:20px;margin:46px 0 12px}
+.portfolio-corporate .step p{position:relative;z-index:1;font-size:12px;line-height:1.85;max-width:230px}
+.portfolio-corporate .about-section{background:linear-gradient(120deg,#e8ecf6,#f4f6fa);padding-top:130px;padding-bottom:130px}
+.portfolio-corporate .about-layout{gap:90px;align-items:center}
+.portfolio-corporate .about-layout>div:first-child{position:relative;padding:50px 44px;background:#171d2b;color:#fff;min-height:370px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.portfolio-corporate .about-layout>div:first-child:after{content:"AK";position:absolute;right:5px;bottom:-48px;font:800 230px/.9 var(--font);letter-spacing:-.13em;color:#ffffff08}
+.portfolio-corporate .about-layout>div:first-child .eyebrow{color:#aebaff;position:relative;z-index:1}
+.portfolio-corporate .about-layout h2{position:relative;z-index:1;color:#fff;font-size:clamp(44px,5.5vw,72px)}
+.portfolio-corporate .about-layout h2 span{color:#aebaff}
+.portfolio-corporate .about-copy{padding:25px 0;max-width:560px}
+.portfolio-corporate .about-copy .about-lead{font-size:23px;line-height:1.45;max-width:520px}
+.portfolio-corporate .about-copy p{font-size:13px;line-height:1.95;color:#5c6678}
+.portfolio-corporate .about-link{color:#344fc8;border-color:#9ba9e0;padding-bottom:10px}
+.portfolio-corporate .contact-section{position:relative;overflow:hidden;padding:118px 0;background:radial-gradient(ellipse at 82% 45%,#344477 0%,transparent 38%),linear-gradient(115deg,#111622 0%,#1b2540 100%)}
+.portfolio-corporate .contact-section:before{content:"LET'S BUILD";position:absolute;left:4%;bottom:-35px;font:800 clamp(90px,16vw,220px)/1 var(--font);letter-spacing:-.1em;color:#ffffff07;white-space:nowrap}
+.portfolio-corporate .contact-panel{position:relative;z-index:1;align-items:center}
+.portfolio-corporate .contact-panel h2{font-size:clamp(48px,6.4vw,82px);line-height:1}
+.portfolio-corporate .contact-panel p:not(.eyebrow){font-size:14px;color:#c5cee0}
+.portfolio-corporate .contact-actions{padding:28px;background:#ffffff0d;border:1px solid #ffffff20;min-width:260px;backdrop-filter:blur(10px)}
+.portfolio-corporate .button-light{min-height:56px;padding:0 20px}
+.portfolio-corporate .footer{padding:28px 0}
+@media(max-width:900px){
+ .portfolio-corporate .section{padding-top:90px;padding-bottom:90px}
+ .portfolio-corporate .case-study-layout{grid-template-columns:1fr;gap:42px}
+ .portfolio-corporate .case-study-heading{max-width:640px}
+ .portfolio-corporate .about-layout{gap:42px}
+ .portfolio-corporate .about-layout>div:first-child{min-height:320px}
+ .portfolio-corporate .price-featured{transform:none}
+}
+@media(max-width:680px){
+ .portfolio-corporate .section{padding-top:70px;padding-bottom:70px}
+ .portfolio-corporate .section-heading{margin-bottom:32px;gap:18px}
+ .portfolio-corporate .section-heading h2{font-size:clamp(36px,10vw,48px)}
+ .portfolio-corporate .services-grid,.portfolio-corporate .pricing-grid,.portfolio-corporate .projects-grid{grid-template-columns:1fr}
+ .portfolio-corporate .service-card{min-height:0;padding:27px 24px}
+ .portfolio-corporate .service-card h3{margin-top:30px}
+ .portfolio-corporate .price-card{min-height:245px}
+ .portfolio-corporate .project-preview{height:225px}
+ .portfolio-corporate .project-body{padding:23px 22px}
+ .portfolio-corporate .project-description{min-height:0}
+ .portfolio-corporate .case-study-heading{padding:34px 26px}
+ .portfolio-corporate .case-study-heading:after{font-size:80px}
+ .portfolio-corporate .steps-grid{grid-template-columns:1fr 1fr}
+ .portfolio-corporate .step{min-height:225px;padding:23px 18px}
+ .portfolio-corporate .step h3{font-size:17px;margin-top:38px}
+ .portfolio-corporate .about-layout{grid-template-columns:1fr}
+ .portfolio-corporate .about-layout>div:first-child{min-height:280px;padding:32px 26px}
+ .portfolio-corporate .contact-section{padding:78px 0}
+ .portfolio-corporate .contact-panel{align-items:flex-start;flex-direction:column;gap:32px}
+ .portfolio-corporate .contact-actions{width:100%;min-width:0}
+}
