@@ -4,13 +4,30 @@ Selected practical projects in REST API testing, data analysis, UI automation an
 
 ## Featured QA projects
 
+### [FinTech QA Engineering Platform](./fintech-qa-platform/)
+
+[![FinTech QA Platform](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
+
+End-to-end QA project for a fictional payment product with separate Payment and Ledger services.
+
+- REST API testing and service-to-service integration.
+- Python + pytest automated API tests.
+- Idempotency, negative scenarios and ledger balance invariants.
+- PostgreSQL persistence and Docker Compose environment.
+- Postman collection and QA documentation: strategy, plan, test cases and risk analysis.
+- GitHub Actions: lint, automated tests, JUnit artifact and Docker Compose smoke flow.
+
+**Stack:** Python · FastAPI · pytest · SQLAlchemy · PostgreSQL · Docker · Postman · Ruff · GitHub Actions
+
+> Synthetic demo system only. It does not process real payments or use real customer data.
+
 ### [API Automation — Python / pytest](./api-automation/)
 
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 
 REST API test suite for the JSONPlaceholder Posts resource.
 
-- Reusable HTTP client built with `requests`.
+- Reusable HTTP client built with requests.
 - CRUD coverage: GET, POST, PUT, PATCH and DELETE.
 - Positive, negative and parametrized scenarios.
 - Request/response validation with JSON Schema.
@@ -72,7 +89,6 @@ Responsive website concepts demonstrating HTML, CSS and JavaScript:
 - [Treker](https://github.com/blvxx/Treker) — standalone responsive recovery milestone tracker (single-page HTML app).
 - [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker concept; implementation is not yet complete.
 
-
 ## Fintech Support & QA Lab
 
 A local payment API sandbox combining FastAPI, SQLAlchemy, PostgreSQL, pytest and support documentation. Includes payment lifecycle checks, API tests, Docker Compose and a GitHub Actions workflow. Demo data only; no real payment processing.
@@ -105,6 +121,6 @@ Unified CLI for log analysis, payment reconciliation, and consolidated incident 
 
 Run from the repository root:
 
-```bash
+~~~bash
 python incident-lab/scripts/incident_ops.py all
-```
+~~~
