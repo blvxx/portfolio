@@ -1,6 +1,6 @@
 # Automated Order/Payment Reconciliation
 
-This script compares order and payment CSV exports and writes actionable findings as CSV plus a responsive HTML dashboard. The HTML report includes summary cards, an issue breakdown, a detailed table, and a severity filter.
+This script compares order and payment CSV exports and writes actionable findings as CSV plus a responsive HTML dashboard. The HTML report includes summary cards for orders checked, affected unique orders, total findings, high/medium severity, and issue types; an issue breakdown, detailed table, and client-side severity filter are also included.
 
 ## Checks
 - Missing payment records
