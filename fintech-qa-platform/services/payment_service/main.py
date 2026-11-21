@@ -49,27 +49,31 @@ def create_payment(
     if payload.customer_account == payload.merchant_account:
         raise HTTPException(status_code=422, detail="Customer and merchant accounts must differ")
 
-    existing = db.query(Payment).filter_by(idempotency_key=payload.idempotency_key).first()
-    if existing:
+    payment = db.query(Payment).filter_by(idempotency_key=payload.idempotency_key).first()
+    is_retry = payment is not None
+    if payment:
         same_request = (
-            existing.customer_account == payload.customer_account
-            and existing.merchant_account == payload.merchant_account
-            and existing.amount_minor == payload.amount_minor
-            and existing.currency == payload.currency
+            payment.customer_account == payload.customer_account
+            and payment.merchant_account == payload.merchant_account
+            and payment.amount_minor == payload.amount_minor
+            and payment.currency == payload.currency
         )
         if not same_request:
             raise HTTPException(status_code=409, detail="Idempotency key reused with different payload")
-        return {
-            "payment_id": existing.id,
-            "status": existing.status,
-            "ledger_transfer_id": existing.ledger_transfer_id,
-            "duplicate": True,
-        }
-
-    payment = Payment(**payload.model_dump(), status="pending")
-    db.add(payment)
-    db.commit()
-    db.refresh(payment)
+        if payment.status == "posted":
+            return {
+                "payment_id": payment.id,
+                "status": payment.status,
+                "ledger_transfer_id": payment.ledger_transfer_id,
+                "duplicate": True,
+            }
+        # A previous attempt may have timed out after Ledger committed. Retry with
+        # the same idempotency key so Ledger can safely return its original transfer.
+    else:
+        payment = Payment(**payload.model_dump(), status="pending")
+        db.add(payment)
+        db.commit()
+        db.refresh(payment)
 
     try:
         response = ledger.post("/transfers", json={
@@ -99,7 +103,7 @@ def create_payment(
         "payment_id": payment.id,
         "status": payment.status,
         "ledger_transfer_id": payment.ledger_transfer_id,
-        "duplicate": False,
+        "duplicate": is_retry,
     }
 
 
