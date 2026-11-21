@@ -63,7 +63,7 @@ Import `postman/fintech-support-qa-lab.postman_collection.json` into Postman. Se
 
 | Method | Endpoint | Purpose |
 |---|---|---|
-| GET | `/health` | Health check |
+| GET | `/health` | Process health check |\n| GET | `/health/ready` | Database readiness check (`SELECT 1`) |
 | POST | `/payments` | Create a demo payment |
 | GET | `/payments/{payment_id}` | Retrieve payment |
 | PATCH | `/payments/{payment_id}/status` | Change payment status |
@@ -89,7 +89,7 @@ scripts/       Log analysis CLI
 - [x] SQL investigation playbook
 - [x] Synthetic incident logs and analysis CLI
 - [x] PostgreSQL API and signed-webhook integration test in CI
-- [x] Docker Compose build and API smoke test in CI
+- [x] Database readiness endpoint and outage handling test\n- [x] Docker Compose build and API smoke test in CI
 - [ ] Local Docker Compose smoke test
 - [x] Postman collection with signed webhook request
 
