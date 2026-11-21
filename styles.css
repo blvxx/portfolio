@@ -272,3 +272,53 @@ body.portfolio-editorial{
   .showcase-frame-small{width:45%;height:54%}
   .showcase-stamp{font-size:8px;padding:10px 11px}
 }
+
+
+/* Accessibility pass: stronger text contrast on light editorial surfaces */
+body.portfolio-editorial{color:#20251f}
+.portfolio-editorial .nav a,.portfolio-editorial .mobile-nav a{color:#3f453d}
+.portfolio-editorial .eyebrow,
+.portfolio-editorial .brand span,
+.portfolio-editorial .service-no,
+.portfolio-editorial .project-link,
+.portfolio-editorial .project-highlights li:before,
+.portfolio-editorial .step>.mono,
+.portfolio-editorial .project-kicker-body{color:#40543a}
+.portfolio-editorial .hero-lead,
+.portfolio-editorial .section-intro,
+.portfolio-editorial .service-card p,
+.portfolio-editorial .project-description,
+.portfolio-editorial .project-highlights li,
+.portfolio-editorial .step p,
+.portfolio-editorial .about-copy p{color:#4b5048}
+.portfolio-editorial .service-card li{color:#41473f}
+.portfolio-editorial .project-status,
+.portfolio-editorial .transparency-note,
+.portfolio-editorial .loading,
+.portfolio-editorial .project-count{color:#50564d}
+.portfolio-editorial .stack-line{color:#454c43}
+.portfolio-editorial .hero-meta{color:#50564d}
+.portfolio-editorial .showcase-top,
+.portfolio-editorial .showcase-bottom{color:#50564d}
+.portfolio-editorial .showcase-bottom a{color:#34452f}
+.portfolio-editorial .text-link span,
+.portfolio-editorial .header-cta span{color:#40543a}
+.portfolio-editorial .project-link-primary{background:#40543a;color:#fff}
+.portfolio-editorial .project-link-primary:hover{background:#2f402b}
+.portfolio-editorial .filter-btn{color:#41473f;border-color:#c5c0b5}
+.portfolio-editorial .filter-btn:hover,
+.portfolio-editorial .filter-btn[aria-pressed="true"]{color:#fff}
+.portfolio-editorial .about-layout h2 span,
+.portfolio-editorial .hero h1 span{color:#40543a}
+.portfolio-editorial .contact-panel .eyebrow,
+.portfolio-editorial .contact-panel h2 span{color:#d0ddc5}
+.portfolio-editorial .contact-panel p:not(.eyebrow),
+.portfolio-editorial .contact-actions>a:not(.button){color:#d0d4cb}
+.portfolio-editorial .contact-email{color:#c1c8bc}
+@media(max-width:680px){
+  .portfolio-editorial .hero-lead{font-size:15px}
+  .portfolio-editorial .service-card p,
+  .portfolio-editorial .project-description,
+  .portfolio-editorial .about-copy p,
+  .portfolio-editorial .step p{font-size:12px}
+}
