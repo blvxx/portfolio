@@ -1,68 +1,198 @@
 [
   {
     "id": 1,
-    "category": "qa",
-    "metric": "−85% времени регрессии",
-    "title": "Автотесты REST API: регрессия с 4 часов до 35 минут",
-    "problem": "Перед каждым релизом API проверяли вручную: 47 эндпоинтов, около 4 часов работы. Из-за человеческого фактора ошибки дважды за квартал долетали до прода.",
-    "solution": "Собрал набор автотестов на Python + pytest + requests: 60+ проверок критичных эндпоинтов, отчёты Allure, ночной запуск по cron. Интегрировал с Jira: упавший тест сам создаёт задачу с логами.",
-    "result": "Регрессия сократилась до 35 минут. За 3 месяца — 12 критичных багов пойманы до релиза, ни одного отката из-за пропущенной ошибки API.",
-    "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
-    "tech": ["Python", "pytest", "Requests", "Allure", "Postman", "Jira"]
+    "category": "web",
+    "kicker": "WEB / CONCEPT COLLECTION",
+    "title": "Сайты для разных ниш",
+    "description": "Четыре самостоятельных концепта: кофейня NOIR COFFEE, креативная студия FRAME STUDIO, фитнес-клуб IRON DISTRICT и магазин косметики VÉRA SKIN.",
+    "highlights": [
+      "Разные визуальные направления и структуры страниц",
+      "Адаптивные интерфейсы и интерактивные элементы",
+      "Концепты для демонстрации навыков, не коммерческие заказы"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Responsive UI"
+    ],
+    "status": "4 концепт-проекта",
+    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects",
+    "link": "Смотреть проекты"
   },
   {
     "id": 2,
-    "category": "backend",
-    "metric": "100% транзакций восстановлено",
-    "title": "Расследование инцидента с «зависшими» транзакциями",
-    "problem": "B2B-клиенты массово жаловались на транзакции в статусе «выполняется». Мониторинг молчал, L1 не мог воспроизвести ошибку.",
-    "solution": "Протрейсил транзакции по ID в логах приложений на Linux (grep, awk), нашёл скопление очереди: один микросервис обрабатывал события медленнее, чем они приходили. Гипотезу подтвердил SQL-запросами к таблицам транзакций (JOIN + GROUP BY по статусам и времени).",
-    "result": "Первопричина найдена за 2 часа, очередь разобрана, 100% транзакций восстановлены. Написал постмортем и добавил алерт на длину очереди: подобные инциденты теперь видны за минуты, а не из жалоб клиентов.",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
-    "tech": ["Linux", "Bash", "PostgreSQL", "SQL", "Логи", "Микросервисы"]
+    "category": "qa",
+    "kicker": "QA ENGINEERING / FINTECH",
+    "title": "FinTech QA Engineering Platform",
+    "description": "Демонстрационная платёжная платформа с двумя API-сервисами, PostgreSQL и пользовательским интерфейсом. Показывает полный цикл тестирования веб-продукта.",
+    "highlights": [
+      "API и интеграционные проверки на pytest",
+      "Playwright E2E, Postman и Allure",
+      "Docker Compose, GitHub Actions, Prometheus и Grafana"
+    ],
+    "tech": [
+      "Python",
+      "pytest",
+      "Playwright",
+      "PostgreSQL",
+      "Docker",
+      "Prometheus"
+    ],
+    "status": "Технический демо-проект",
+    "url": "https://blvxx.github.io/portfolio/fintech-qa-platform/overview.html",
+    "link": "Открыть обзор"
   },
   {
     "id": 3,
     "category": "qa",
-    "metric": "релиз ×2 быстрее",
-    "title": "Системная регрессия мобильного приложения",
-    "problem": "Релиз мобильного приложения занимал 2 недели: проверки без единого плана, баги находили в конце цикла, после релиза — хотфиксы.",
-    "solution": "Составил 120 тест-кейсов в Jira, разбил регрессию на smoke / critical / major по риску. Ввёл чек-листы для сборок и единый формат баг-репортов с логами и шагами воспроизведения.",
-    "result": "Цикл релиза сократился до 1 недели, 9 из 10 критичных багов стали находить до релиза. Регрессию может прогнать любой член команды, а не только «тот, кто её писал».",
-    "image": "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
-    "tech": ["Тест-кейсы", "Jira", "Регрессия", "Mobile QA", "Баг-репорты"]
+    "kicker": "API TEST AUTOMATION",
+    "title": "API Automation — Python / pytest",
+    "description": "Набор автоматизированных проверок REST API: CRUD-сценарии, позитивные и негативные проверки, JSON Schema и отдельные unit-тесты HTTP-клиента.",
+    "highlights": [
+      "GET, POST, PUT, PATCH и DELETE",
+      "Проверка схем ответов и параметризованные сценарии",
+      "Коллекция Postman, Allure и GitHub Actions"
+    ],
+    "tech": [
+      "Python",
+      "pytest",
+      "requests",
+      "JSON Schema",
+      "Postman"
+    ],
+    "status": "Тесты для публичного demo API",
+    "url": "https://github.com/blvxx/portfolio/tree/main/api-automation",
+    "link": "Открыть репозиторий"
   },
   {
     "id": 4,
-    "category": "support",
-    "metric": "−45% эскалаций на L2",
-    "title": "База знаний, сократившая эскалации на L2 вдвое",
-    "problem": "L1 эскалировал на L2 до 40% обращений, включая типовые: восстановление доступа, настройка интеграций, ошибки сертификатов.",
-    "solution": "Проанализировал эскалации за 3 месяца, выделил топ-12 повторяющихся сценариев. Написал статьи в Confluence с пошаговыми инструкциями и готовыми сниппетами SQL и логов, провёл 2 обучения для L1.",
-    "result": "За квартал эскалации на L2 снизились с 40% до 22%, среднее время решения обращения на L1 — минус 15 минут. База знаний стала частью онбординга новичков.",
-    "image": "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=800&q=80",
-    "tech": ["Confluence", "Документация", "SQL", "Процессы поддержки"]
+    "category": "qa",
+    "kicker": "UI TEST AUTOMATION",
+    "title": "Todo Test — Playwright",
+    "description": "Небольшое веб-приложение, используемое как объект тестирования. В репозитории собраны сценарии ручной проверки и браузерная автоматизация.",
+    "highlights": [
+      "8 E2E-сценариев описаны в тестовом наборе",
+      "17 ручных тест-кейсов и шаблон отчёта",
+      "Проверки валидации, действий со списком и localStorage"
+    ],
+    "tech": [
+      "Playwright",
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "GitHub Actions"
+    ],
+    "status": "Практический QA-проект",
+    "url": "https://github.com/blvxx/todo-test",
+    "link": "Открыть репозиторий"
   },
   {
     "id": 5,
-    "category": "backend",
-    "metric": "алерт за минуты вместо часа",
-    "title": "Telegram-бот для дежурного инженера (pet-проект)",
-    "problem": "Дежурный инженер вручную мониторил статус сервисов и очередь обращений — ночью и в выходные всплески легко пропустить.",
-    "solution": "Написал бота на Python (aiogram): каждые 5 минут опрашивает API статусов и очередь обращений, шлёт алерт при превышении порога, понимает команды /status, /queue, /report. Развернул в Docker-контейнере на VPS, логи — в файл с ротацией.",
-    "result": "Ботом пользуется команда из 4 человек: всплески очереди замечаем за минуты вместо часа. Проект закрепил навыки Python, REST API и Docker на реальном сценарии.",
-    "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-    "tech": ["Python", "aiogram", "Docker", "REST API", "VPS"]
+    "category": "support",
+    "kicker": "APPLICATION SUPPORT / API",
+    "title": "Fintech Support & QA Lab",
+    "description": "Песочница для отработки типовых задач поддержки: жизненный цикл платежа, вебхуки, диагностика логов, SQL-проверки и техническая документация.",
+    "highlights": [
+      "FastAPI, PostgreSQL и интеграционные тесты",
+      "HMAC-подпись и идемпотентная обработка webhook-событий",
+      "CLI-анализатор синтетических логов и SQL playbook"
+    ],
+    "tech": [
+      "FastAPI",
+      "Python",
+      "SQL",
+      "PostgreSQL",
+      "pytest",
+      "Postman"
+    ],
+    "status": "Демонстрационная среда",
+    "url": "https://github.com/blvxx/portfolio/tree/main/fintech-support-qa-lab",
+    "link": "Открыть репозиторий"
   },
   {
     "id": 6,
+    "category": "support",
+    "kicker": "INCIDENT RESPONSE / RCA",
+    "title": "Incident Investigation Lab",
+    "description": "Симуляция инцидента: платёжный провайдер подтверждает оплату, но заказ остаётся в ожидании. Кейс показывает ход расследования от логов до восстановления.",
+    "highlights": [
+      "Анализ логов и классификация ошибок webhook",
+      "SQL-сверка платежей и заказов, поиск дублей",
+      "RCA, recovery runbook и единый operations CLI"
+    ],
+    "tech": [
+      "Python",
+      "SQL",
+      "HTTP",
+      "Webhooks",
+      "RCA",
+      "Runbooks"
+    ],
+    "status": "Смоделированный инцидент",
+    "url": "https://github.com/blvxx/portfolio/tree/main/incident-lab",
+    "link": "Открыть разбор"
+  },
+  {
+    "id": 7,
+    "category": "analytics",
+    "kicker": "DATA ANALYTICS / SQL + PYTHON",
+    "title": "E-commerce Sales Analytics",
+    "description": "Воспроизводимый аналитический кейс на синтетическом наборе из 360 заказов: расчёт KPI и анализ продаж по месяцам, регионам, категориям и каналам.",
+    "highlights": [
+      "SQL-запросы для воронки, выручки и сегментов",
+      "Pandas-пайплайн и экспорт CSV/JSON-отчётов",
+      "Проверка качества данных и unit-тесты"
+    ],
+    "tech": [
+      "PostgreSQL",
+      "SQL",
+      "Python",
+      "pandas",
+      "pytest"
+    ],
+    "status": "Синтетический набор данных",
+    "url": "https://github.com/blvxx/portfolio/tree/main/data-analytics",
+    "link": "Открыть анализ"
+  },
+  {
+    "id": 8,
     "category": "web",
-    "metric": "PageSpeed 98/100",
-    "title": "Лендинг для кофейни: 18 заявок за первую неделю",
-    "problem": "У локальной кофейни не было сайта: меню на бумаге, часы работы по телефону. Владелец не хотел платить 1500 ₽/мес за конструктор.",
-    "solution": "Сделал одностраничник без фреймворков: HTML/CSS/JS, mobile-first вёрстка, меню с фильтром по категориям, форма заявки на почту, базовое SEO (мета-теги, sitemap, OG-теги).",
-    "result": "PageSpeed 98/100 на мобильных. За первый месяц — 200+ визитов из поиска и 18 заявок с формы. Расходы на конструктор отбились за первую неделю.",
-    "image": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
-    "tech": ["HTML", "CSS", "JavaScript", "SEO", "Formspree"]
+    "kicker": "PERSONAL WEB APP",
+    "title": "Treker — трекер восстановления",
+    "description": "Самостоятельное одностраничное веб-приложение с временными этапами, прогрессом и адаптивным интерфейсом. Реализовано без внешних зависимостей.",
+    "highlights": [
+      "Одностраничный интерфейс на HTML, CSS и JavaScript",
+      "Адаптивная компоновка для desktop и mobile",
+      "Личный прототип, не медицинский инструмент"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Responsive UI"
+    ],
+    "status": "Личный прототип",
+    "url": "https://github.com/blvxx/Treker",
+    "link": "Открыть репозиторий"
+  },
+  {
+    "id": 9,
+    "category": "prototype",
+    "kicker": "EARLY PROTOTYPE",
+    "title": "HabitForge",
+    "description": "Заготовка концепции трекера привычек. Репозиторий пока содержит описание направления, а не готовое приложение.",
+    "highlights": [
+      "Идея интерфейса и сценариев привычек",
+      "Полная реализация и тестовое покрытие ещё не готовы"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "status": "В разработке · не завершён",
+    "url": "https://github.com/blvxx/HabitForge",
+    "link": "Открыть репозиторий"
   }
 ]
