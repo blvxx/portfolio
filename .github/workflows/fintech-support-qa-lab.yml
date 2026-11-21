@@ -76,5 +76,5 @@ jobs:
           payment_id=$(python -c 'import json,sys; print(json.load(sys.stdin)["id"])' <<< "$response")
           test -n "$payment_id"
           fetched=$(curl --silent --show-error --fail "http://localhost:8000/payments/$payment_id")
-          python -c 'import json,sys; data=json.load(sys.stdin); assert data["status"] == "pending"; assert data["customer_reference"] == "COMPOSE-SMOKE-001"'
+          python -c 'import json,sys; data=json.load(sys.stdin); assert data["status"] == "pending"; assert data["customer_reference"] == "COMPOSE-SMOKE-001"' <<< "$fetched"
           echo "Docker Compose API smoke test passed for payment $payment_id"
