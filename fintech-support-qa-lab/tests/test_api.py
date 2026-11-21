@@ -59,6 +59,34 @@ def test_health_check():
     assert response.json() == {"status": "ok"}
 
 
+def test_database_readiness_check():
+    response = client.get("/health/ready")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ready", "database": "ok"}
+
+
+def test_database_readiness_returns_503_when_database_is_unavailable():
+    from sqlalchemy.exc import OperationalError
+
+    class UnavailableSession:
+        def execute(self, statement):
+            raise OperationalError("SELECT 1", {}, Exception("database offline"))
+
+        def close(self):
+            pass
+
+    def unavailable_db():
+        yield UnavailableSession()
+
+    app.dependency_overrides[get_db] = unavailable_db
+    try:
+        response = client.get("/health/ready")
+        assert response.status_code == 503
+        assert response.json()["detail"] == "Database unavailable"
+    finally:
+        app.dependency_overrides[get_db] = override_get_db
+
+
 def test_create_and_get_payment():
     payment_id = create_payment()
     fetched = client.get(f"/payments/{payment_id}")
