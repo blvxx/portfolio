@@ -436,3 +436,62 @@ body.portfolio-editorial{
  .case-study-layout{grid-template-columns:1fr;gap:28px}
  .portfolio-editorial .section{padding-top:66px;padding-bottom:66px}
 }
+
+
+/* Corporate graphite & white redesign — primary portfolio */
+body.portfolio-corporate{--paper:#f4f5f6;--white:#fff;--ink:#17191d;--muted:#737982;--soft:#e8eaed;--line:#d7dbe0;--blue:#414852;--blue-dark:#252a31;--night:#171a1f;--night-soft:#242930;background:var(--paper);color:var(--ink)}
+.portfolio-corporate .header{background:rgba(23,26,31,.96);border-color:#343941;color:#fff}
+.portfolio-corporate .brand{color:#fff;font-size:23px;letter-spacing:-.08em}.portfolio-corporate .brand span{color:#aeb5bf}
+.portfolio-corporate .nav a,.portfolio-corporate .mobile-nav a{color:#c4c9d0}.portfolio-corporate .nav a:hover,.portfolio-corporate .mobile-nav a:hover{color:#fff}
+.portfolio-corporate .header-cta{color:#fff;border-color:#737b86}.portfolio-corporate .header-cta span,.portfolio-corporate .button span,.portfolio-corporate .text-link span,.portfolio-corporate .about-link span{color:#aeb5bf}
+.portfolio-corporate .menu-toggle{color:#fff}.portfolio-corporate .mobile-nav{background:#171a1f;border-color:#343941}
+.portfolio-corporate .hero{padding:92px 0 30px;background:#171a1f;color:#fff}
+.portfolio-corporate .hero-layout{grid-template-columns:minmax(0,1.1fr) minmax(350px,.9fr);gap:62px}
+.portfolio-corporate .eyebrow{color:#aeb5bf}.portfolio-corporate .eyebrow-dot{background:#aeb5bf}
+.portfolio-corporate .hero h1{font-family:var(--font);font-size:clamp(52px,6.5vw,88px);font-weight:700;line-height:1.02;letter-spacing:-.075em}
+.portfolio-corporate .hero h1 span{color:#aeb5bf;font-style:normal;font-weight:500}
+.portfolio-corporate .hero-lead{color:#c1c6ce;font-size:15px;line-height:1.85;max-width:600px}
+.portfolio-corporate .button-dark{background:#fff;color:#171a1f}.portfolio-corporate .button-dark:hover{background:#dfe3e8;color:#171a1f}.portfolio-corporate .button-dark span{color:#59616c}
+.portfolio-corporate .text-link{color:#fff}.portfolio-corporate .hero-meta{color:#9ca4af}.portfolio-corporate .hero-meta i{background:#68717d}
+.portfolio-corporate .hero-aside.editorial-showcase{background:#242930;color:#fff;border:1px solid #3a414b;min-height:490px;padding:22px}
+.portfolio-corporate .showcase-top,.portfolio-corporate .showcase-bottom{color:#c0c6cf}
+.portfolio-corporate .showcase-frame{border-color:#fff;background:#fff;box-shadow:0 18px 50px #0005}
+.portfolio-corporate .showcase-stamp{background:#fff;color:#171a1f}.portfolio-corporate .showcase-bottom a{color:#fff}
+.portfolio-corporate .hero-foot{color:#fff;border-top:1px solid #343941;padding-top:22px;margin-top:42px}.portfolio-corporate .hero-foot .mono{color:#9ca4af}
+.portfolio-corporate .stack-line span{color:#d4d8de;border-color:#505762}
+.portfolio-corporate .section{background:#f4f5f6;color:#17191d}.portfolio-corporate .section:nth-of-type(even){background:#fff}
+.portfolio-corporate .section-heading h2,.portfolio-corporate .case-study-heading h2,.portfolio-corporate .contact-panel h2{font-family:var(--font);font-weight:700;letter-spacing:-.065em}
+.portfolio-corporate .section-heading h2{color:#17191d}.portfolio-corporate .section-intro{color:#646b75}
+.portfolio-corporate .services-section{background:#fff}
+.portfolio-corporate .service-card{background:#f4f5f6;border:1px solid #d9dde2;color:#17191d}
+.portfolio-corporate .service-card.service-primary{background:#171a1f;color:#fff;border-color:#171a1f}
+.portfolio-corporate .service-no{color:#737b86}.portfolio-corporate .service-primary .service-no,.portfolio-corporate .service-primary p,.portfolio-corporate .service-primary li{color:#c1c6ce}
+.portfolio-corporate .service-card p,.portfolio-corporate .service-card li{color:#626a74}.portfolio-corporate .service-card h3{color:inherit}
+.portfolio-corporate .service-primary .service-detail-link{border-color:#555d68}.portfolio-corporate .service-detail-link span{color:#c4cbd4}
+.portfolio-corporate .pricing-section{background:#eef0f2}.portfolio-corporate .price-card{background:#fff;border:1px solid #d9dde2}
+.portfolio-corporate .price-featured{background:#171a1f;color:#fff;border-color:#171a1f}.portfolio-corporate .price-card .mono{color:#737b86}
+.portfolio-corporate .price-featured .mono,.portfolio-corporate .price-featured p:not(.price-value){color:#c1c6ce}
+.portfolio-corporate .price-value{color:inherit}.portfolio-corporate .price-card a{color:#343b45}.portfolio-corporate .price-featured a{color:#fff}
+.portfolio-corporate .pricing-note,.portfolio-corporate .transparency-note{color:#747b85}
+.portfolio-corporate .work-section{background:#fff}.portfolio-corporate .filter-btn{border-color:#cbd0d6;color:#59616c}
+.portfolio-corporate .filter-btn:hover,.portfolio-corporate .filter-btn[aria-pressed="true"]{background:#171a1f;border-color:#171a1f;color:#fff}
+.portfolio-corporate .project-card{background:#fff;border-color:#d9dde2}.portfolio-corporate .project-card:hover{border-color:#8c949f}
+.portfolio-corporate .project-top,.portfolio-corporate .artifact-preview{background:#20242b}.portfolio-corporate .project-kicker,.portfolio-corporate .artifact-label{color:#c1c7d0}
+.portfolio-corporate .project-description,.portfolio-corporate .project-highlights li{color:#626a74}.portfolio-corporate .project-highlights li:before{color:#737b86}
+.portfolio-corporate .project-tag{border-color:#e0e3e7;color:#626a74}.portfolio-corporate .project-link,.portfolio-corporate .project-link-primary{color:#fff;background:#252a31}
+.portfolio-corporate .project-link:not(.project-link-primary){background:transparent;color:#343b45}.portfolio-corporate .project-footer{border-color:#e2e5e9}
+.portfolio-corporate .case-study-section{background:#eef0f2}.portfolio-corporate .case-study-heading h2 span{color:#68717d}
+.portfolio-corporate .case-study-heading>p:not(.eyebrow){color:#626a74}.portfolio-corporate .case-study-link{color:#252a31;border-color:#858d97}
+.portfolio-corporate .case-study-points article{border-color:#cbd0d6}.portfolio-corporate .case-study-points article>span{color:#737b86}
+.portfolio-corporate .case-study-points p,.portfolio-corporate .step p{color:#626a74}
+.portfolio-corporate .approach-section{background:#fff;border-color:#d7dbe0}.portfolio-corporate .step>.mono{color:#737b86}
+.portfolio-corporate .about-section{background:#e8eaed}.portfolio-corporate .about-layout h2 span{color:#68717d}
+.portfolio-corporate .about-copy p{color:#626a74}.portfolio-corporate .about-copy .about-lead{color:#17191d}.portfolio-corporate .about-link{border-color:#858d97}
+.portfolio-corporate .contact-section{background:#171a1f;color:#fff}.portfolio-corporate .contact-panel .eyebrow,.portfolio-corporate .contact-panel h2 span{color:#b5bdc8}
+.portfolio-corporate .contact-panel p:not(.eyebrow){color:#c1c6ce}.portfolio-corporate .button-light{background:#fff;color:#171a1f}
+.portfolio-corporate .button-light:hover{background:#dfe3e8}.portfolio-corporate .contact-actions>a:not(.button){color:#d4d8de}
+.portfolio-corporate .contact-email{color:#9ca4af}.portfolio-corporate .footer{background:#101216;border-color:#343941}
+.portfolio-corporate .footer .brand{color:#fff}.portfolio-corporate .project-preview{border-color:#d9dde2}.portfolio-corporate .preview-toolbar{background:#252a31}
+.portfolio-corporate :focus-visible{outline-color:#8d98a7}
+@media(max-width:900px){.portfolio-corporate .hero-layout{grid-template-columns:1fr .85fr;gap:32px}}
+@media(max-width:680px){.portfolio-corporate .hero{padding-top:60px}.portfolio-corporate .hero-layout{grid-template-columns:1fr;gap:34px}.portfolio-corporate .hero h1{font-size:clamp(43px,12vw,66px)}.portfolio-corporate .hero-aside.editorial-showcase{min-height:420px}.portfolio-corporate .section{padding:68px 0}}
