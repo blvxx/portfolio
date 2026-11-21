@@ -112,7 +112,7 @@
     }
   },
   {
-    "id": 2,
+    "id": 5,
     "category": "qa",
     "kicker": "QA ENGINEERING / FINTECH",
     "title": "FinTech QA Engineering Platform",
@@ -140,7 +140,7 @@
     }
   },
   {
-    "id": 3,
+    "id": 6,
     "category": "qa",
     "kicker": "API TEST AUTOMATION",
     "title": "API Automation — Python / pytest",
@@ -173,7 +173,7 @@
     }
   },
   {
-    "id": 4,
+    "id": 7,
     "category": "qa",
     "kicker": "UI TEST AUTOMATION",
     "title": "Todo Test — Playwright",
@@ -206,7 +206,7 @@
     }
   },
   {
-    "id": 5,
+    "id": 8,
     "category": "support",
     "kicker": "APPLICATION SUPPORT / API",
     "title": "Fintech Support & QA Lab",
@@ -240,7 +240,7 @@
     }
   },
   {
-    "id": 6,
+    "id": 9,
     "category": "support",
     "kicker": "INCIDENT RESPONSE / RCA",
     "title": "Incident Investigation Lab",
@@ -274,7 +274,7 @@
     }
   },
   {
-    "id": 7,
+    "id": 10,
     "category": "analytics",
     "kicker": "DATA ANALYTICS / SQL + PYTHON",
     "title": "E-commerce Sales Analytics",
@@ -307,7 +307,7 @@
     }
   },
   {
-    "id": 8,
+    "id": 11,
     "category": "web",
     "kicker": "PERSONAL WEB APP",
     "title": "Treker — трекер восстановления",
@@ -339,7 +339,7 @@
     }
   },
   {
-    "id": 9,
+    "id": 12,
     "category": "prototype",
     "kicker": "EARLY PROTOTYPE",
     "title": "HabitForge",
