@@ -91,3 +91,14 @@ Simulated production incident: successful payments are not reflected in order st
 ## About
 
 Artem Kalinin — [GitHub profile](https://github.com/blvxx) · [Web portfolio](https://blvxx.github.io/portfolio/)
+
+## Incident Operations Toolkit
+
+Unified CLI for log analysis, payment reconciliation, and consolidated incident reports: [tool](./incident-lab/scripts/incident_ops.py) · [documentation](./incident-lab/docs/incident-operations-toolkit.md).
+
+Run from the repository root:
+
+```bash
+python incident-lab/scripts/incident_ops.py all
+```
+
