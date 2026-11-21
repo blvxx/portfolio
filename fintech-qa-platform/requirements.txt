@@ -8,3 +8,4 @@ ruff==0.11.2
 playwright==1.51.0
 pytest-playwright==0.7.0
 allure-pytest==2.13.5
+\nprometheus-client==0.21.1\n
