@@ -22,6 +22,8 @@ A fictional payment provider reports successful payments, but some storefront or
 8. [SQL reconciliation report](docs/sql-reconciliation-report.md) — sample findings from synthetic data
 9. [Investigation findings](docs/investigation-findings.md)
 10. [Python log analyzer](scripts/analyze_incident.py) — classify patterns and recommend triage checks
+11. [Automated reconciliation](scripts/reconcile_payments.py) — compare order/payment exports and produce CSV findings
+12. [Reconciliation utility documentation](docs/automated-reconciliation.md
 
 ## Sample dataset
 CSV files in \`data/\` contain fictional order/payment records with deliberately injected state mismatches and a repeated provider payment ID. These are used for SQL investigation examples, not real customer or financial data.
@@ -31,6 +33,7 @@ From the repository root:
 
 \`\`\`bash
 python incident-lab/scripts/analyze_incident.py
+python incident-lab/scripts/reconcile_payments.py
 python -m unittest discover -s incident-lab/scripts -v
 \`\`\`
 
