@@ -114,6 +114,31 @@ def test_payment_marks_failed_when_ledger_returns_error(test_session_factory):
         app.dependency_overrides.clear()
 
 
+def test_failed_payment_can_be_retried_safely(test_session_factory):
+    ledger = FakeLedgerClient(status_code=503)
+    configure_app(test_session_factory, ledger)
+    try:
+        with TestClient(app) as client:
+            payload = {
+                "idempotency_key": "payment-test-0006",
+                "customer_account": "customer-60",
+                "merchant_account": "merchant-60",
+                "amount_minor": 1200,
+                "currency": "RUB",
+            }
+            first = client.post("/payments", json=payload)
+            assert first.status_code == 502
+
+            ledger.status_code = 201
+            retry = client.post("/payments", json=payload)
+            assert retry.status_code == 201
+            assert retry.json()["status"] == "posted"
+            assert retry.json()["duplicate"] is True
+            assert len(ledger.calls) == 2
+    finally:
+        app.dependency_overrides.clear()
+
+
 def test_payment_rejects_invalid_amount_before_ledger_call(test_session_factory):
     ledger = FakeLedgerClient()
     configure_app(test_session_factory, ledger)
