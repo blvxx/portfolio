@@ -2,23 +2,114 @@
   {
     "id": 1,
     "category": "web",
-    "kicker": "WEB / CONCEPT COLLECTION",
-    "title": "Сайты для разных ниш",
-    "description": "Четыре самостоятельных концепта: кофейня NOIR COFFEE, креативная студия FRAME STUDIO, фитнес-клуб IRON DISTRICT и магазин косметики VÉRA SKIN.",
+    "kicker": "WEBSITE CONCEPT / COFFEE",
+    "title": "NOIR Coffee Studio",
+    "description": "Концепт сайта городской кофейни: спокойная визуальная подача, меню, история бренда и блок с контактами. Показывает, как сайт может передавать атмосферу заведения и помогать гостю принять решение.",
     "highlights": [
-      "Разные визуальные направления и структуры страниц",
-      "Адаптивные интерфейсы и интерактивные элементы",
-      "Концепты для демонстрации навыков, не коммерческие заказы"
+      "Первый экран с ясным позиционированием",
+      "Меню с ассортиментом и ценами",
+      "Адаптивная структура и сценарий знакомства с заведением"
     ],
     "tech": [
       "HTML",
       "CSS",
       "JavaScript",
-      "Responsive UI"
+      "Responsive"
     ],
-    "status": "4 концепт-проекта",
-    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects",
-    "link": "Смотреть проекты"
+    "status": "Концепт · демонстрационный проект",
+    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/noir-coffee",
+    "link": "Код на GitHub",
+    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/noir-coffee/",
+    "demo_label": "Открыть сайт",
+    "preview": {
+      "type": "iframe",
+      "src": "https://blvxx.github.io/frontend-portfolio/projects/noir-coffee/",
+      "alt": "Живое превью сайта NOIR Coffee Studio"
+    }
+  },
+  {
+    "id": 2,
+    "category": "web",
+    "kicker": "WEBSITE CONCEPT / CREATIVE",
+    "title": "FRAME Digital Studio",
+    "description": "Концепт сайта цифровой студии с выразительной типографикой и минималистичной подачей. Подходит как пример презентации услуг креативного или digital-бизнеса.",
+    "highlights": [
+      "Акцент на услугах и позиционировании",
+      "Выразительная типографика и композиция",
+      "Минималистичная структура без лишнего шума"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Responsive"
+    ],
+    "status": "Концепт · вымышленная студия",
+    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/frame-studio",
+    "link": "Код на GitHub",
+    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/frame-studio/",
+    "demo_label": "Открыть сайт",
+    "preview": {
+      "type": "iframe",
+      "src": "https://blvxx.github.io/frontend-portfolio/projects/frame-studio/",
+      "alt": "Живое превью сайта FRAME Digital Studio"
+    }
+  },
+  {
+    "id": 3,
+    "category": "web",
+    "kicker": "WEBSITE CONCEPT / FITNESS",
+    "title": "IRON DISTRICT",
+    "description": "Концепт сайта фитнес-клуба с сильным первым экраном, направлениями тренировок и заметными точками входа в запись. Пример того, как структурировать услуги и мотивировать посетителя оставить заявку.",
+    "highlights": [
+      "Первый экран с чётким предложением клуба",
+      "Карточки направлений и преимуществ",
+      "CTA-запись с пометкой о демонстрационном сценарии"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Responsive"
+    ],
+    "status": "Концепт · заявки демонстрационные",
+    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/iron-district",
+    "link": "Код на GitHub",
+    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/iron-district/",
+    "demo_label": "Открыть сайт",
+    "preview": {
+      "type": "iframe",
+      "src": "https://blvxx.github.io/frontend-portfolio/projects/iron-district/",
+      "alt": "Живое превью сайта IRON DISTRICT"
+    }
+  },
+  {
+    "id": 4,
+    "category": "web",
+    "kicker": "E-COMMERCE CONCEPT / BEAUTY",
+    "title": "VÉRA SKIN",
+    "description": "Концепт интернет-магазина уходовой косметики: продуктовая подача, каталог, корзина и промо-блок. Демонстрирует интерфейсную логику небольшого e-commerce проекта.",
+    "highlights": [
+      "Каталог и продуктовая коммуникация",
+      "Корзина и отображение суммы заказа",
+      "Промо-блок и адаптивная подача"
+    ],
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "E-commerce UI"
+    ],
+    "status": "Концепт · без реальных продаж",
+    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/vera-skin",
+    "link": "Код на GitHub",
+    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/vera-skin/",
+    "demo_label": "Открыть сайт",
+    "preview": {
+      "type": "iframe",
+      "src": "https://blvxx.github.io/frontend-portfolio/projects/vera-skin/",
+      "alt": "Живое превью сайта VÉRA SKIN"
+    }
   },
   {
     "id": 2,
@@ -41,7 +132,12 @@
     ],
     "status": "Технический демо-проект",
     "url": "https://blvxx.github.io/portfolio/fintech-qa-platform/overview.html",
-    "link": "Открыть обзор"
+    "link": "Открыть обзор",
+    "preview": {
+      "type": "image",
+      "src": "https://raw.githubusercontent.com/blvxx/portfolio/main/fintech-qa-platform/docs/screenshots/payment-ui.png",
+      "alt": "Скриншот интерфейса платёжной FinTech QA Platform"
+    }
   },
   {
     "id": 3,
@@ -63,7 +159,18 @@
     ],
     "status": "Тесты для публичного demo API",
     "url": "https://github.com/blvxx/portfolio/tree/main/api-automation",
-    "link": "Открыть репозиторий"
+    "link": "Открыть репозиторий",
+    "preview": {
+      "type": "artifact",
+      "label": "API TEST SUITE",
+      "headline": "REST API · pytest",
+      "lines": [
+        "GET / POST / PUT / PATCH / DELETE",
+        "JSON Schema validation",
+        "Positive & negative scenarios"
+      ],
+      "footer": "Python  ·  requests  ·  Allure"
+    }
   },
   {
     "id": 4,
@@ -85,7 +192,18 @@
     ],
     "status": "Практический QA-проект",
     "url": "https://github.com/blvxx/todo-test",
-    "link": "Открыть репозиторий"
+    "link": "Открыть репозиторий",
+    "preview": {
+      "type": "artifact",
+      "label": "BROWSER TESTING",
+      "headline": "Playwright E2E",
+      "lines": [
+        "17 manual test cases",
+        "8 automated UI scenarios",
+        "Validation · localStorage · CRUD"
+      ],
+      "footer": "JavaScript  ·  GitHub Actions"
+    }
   },
   {
     "id": 5,
@@ -108,7 +226,18 @@
     ],
     "status": "Демонстрационная среда",
     "url": "https://github.com/blvxx/portfolio/tree/main/fintech-support-qa-lab",
-    "link": "Открыть репозиторий"
+    "link": "Открыть репозиторий",
+    "preview": {
+      "type": "artifact",
+      "label": "SUPPORT WORKFLOW",
+      "headline": "Payment investigation",
+      "lines": [
+        "API & webhook diagnostics",
+        "SQL checks · PostgreSQL",
+        "Logs · reproducible test cases"
+      ],
+      "footer": "FastAPI  ·  SQL  ·  pytest"
+    }
   },
   {
     "id": 6,
@@ -131,7 +260,18 @@
     ],
     "status": "Смоделированный инцидент",
     "url": "https://github.com/blvxx/portfolio/tree/main/incident-lab",
-    "link": "Открыть разбор"
+    "link": "Открыть разбор",
+    "preview": {
+      "type": "artifact",
+      "label": "INCIDENT RESPONSE",
+      "headline": "Detect → Investigate → Recover",
+      "lines": [
+        "Webhook delivery failure",
+        "Payment / order reconciliation",
+        "RCA · recovery runbook"
+      ],
+      "footer": "Python  ·  SQL  ·  Operations"
+    }
   },
   {
     "id": 7,
@@ -153,7 +293,18 @@
     ],
     "status": "Синтетический набор данных",
     "url": "https://github.com/blvxx/portfolio/tree/main/data-analytics",
-    "link": "Открыть анализ"
+    "link": "Открыть анализ",
+    "preview": {
+      "type": "artifact",
+      "label": "ANALYTICS SNAPSHOT",
+      "headline": "Sales performance",
+      "lines": [
+        "Monthly revenue & order KPIs",
+        "Region / category segmentation",
+        "Data quality checks"
+      ],
+      "footer": "PostgreSQL  ·  Python  ·  pandas"
+    }
   },
   {
     "id": 8,
@@ -174,7 +325,18 @@
     ],
     "status": "Личный прототип",
     "url": "https://github.com/blvxx/Treker",
-    "link": "Открыть репозиторий"
+    "link": "Открыть репозиторий",
+    "preview": {
+      "type": "artifact",
+      "label": "PERSONAL WEB APP",
+      "headline": "Treker · progress tracker",
+      "lines": [
+        "Single-page interface",
+        "Responsive layout",
+        "Vanilla JavaScript"
+      ],
+      "footer": "HTML  ·  CSS  ·  JavaScript"
+    }
   },
   {
     "id": 9,
@@ -193,6 +355,17 @@
     ],
     "status": "В разработке · не завершён",
     "url": "https://github.com/blvxx/HabitForge",
-    "link": "Открыть репозиторий"
+    "link": "Открыть репозиторий",
+    "preview": {
+      "type": "artifact",
+      "label": "CONCEPT IN PROGRESS",
+      "headline": "HabitForge",
+      "lines": [
+        "Habit tracking concept",
+        "Interface direction",
+        "Implementation not finished"
+      ],
+      "footer": "Prototype  ·  work in progress"
+    }
   }
 ]
