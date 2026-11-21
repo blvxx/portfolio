@@ -257,3 +257,8 @@
 .portfolio-corporate .rules-footnote{font-size:10px;line-height:1.8;color:#6D625D;margin:22px 0 0;max-width:900px}
 @media(max-width:900px){.portfolio-corporate .rules-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.portfolio-corporate .service-rules{padding:64px 0}.portfolio-corporate .rules-grid{grid-template-columns:1fr}.portfolio-corporate .rules-grid article{min-height:0;padding:22px}}
+
+
+/* Seven-day first-client offer on service page */
+.portfolio-corporate .promo-banner{display:flex;align-items:center;justify-content:space-between;gap:28px;margin:28px 0 18px;padding:28px 30px;background:linear-gradient(115deg,#744B50,#5D393E);color:#fff;border:1px solid #8a6265}.portfolio-corporate .promo-copy{max-width:760px}.portfolio-corporate .promo-kicker{font:9px var(--mono);letter-spacing:.12em;color:#E6CDBA;margin:0 0 10px}.portfolio-corporate .promo-copy h3{font:700 clamp(23px,3vw,32px)/1.2 var(--font);letter-spacing:-.05em;margin:0 0 9px;color:#fff}.portfolio-corporate .promo-copy p:not(.promo-kicker){font-size:13px;color:#F0DED2;margin:0 0 8px}.portfolio-corporate .promo-copy strong{color:#fff}.portfolio-corporate .promo-copy small{display:block;max-width:720px;font-size:10px;line-height:1.7;color:#EADBD2}.portfolio-corporate .promo-link{flex:none;display:inline-flex;align-items:center;gap:12px;padding:13px 17px;background:#F0ECE5;color:#242426;font-size:11px;font-weight:800}.portfolio-corporate .promo-link:hover{background:#fff}
+@media(max-width:680px){.portfolio-corporate .promo-banner{align-items:flex-start;flex-direction:column;padding:23px 20px;gap:18px}.portfolio-corporate .promo-link{width:100%;justify-content:space-between}}
