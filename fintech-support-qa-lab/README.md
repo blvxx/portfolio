@@ -55,6 +55,10 @@ docker compose up --build
 
 The API is available at http://localhost:8000 and PostgreSQL is exposed on port 5432.
 
+## Postman collection
+
+Import `postman/fintech-support-qa-lab.postman_collection.json` into Postman. Set the collection variables `baseUrl` (default `http://localhost:8000`) and `webhook_secret` to the same value as the API `WEBHOOK_SECRET`. Run the requests in order: health check, create payment, retrieve payment, signed webhook, then the invalid-transition check. The webhook pre-request script calculates the HMAC-SHA256 signature and generates a fresh event ID for each run.
+
 ## API overview
 
 | Method | Endpoint | Purpose |
@@ -85,7 +89,7 @@ scripts/       Log analysis CLI
 - [x] SQL investigation playbook
 - [x] Synthetic incident logs and analysis CLI
 - [ ] PostgreSQL integration verification
-- [ ] Postman collection and CI test report
+- [x] Postman collection with signed webhook request
 
 ## Transparency
 
