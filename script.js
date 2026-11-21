@@ -159,7 +159,7 @@ function renderProjects(){
 }
 async function init(){
   try{
-    const response = await fetch('projects.json');
+    const response = await fetch('https://blvxx.github.io/portfolio/projects.json?v=20261121-2');
     if (!response.ok) throw new Error('HTTP ' + response.status);
     projects = await response.json();
     renderFilters();
