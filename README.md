@@ -72,6 +72,21 @@ Responsive website concepts demonstrating HTML, CSS and JavaScript:
 - [Treker](https://github.com/blvxx/Treker) — standalone responsive recovery milestone tracker (single-page HTML app).
 - [HabitForge](https://github.com/blvxx/HabitForge) — habit tracker concept; implementation is not yet complete.
 
+## 1C Development
+
+### [1C Warehouse Management](./1c-warehouse-management/)
+
+Учебный проект на 1С:Предприятие 8.3 для демонстрации проектирования складского учета.
+
+- Бизнес-требования, архитектура и спецификация метаданных.
+- Примеры BSL-модулей для поступления, реализации и получения остатков.
+- Проверка достаточности остатков с учетом повторяющихся строк документа.
+- Ручные тест-кейсы и описание ограничений текущей реализации.
+
+**Stack:** 1С:Предприятие 8.3 · BSL · язык запросов 1С · регистры накопления
+
+> Учебный проект в разработке. Конфигурация еще не собрана и не прошла проверку в Конфигураторе 1С.
+
 ## Incident investigation
 
 ### [Incident Investigation Lab — Payment Webhook Failure](./incident-lab/)
