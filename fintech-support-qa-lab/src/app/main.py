@@ -7,8 +7,8 @@ from typing import Generator
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import DateTime, Integer, String, create_engine
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy import DateTime, Integer, String, create_engine, text
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./fintech_lab.db")
@@ -107,6 +107,16 @@ def verify_webhook_signature(body: bytes, signature: str) -> bool:
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/health/ready")
+def readiness(db: Session = Depends(get_db)) -> dict[str, str]:
+    """Check that the API can reach its configured database."""
+    try:
+        db.execute(text("SELECT 1"))
+    except SQLAlchemyError as exc:
+        raise HTTPException(status_code=503, detail="Database unavailable") from exc
+    return {"status": "ready", "database": "ok"}
 
 
 @app.post("/payments", response_model=PaymentOut, status_code=status.HTTP_201_CREATED)
