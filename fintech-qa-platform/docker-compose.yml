@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: fintech_qa
+      POSTGRES_USER: qa
+      POSTGRES_PASSWORD: qa_demo_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qa -d fintech_qa"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+    volumes:
+      - qa_postgres_data:/var/lib/postgresql/data
+
+  ledger:
+    build: .
+    command: uvicorn services.ledger_service.main:app --host 0.0.0.0 --port 8001
+    environment:
+      DATABASE_URL: postgresql+psycopg://qa:qa_demo_password@db:5432/fintech_qa
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health/ready')"]
+      interval: 5s
+      timeout: 3s
+      retries: 15
+
+  payment:
+    build: .
+    command: uvicorn services.payment_service.main:app --host 0.0.0.0 --port 8000
+    environment:
+      DATABASE_URL: postgresql+psycopg://qa:qa_demo_password@db:5432/fintech_qa
+      LEDGER_SERVICE_URL: http://ledger:8001
+    depends_on:
+      db:
+        condition: service_healthy
+      ledger:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  qa_postgres_data:
