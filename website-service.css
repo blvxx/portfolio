@@ -122,3 +122,60 @@
 .portfolio-editorial .service-contact-actions>a:not(.button){color:#e0ded4}
 @media(max-width:1000px){.service-price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.service-pricing{padding:66px 0}.service-price-grid{grid-template-columns:1fr}.service-price-card{min-height:0}.portfolio-editorial .service-hero h1{font-size:clamp(52px,13vw,72px)}}
+
+
+/* Corporate graphite + white service page — aligned with main portfolio */
+.portfolio-corporate .service-back{color:#c4c9d0}
+.portfolio-corporate .service-hero{background:#171a1f;color:#fff}
+.portfolio-corporate .service-hero h1{font-family:var(--font);font-size:clamp(52px,6.5vw,86px);font-weight:700;line-height:1.02;letter-spacing:-.075em}
+.portfolio-corporate .service-hero h1 span{color:#aeb5bf;font-style:normal}
+.portfolio-corporate .service-lead{color:#c1c6ce}
+.portfolio-corporate .service-proof{color:#aeb5bf}
+.portfolio-corporate .service-proof i{background:#7d8794}
+.portfolio-corporate .service-hero-card{background:#242930;border:1px solid #3a414b}
+.portfolio-corporate .service-hero-card>.mono{color:#c4cbd4}
+.portfolio-corporate .graphic-window{background:#fff;box-shadow:18px 18px 0 #ffffff12}
+.portfolio-corporate .graphic-note{background:#343b45;color:#fff}
+.portfolio-corporate .graphic-content em{background:#343b45}
+.portfolio-corporate .service-hero-card-foot{border-color:#ffffff25;color:#c0c6cf}
+.portfolio-corporate .service-section{background:#f4f5f6;border-color:#d7dbe0}
+.portfolio-corporate .service-section-heading>p{color:#626a74}
+.portfolio-corporate .service-offers article{background:#fff;border-color:#d9dde2}
+.portfolio-corporate .service-offers article:first-child{background:#171a1f;border-color:#171a1f}
+.portfolio-corporate .service-offers .mono{color:#737b86}
+.portfolio-corporate .service-offers article:first-child .mono{color:#c1c6ce}
+.portfolio-corporate .service-offers p{color:#626a74}
+.portfolio-corporate .service-offers article:first-child p{color:#c1c6ce}
+.portfolio-corporate .service-offers ul{border-color:#e2e5e9}
+.portfolio-corporate .service-offers article:first-child ul{border-color:#ffffff25}
+.portfolio-corporate .service-offers li{color:#626a74}
+.portfolio-corporate .service-offers article:first-child li{color:#d4d8de}
+.portfolio-corporate .service-offers li:before,.portfolio-corporate .requirements-grid li:before{color:#737b86}
+.portfolio-corporate .service-pricing{background:#eef0f2;border-color:#d7dbe0}
+.portfolio-corporate .service-price-card{background:#fff;border-color:#d9dde2;color:#17191d}
+.portfolio-corporate .service-price-card>span{color:#737b86}
+.portfolio-corporate .service-price-card h3{font:700 22px/1.15 var(--font);letter-spacing:-.045em}
+.portfolio-corporate .service-price-card p{color:#626a74}
+.portfolio-corporate .service-price-featured{background:#171a1f;border-color:#171a1f;color:#fff}
+.portfolio-corporate .service-price-featured>span{color:#c1c6ce}
+.portfolio-corporate .service-price-featured p{color:#c1c6ce}
+.portfolio-corporate .service-pricing-note{color:#626a74}
+.portfolio-corporate .service-examples{background:#fff}
+.portfolio-corporate .example-card{background:#f4f5f6;border-color:#d9dde2}
+.portfolio-corporate .example-card:hover{border-color:#858d97}
+.portfolio-corporate .example-iron,.portfolio-corporate .example-noir,.portfolio-corporate .example-vera,.portfolio-corporate .example-frame{filter:grayscale(.8)}
+.portfolio-corporate .example-info>span{color:#343b45}
+.portfolio-corporate .service-steps{border-color:#d7dbe0}
+.portfolio-corporate .service-steps article{border-color:#d7dbe0}
+.portfolio-corporate .service-steps article>span{color:#737b86}
+.portfolio-corporate .service-steps p{color:#626a74}
+.portfolio-corporate .service-requirements{background:#e8eaed}
+.portfolio-corporate .requirements-grid p,.portfolio-corporate .requirements-grid li{color:#626a74}
+.portfolio-corporate .requirements-grid ul{border-color:#cbd0d6}
+.portfolio-corporate .service-contact{background:#171a1f}
+.portfolio-corporate .service-contact .eyebrow,.portfolio-corporate .service-contact h2 span{color:#b5bdc8}
+.portfolio-corporate .service-contact h2{font-family:var(--font);font-weight:700;letter-spacing:-.065em}
+.portfolio-corporate .service-contact-inner>div:first-child>p:not(.eyebrow){color:#c1c6ce}
+.portfolio-corporate .service-contact-actions>a:not(.button){color:#d4d8de}
+.portfolio-corporate .service-contact-actions>span{color:#9ca4af}
+@media(max-width:680px){.portfolio-corporate .service-hero h1{font-size:clamp(43px,12vw,66px)}}
