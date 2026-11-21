@@ -101,30 +101,47 @@
       ]
     },
     {
-      "name": "Update payment to paid",
+      "name": "Signed payment webhook",
       "request": {
-        "method": "PATCH",
+        "method": "POST",
         "header": [
           {
             "key": "Content-Type",
             "value": "application/json"
+          },
+          {
+            "key": "X-Signature",
+            "value": "{{webhook_signature}}"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"status\": \"paid\"\n}"
+          "raw": "{\n  \"event_id\": \"{{event_id}}\",\n  \"payment_id\": {{payment_id}},\n  \"status\": \"paid\"\n}"
         },
-        "url": "{{baseUrl}}/payments/{{payment_id}}/status"
+        "url": "{{baseUrl}}/webhooks/payment-status"
       },
       "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set('event_id', 'evt-' + Date.now());",
+              "const rawBody = pm.variables.replaceIn(pm.request.body.raw);",
+              "const secret = pm.collectionVariables.get('webhook_secret');",
+              "const digest = CryptoJS.HmacSHA256(rawBody, secret).toString(CryptoJS.enc.Hex);",
+              "pm.variables.set('webhook_signature', 'sha256=' + digest);"
+            ]
+          }
+        },
         {
           "listen": "test",
           "script": {
             "type": "text/javascript",
             "exec": [
-              "pm.test('Payment transitions to paid', function () {",
+              "pm.test('Signed webhook accepted', function () {",
               "  pm.response.to.have.status(200);",
-              "  pm.expect(pm.response.json().status).to.eql('paid');",
+              "  pm.expect(pm.response.json().duplicate).to.eql(false);",
               "});"
             ]
           }
@@ -155,53 +172,6 @@
             "exec": [
               "pm.test('Invalid transition returns 409', function () {",
               "  pm.response.to.have.status(409);",
-              "});"
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "name": "Signed payment webhook",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          },
-          {
-            "key": "X-Signature",
-            "value": "{{webhook_signature}}"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"event_id\": \"{{event_id}}\",\n  \"payment_id\": {{payment_id}},\n  \"status\": \"paid\"\n}"
-        },
-        "url": "{{baseUrl}}/webhooks/payment-status"
-      },
-      "event": [
-        {
-          "listen": "prerequest",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "const rawBody = pm.variables.replaceIn(pm.request.body.raw);",
-              "const secret = pm.collectionVariables.get('webhook_secret');",
-              "const digest = CryptoJS.HmacSHA256(rawBody, secret).toString(CryptoJS.enc.Hex);",
-              "pm.variables.set('webhook_signature', 'sha256=' + digest);"
-            ]
-          }
-        },
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "pm.test('Signed webhook accepted', function () {",
-              "  pm.response.to.have.status(200);",
-              "  pm.expect(pm.response.json().duplicate).to.eql(false);",
               "});"
             ]
           }
