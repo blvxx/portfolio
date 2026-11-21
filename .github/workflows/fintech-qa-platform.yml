@@ -10,6 +10,9 @@ on:
       - "fintech-qa-platform/**"
       - ".github/workflows/fintech-qa-platform.yml"
 
+permissions:
+  contents: write
+
 jobs:
   quality:
     runs-on: ubuntu-24.04
@@ -117,9 +120,9 @@ jobs:
           done
           docker compose logs
           exit 1
-      - name: Run Playwright E2E tests
+      - name: Run Playwright E2E tests and capture UI screenshot
         run: |
-          mkdir -p reports allure-results
+          mkdir -p reports allure-results docs/screenshots
           if [ -d allure-history ]; then
             mkdir -p allure-results/history
             cp -R allure-history/. allure-results/history/
@@ -138,13 +141,31 @@ jobs:
               cp -R allure-report/history/. allure-history/
             fi
           fi
+      - name: Capture Allure report screenshot
+        if: always() && hashFiles('fintech-qa-platform/allure-report/index.html') != ''
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from playwright.sync_api import sync_playwright
+
+          report = Path("allure-report/index.html").resolve()
+          output = Path("docs/screenshots/allure-report.png")
+          output.parent.mkdir(parents=True, exist_ok=True)
+          with sync_playwright() as playwright:
+              browser = playwright.chromium.launch()
+              page = browser.new_page(viewport={"width": 1440, "height": 1000}, device_scale_factor=1)
+              page.goto(report.as_uri(), wait_until="networkidle")
+              page.screenshot(path=str(output), full_page=True)
+              browser.close()
+          PY
       - name: Save Allure trend history
         if: always() && hashFiles('fintech-qa-platform/allure-history/**') != ''
         uses: actions/cache/save@v4
         with:
           path: fintech-qa-platform/allure-history
           key: allure-history-${{ github.ref_name }}-${{ github.run_id }}
-      - name: Upload Allure report and raw results
+      - name: Upload Allure report, results and screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -152,7 +173,14 @@ jobs:
           path: |
             fintech-qa-platform/allure-report
             fintech-qa-platform/allure-results
+            fintech-qa-platform/docs/screenshots
           if-no-files-found: ignore
+      - name: Publish generated screenshots to repository
+        if: github.event_name == 'push' && success()
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: add generated QA screenshots [skip ci]"
+          file_pattern: "fintech-qa-platform/docs/screenshots/*.png"
       - name: Collect service logs
         if: failure()
         run: docker compose logs
