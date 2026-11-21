@@ -28,7 +28,9 @@ jobs:
       - name: Lint
         run: ruff check services tests e2e
       - name: Automated API tests
-        run: pytest tests --junitxml=reports/junit.xml
+        run: |
+          mkdir -p reports
+          pytest tests --junitxml=reports/junit.xml
       - name: Upload JUnit report
         if: always()
         uses: actions/upload-artifact@v4
@@ -92,6 +94,13 @@ jobs:
           python-version: "3.12"
           cache: pip
           cache-dependency-path: fintech-qa-platform/requirements.txt
+      - name: Restore Allure trend history
+        uses: actions/cache/restore@v4
+        with:
+          path: fintech-qa-platform/allure-history
+          key: allure-history-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            allure-history-${{ github.ref_name }}-
       - name: Install Python dependencies
         run: pip install -r requirements.txt
       - name: Install Chromium
@@ -109,7 +118,13 @@ jobs:
           docker compose logs
           exit 1
       - name: Run Playwright E2E tests
-        run: pytest e2e --alluredir=allure-results --junitxml=reports/ui-junit.xml
+        run: |
+          mkdir -p reports allure-results
+          if [ -d allure-history ]; then
+            mkdir -p allure-results/history
+            cp -R allure-history/. allure-results/history/
+          fi
+          pytest e2e --alluredir=allure-results --junitxml=reports/ui-junit.xml
       - name: Generate Allure HTML report
         if: always()
         run: |
@@ -118,7 +133,17 @@ jobs:
             sudo apt-get install -y default-jre
             sudo npm install --global allure-commandline
             allure generate allure-results --clean --output allure-report
+            mkdir -p allure-history
+            if [ -d allure-report/history ]; then
+              cp -R allure-report/history/. allure-history/
+            fi
           fi
+      - name: Save Allure trend history
+        if: always() && hashFiles('fintech-qa-platform/allure-history/**') != ''
+        uses: actions/cache/save@v4
+        with:
+          path: fintech-qa-platform/allure-history
+          key: allure-history-${{ github.ref_name }}-${{ github.run_id }}
       - name: Upload Allure report and raw results
         if: always()
         uses: actions/upload-artifact@v4
