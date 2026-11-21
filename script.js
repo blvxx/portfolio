@@ -3,14 +3,14 @@ const grid = $('#projects-grid');
 const filtersEl = $('#project-filters');
 const countEl = $('#project-count');
 const filters = [
+  {id:'web',label:'Сайты'},
   {id:'all',label:'Все проекты'},
-  {id:'web',label:'Веб-разработка'},
   {id:'qa',label:'QA / API'},
   {id:'support',label:'Поддержка / инциденты'},
   {id:'analytics',label:'Аналитика'},
   {id:'prototype',label:'Прототипы'}
 ];
-let activeFilter = 'all';
+let activeFilter = 'web';
 let projects = [];
 
 function makePreview(project){
