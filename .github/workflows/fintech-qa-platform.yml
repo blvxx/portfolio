@@ -85,6 +85,24 @@ jobs:
           python -c 'import json,sys; c=json.loads(sys.argv[1]); m=json.loads(sys.argv[2]); assert c["balance_minor"] == -2500; assert m["balance_minor"] == 2500; assert c["balance_minor"] + m["balance_minor"] == 0' "$customer" "$merchant"
           echo "Payment-to-ledger Compose smoke test passed."
 
+          for attempt in $(seq 1 30); do
+            if curl --silent --fail http://localhost:9090/-/ready >/dev/null && \
+               curl --silent --fail http://localhost:3000/api/health >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              $COMPOSE logs prometheus grafana
+              exit 1
+            fi
+            sleep 2
+          done
+
+          curl --silent --fail http://localhost:8000/metrics | grep -q 'http_requests_total{'
+          curl --silent --fail http://localhost:8001/metrics | grep -q 'http_requests_total{'
+          curl --silent --fail http://localhost:9090/api/v1/targets | grep -q 'payment-service'
+          curl --silent --fail http://localhost:9090/api/v1/targets | grep -q 'ledger-service'
+          echo "Prometheus and Grafana observability smoke checks passed."
+
   ui-e2e:
     runs-on: ubuntu-24.04
     defaults:
