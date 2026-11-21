@@ -322,3 +322,117 @@ body.portfolio-editorial{color:#20251f}
   .portfolio-editorial .about-copy p,
   .portfolio-editorial .step p{font-size:12px}
 }
+
+/* Warm editorial redesign — calm, structured and business-focused */
+body.portfolio-editorial{
+  --paper:#f3efe7;--white:#fcfaf5;--ink:#28271f;--muted:#68675d;--soft:#e8e1d5;--line:#d8d0c3;
+  --blue:#66735a;--blue-dark:#46533d;--night:#292b24;--night-soft:#373a31;
+  background:var(--paper);color:#28271f;
+}
+.portfolio-editorial .header{background:rgba(243,239,231,.94);border-color:#d8d0c3}
+.portfolio-editorial .brand{font-family:'Cormorant Garamond',Georgia,serif;font-size:31px;letter-spacing:-.07em;font-weight:700}
+.portfolio-editorial .brand span{color:#8b765d}
+.portfolio-editorial .nav a,.portfolio-editorial .mobile-nav a{color:#49483f;font-size:12px}
+.portfolio-editorial .nav a:hover,.portfolio-editorial .mobile-nav a:hover{color:#66735a}
+.portfolio-editorial .header-cta{border-color:#77715f}
+.portfolio-editorial .hero{padding-top:92px}
+.portfolio-editorial .hero-layout{grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);gap:58px}
+.portfolio-editorial .eyebrow{color:#687456;letter-spacing:.13em}
+.portfolio-editorial .hero h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(70px,7.6vw,108px);font-weight:600;line-height:.88;letter-spacing:-.045em}
+.portfolio-editorial .hero h1 span,.portfolio-editorial .about-layout h2 span{color:#687456;font-style:italic;font-weight:500}
+.portfolio-editorial .hero-lead{color:#55564d;font-size:15px;line-height:1.95;max-width:540px}
+.portfolio-editorial .button-dark{background:#292b24;border-radius:2px}
+.portfolio-editorial .button-dark:hover{background:#66735a}
+.portfolio-editorial .text-link{color:#37382f}
+.portfolio-editorial .hero-meta{color:#646459}
+.portfolio-editorial .hero-aside.editorial-showcase{background:#e6dfd2;border:1px solid #d8d0c3;border-radius:2px;min-height:485px}
+.portfolio-editorial .showcase-frame{border:6px solid #fcfaf5;box-shadow:0 14px 34px #332f251c}
+.portfolio-editorial .showcase-frame-main{transform:rotate(-1deg)}
+.portfolio-editorial .showcase-frame-small{transform:rotate(2deg)}
+.portfolio-editorial .showcase-stamp{background:#687456;border-radius:2px}
+.portfolio-editorial .showcase-tag{background:#292b24}
+.portfolio-editorial .hero-foot{border-color:#d8d0c3;margin-top:60px}
+.portfolio-editorial .stack-line{color:#55584d}
+.portfolio-editorial .section{padding-top:104px;padding-bottom:104px}
+.portfolio-editorial h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(43px,4.7vw,66px);font-weight:600;letter-spacing:-.035em;line-height:.98}
+.portfolio-editorial .section-intro{color:#55564d;font-size:13px;line-height:1.9}
+.portfolio-editorial .services-section{border-color:#d8d0c3}
+.portfolio-editorial .service-card{background:#fcfaf5;border-color:#ded7cb;border-radius:2px;padding:31px 29px;min-height:330px}
+.portfolio-editorial .service-primary{background:#292b24;border-color:#292b24}
+.portfolio-editorial .service-card h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:29px;font-weight:600;letter-spacing:-.02em}
+.portfolio-editorial .service-card p,.portfolio-editorial .service-card li{color:#4f5047;font-size:12px}
+.portfolio-editorial .service-primary p{color:#d0cec3}
+.portfolio-editorial .service-primary li{color:#e3e0d6}
+.portfolio-editorial .service-no,.portfolio-editorial .project-kicker-body{color:#687456}
+.portfolio-editorial .service-primary .service-no{color:#c6cbb8}
+.portfolio-editorial .work-section{background:#e9e3d8}
+.portfolio-editorial .project-card{background:#fcfaf5;border-color:#d9d1c5;border-radius:2px;overflow:hidden}
+.portfolio-editorial .project-top{background:#292b24}
+.portfolio-editorial .project-body{padding:24px 26px}
+.portfolio-editorial .project-title{font-family:'Cormorant Garamond',Georgia,serif;font-size:29px;font-weight:600;letter-spacing:-.02em}
+.portfolio-editorial .project-description,.portfolio-editorial .project-highlights li{color:#4f5047;font-size:12px}
+.portfolio-editorial .project-tag{border-color:#ded8cd;color:#55564d}
+.portfolio-editorial .project-link{color:#46563d}
+.portfolio-editorial .project-link-primary{background:#66735a;color:#fff}
+.portfolio-editorial .filter-btn{border-color:#c9c1b5;color:#4b4b41;border-radius:2px}
+.portfolio-editorial .filter-btn:hover,.portfolio-editorial .filter-btn[aria-pressed=true]{background:#292b24;border-color:#292b24}
+.portfolio-editorial .pricing-section{background:#f7f4ed;border-top:1px solid #ded7cb;border-bottom:1px solid #ded7cb}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.price-card{background:#fcfaf5;border:1px solid #ded7cb;padding:24px 22px;min-height:250px;display:flex;flex-direction:column}
+.price-card .mono{font:9px var(--mono);letter-spacing:.09em;color:#687456}
+.price-card h3{font:600 25px/1.05 'Cormorant Garamond',Georgia,serif;margin:25px 0 10px}
+.price-value{font-size:19px;font-weight:800;letter-spacing:-.04em;margin:0 0 12px;color:#34362d}
+.price-card>p:not(.price-value){font-size:11px;line-height:1.75;color:#55564d;margin:0}
+.price-card>a{font-size:10px;font-weight:800;color:#4c5b43;margin-top:auto;padding-top:20px}
+.price-featured{background:#292b24;border-color:#292b24;color:#fff}
+.price-featured .mono{color:#c6cbb8}
+.price-featured h3,.price-featured .price-value{color:#fff}
+.price-featured>p:not(.price-value){color:#d0cec3}
+.price-featured>a{color:#e2e8d9}
+.pricing-note{font-size:10px;line-height:1.7;color:#5c5d53;margin:17px 0 0}
+.portfolio-editorial .case-study-section{background:#e6dfd2}
+.case-study-layout{display:grid;grid-template-columns:.9fr 1.1fr;gap:90px;align-items:start}
+.case-study-heading h2{margin-bottom:22px}
+.case-study-heading h2 span{color:#687456;font-style:italic}
+.case-study-heading>p:not(.eyebrow){font-size:13px;line-height:1.9;color:#55564d;max-width:420px}
+.case-study-link{display:inline-block;margin-top:18px;padding-bottom:8px;border-bottom:1px solid #858573;font-size:11px;font-weight:800;color:#3e4c36}
+.case-study-points{border-top:1px solid #c9c1b5}
+.case-study-points article{padding:22px 0;border-bottom:1px solid #c9c1b5}
+.case-study-points article>span{font:9px var(--mono);letter-spacing:.1em;color:#687456}
+.case-study-points h3{font:600 25px/1.1 'Cormorant Garamond',Georgia,serif;margin:12px 0 7px}
+.case-study-points p{font-size:12px;line-height:1.8;color:#55564d;margin:0;max-width:520px}
+.portfolio-editorial .approach-section{border-color:#d8d0c3}
+.portfolio-editorial .step>.mono{color:#687456}
+.portfolio-editorial .step h3{font-family:'Cormorant Garamond',Georgia,serif;font-size:23px;font-weight:600}
+.portfolio-editorial .step p{color:#55564d;font-size:12px}
+.portfolio-editorial .about-section{background:#e9e3d8}
+.portfolio-editorial .about-copy p{color:#55564d}
+.portfolio-editorial .about-copy .about-lead{color:#292b24;font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;line-height:1.2}
+.portfolio-editorial .contact-section{background:#292b24}
+.portfolio-editorial .contact-panel .eyebrow,.portfolio-editorial .contact-panel h2 span{color:#c6cbb8}
+.portfolio-editorial .contact-panel h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600}
+.portfolio-editorial .contact-panel p:not(.eyebrow),.portfolio-editorial .contact-actions>a:not(.button){color:#e0ded4}
+.portfolio-editorial .button-light{border-radius:2px}
+.portfolio-editorial .footer{background:#20221d}
+@media(max-width:1000px){.pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.case-study-layout{gap:48px}}
+@media(max-width:900px){
+ .portfolio-editorial .hero-layout{grid-template-columns:1fr .9fr;gap:30px}
+ .portfolio-editorial .hero h1{font-size:clamp(60px,7.4vw,82px)}
+ .portfolio-editorial .hero-aside.editorial-showcase{min-height:430px}
+ .showcase-collage{height:335px}
+ .portfolio-editorial .section{padding-top:82px;padding-bottom:82px}
+}
+@media(max-width:680px){
+ .portfolio-editorial .hero{padding-top:58px}
+ .portfolio-editorial .hero-layout{grid-template-columns:1fr;gap:32px}
+ .portfolio-editorial .hero h1{font-size:clamp(58px,15vw,82px)}
+ .portfolio-editorial .hero-aside.editorial-showcase{min-height:390px;padding:16px}
+ .showcase-collage{height:315px}
+ .showcase-frame-main{width:78%;height:82%}
+ .showcase-frame-small{width:45%;height:54%}
+ .showcase-stamp{font-size:8px;padding:10px 11px}
+ .pricing-grid{grid-template-columns:1fr}
+ .price-card{min-height:220px}
+ .case-study-layout{grid-template-columns:1fr;gap:28px}
+ .portfolio-editorial .section{padding-top:66px;padding-bottom:66px}
+}
