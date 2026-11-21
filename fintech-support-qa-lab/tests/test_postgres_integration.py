@@ -34,6 +34,10 @@ def test_payment_api_and_signed_webhook_use_postgres():
     reference = f"PG-{uuid.uuid4().hex[:12]}"
     try:
         with TestClient(app) as client:
+            readiness = client.get("/health/ready")
+            assert readiness.status_code == 200
+            assert readiness.json()["database"] == "ok"
+
             created = client.post(
                 "/payments",
                 json={
