@@ -1,6 +1,6 @@
 # Automated Order/Payment Reconciliation
 
-This script compares order and payment CSV exports and writes actionable findings.
+This script compares order and payment CSV exports and writes actionable findings as CSV plus a responsive HTML dashboard. The HTML report includes summary cards, an issue breakdown, a detailed table, and a severity filter.
 
 ## Checks
 - Missing payment records
@@ -23,6 +23,6 @@ Optional custom files and output path:
 python incident-lab/scripts/reconcile_payments.py --orders path/orders.csv --payments path/payments.csv --output path/report.csv
 ```
 
-Output is a CSV with severity, issue type, order ID, payment IDs, details, and recommended next action. The tool is read-only: it never changes order/payment data, triggers refunds, or replays events.
+Outputs:\n- CSV: severity, issue type, order ID, payment IDs, details, and recommended next action.\n- HTML dashboard: summary cards, issue breakdown, detailed findings table, and a client-side severity filter.\n\nThe HTML file is self-contained and can be opened locally in a browser. The tool is read-only: it never changes order/payment data, triggers refunds, or replays events.
 
 All included records are fictional. Findings should be validated against the payment provider and system of record before taking action.
