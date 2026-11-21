@@ -8,12 +8,14 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from services.common.database import Base, engine, get_db
-from services.payment_service.models import Payment\nfrom services.common.metrics import install_metrics
+from services.payment_service.models import Payment
+from services.common.metrics import install_metrics
 
 Base.metadata.create_all(bind=engine)
 
 LEDGER_SERVICE_URL = os.getenv("LEDGER_SERVICE_URL", "http://127.0.0.1:8001")
-app = FastAPI(title="Payment Service", version="1.0.0")\ninstall_metrics(app, "payment")
+app = FastAPI(title="Payment Service", version="1.0.0")
+install_metrics(app, "payment")
 
 
 class PaymentCreate(BaseModel):
