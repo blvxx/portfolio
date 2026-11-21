@@ -25,7 +25,9 @@ A fictional payment provider reports successful payments, but some storefront or
 11. [Automated reconciliation](scripts/reconcile_payments.py) — compare order/payment exports and produce CSV + HTML findings
 12. [Reconciliation utility documentation](docs/automated-reconciliation.md)
 13. [Incident summary generator](scripts/incident_summary.py) — combines log analysis and payment findings into JSON + HTML
-14. [Incident summary documentation](docs/incident-summary-generator.md
+14. [Incident summary documentation](docs/incident-summary-generator.md)
+15. [Unified operations CLI](scripts/incident_ops.py) — run all diagnostics from one command
+16. [Operations toolkit guide](docs/incident-operations-toolkit.md)
 
 ## Sample dataset
 CSV files in \`data/\` contain fictional order/payment records with deliberately injected state mismatches and a repeated provider payment ID. These are used for SQL investigation examples, not real customer or financial data.
