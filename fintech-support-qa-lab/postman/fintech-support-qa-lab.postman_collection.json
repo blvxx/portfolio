@@ -1,0 +1,212 @@
+{
+  "info": {
+    "name": "Fintech Support QA Lab",
+    "description": "Smoke and negative scenarios for the demo payment API. Set baseUrl and webhook_secret collection variables before running.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "webhook_secret",
+      "value": "local-demo-secret-change-me"
+    },
+    {
+      "key": "payment_id",
+      "value": ""
+    },
+    {
+      "key": "event_id",
+      "value": "evt-postman-001"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('API is healthy', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().status).to.eql('ok');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Create payment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"customer_reference\": \"postman-customer-001\",\n  \"amount_minor\": 259900,\n  \"currency\": \"RUB\"\n}"
+        },
+        "url": "{{baseUrl}}/payments"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Payment created', function () {",
+              "  pm.response.to.have.status(201);",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.status).to.eql('pending');",
+              "  pm.collectionVariables.set('payment_id', body.id);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get created payment",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/payments/{{payment_id}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Payment can be retrieved', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().id).to.eql(Number(pm.collectionVariables.get('payment_id')));",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Update payment to paid",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"paid\"\n}"
+        },
+        "url": "{{baseUrl}}/payments/{{payment_id}}/status"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Payment transitions to paid', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().status).to.eql('paid');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject invalid transition (paid -> failed)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"failed\"\n}"
+        },
+        "url": "{{baseUrl}}/payments/{{payment_id}}/status"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Invalid transition returns 409', function () {",
+              "  pm.response.to.have.status(409);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Signed payment webhook",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-Signature",
+            "value": "{{webhook_signature}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_id\": \"{{event_id}}\",\n  \"payment_id\": {{payment_id}},\n  \"status\": \"paid\"\n}"
+        },
+        "url": "{{baseUrl}}/webhooks/payment-status"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const rawBody = pm.variables.replaceIn(pm.request.body.raw);",
+              "const secret = pm.collectionVariables.get('webhook_secret');",
+              "const digest = CryptoJS.HmacSHA256(rawBody, secret).toString(CryptoJS.enc.Hex);",
+              "pm.variables.set('webhook_signature', 'sha256=' + digest);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Signed webhook accepted', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json().duplicate).to.eql(false);",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
