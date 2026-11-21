@@ -11,7 +11,8 @@ A practical sandbox for demonstrating API testing, SQL investigation, incident t
 - Automated API tests with pytest and FastAPI TestClient.
 - HMAC-SHA256 webhook signature validation.
 - Idempotent webhook processing with event-ID uniqueness and payload-hash conflict detection.
-- Support runbooks and reproducible troubleshooting scenarios.
+- SQL investigation playbook with practical support queries.
+- Synthetic JSONL logs and a Python CLI for filtering by correlation ID or severity.
 - GitHub Actions CI for automated tests.
 
 ## Quick start (local)
@@ -34,6 +35,18 @@ Open Swagger UI at http://127.0.0.1:8000/docs.
 pytest -q
 ```
 
+## Analyze the synthetic logs
+
+From the project root:
+
+```bash
+python scripts/analyze_logs.py
+python scripts/analyze_logs.py --level ERROR
+python scripts/analyze_logs.py --correlation-id corr-a81
+```
+
+The sample dataset is in `samples/payment-api.log`. It contains synthetic events only.
+
 ## Run with PostgreSQL
 
 ```bash
@@ -52,14 +65,16 @@ The API is available at http://localhost:8000 and PostgreSQL is exposed on port 
 | PATCH | `/payments/{payment_id}/status` | Change payment status |
 | POST | `/webhooks/payment-status` | Receive signed, idempotent payment events |
 
-Webhook details, signature format, error codes and support checks are documented in [docs/webhooks.md](docs/webhooks.md). Payment states are documented in [docs/payment-lifecycle.md](docs/payment-lifecycle.md).
+Webhook details are documented in [docs/webhooks.md](docs/webhooks.md). SQL support queries are in [docs/sql-investigation.md](docs/sql-investigation.md), and payment states are in [docs/payment-lifecycle.md](docs/payment-lifecycle.md).
 
 ## Project structure
 
 ```
 src/app/       FastAPI application and persistence
-tests/         API and webhook tests
+tests/         API, webhook and log analyzer tests
 docs/          Support and integration documentation
+samples/       Synthetic application logs
+scripts/       Log analysis CLI
 ```
 
 ## Roadmap
@@ -67,9 +82,9 @@ docs/          Support and integration documentation
 - [x] Initial API and automated tests
 - [x] Webhook HMAC signature validation
 - [x] Idempotent webhook processing and event conflict detection
+- [x] SQL investigation playbook
+- [x] Synthetic incident logs and analysis CLI
 - [ ] PostgreSQL integration verification
-- [ ] Synthetic incident logs and analysis CLI
-- [ ] SQL investigation playbook
 - [ ] Postman collection and CI test report
 
 ## Transparency
