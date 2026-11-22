@@ -112,6 +112,35 @@
     }
   },
   {
+    "id": 13,
+    "category": "web",
+    "kicker": "WEBSITE CONCEPT / RENOVATION",
+    "title": "ДОМФОРМА — ремонт и отделка",
+    "description": "Концепт сайта локальной ремонтно-отделочной компании: услуги, визуальные концепции помещений, этапы взаимодействия, FAQ и форма запроса с демонстрационным подтверждением.",
+    "highlights": [
+      "Структура коммерческого сайта услуг и понятные точки входа",
+      "Адаптивное меню, FAQ и форма с HTML-валидацией",
+      "CSS-интерьерные иллюстрации без внешних библиотек и изображений"
+    ],
+    "tech": [
+      "HTML5",
+      "CSS3",
+      "Vanilla JavaScript",
+      "Responsive",
+      "Accessibility"
+    ],
+    "status": "Концепт · вымышленная компания",
+    "url": "https://github.com/blvxx/web-development-portfolio/tree/main/projects/domforma",
+    "link": "Код на GitHub",
+    "demo_url": "https://blvxx.github.io/web-development-portfolio/projects/domforma/",
+    "demo_label": "Открыть сайт",
+    "preview": {
+      "type": "iframe",
+      "src": "https://blvxx.github.io/web-development-portfolio/projects/domforma/",
+      "alt": "Живое превью концепта сайта ДОМФОРМА"
+    }
+  },
+  {
     "id": 5,
     "category": "qa",
     "kicker": "QA ENGINEERING / FINTECH",
