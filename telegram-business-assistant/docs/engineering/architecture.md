@@ -82,7 +82,7 @@ Both adapters implement the same repository behaviour used by EnquiryService and
 
 - /healthz is a liveness endpoint.
 - /readyz checks the configured database and Redis dependency.
-- /metrics exports Prometheus outbox state gauges and notification delivery counters.
+- /metrics exports Prometheus outbox state gauges, dependency-readiness gauge and notification delivery counters. The Compose monitoring profile evaluates Prometheus alert rules for unavailable targets/dependencies, dead letters and stalled backlog.
 - Logs identify worker/event outcomes and exception type without persisting arbitrary exception messages or user contact details.
 
 The repository includes PostgreSQL custom-format backup and guarded restore scripts. CI creates a backup, validates the archive, restores into a disposable database, and verifies a row. This proves the scripted mechanism on CI infrastructure, not a production backup schedule, off-host retention or successful restore on Dada Cloud. Those require host-level configuration and a separate drill.
