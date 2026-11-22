@@ -175,7 +175,11 @@ def test_reusing_idempotency_key_with_different_payload_returns_409(client: Test
 def test_idempotency_keys_are_scoped_to_authenticated_user(client: TestClient) -> None:
     key = {"Idempotency-Key": "same-key"}
     first = client.post("/v1/bookings", json=booking_payload(), headers={**AUTH_A, **key})
-    second = client.post("/v1/bookings", json=booking_payload(), headers={**AUTH_B, **key})
+    second = client.post(
+        "/v1/bookings",
+        json=booking_payload(room_id="room-202"),
+        headers={**AUTH_B, **key},
+    )
     assert first.status_code == 201
     assert second.status_code == 201
 
