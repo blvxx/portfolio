@@ -45,6 +45,7 @@ A self-contained API system and automated quality suite built around a fictional
 | `app.py` | FastAPI routes, request/response contracts and HTTP semantics |
 | `store.py` | Isolated in-memory repository, atomic booking and idempotency operations |
 | `test_api.py` | Automated API tests using FastAPI TestClient |
+| `architecture.md` | Component and test architecture, state ownership and design limitations |
 | `test-matrix.md` | Risk-based requirements-to-test traceability |
 | `examples.md` | Human-readable request / response examples |
 | `bug-reports.md` | Hypothetical defect-report examples |
