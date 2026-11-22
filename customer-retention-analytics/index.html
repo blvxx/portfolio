@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111b20">
+  <meta name="description" content="Customer Retention & Sales Analytics — a reproducible Python analytics case study using the public UCI Online Retail dataset.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Customer Retention & Sales Analytics — Artem Kalinin">
+  <meta property="og:description" content="Transaction cleaning, refund-aware sales KPIs, RFM segmentation, cohort retention and a Streamlit dashboard.">
+  <title>Customer Retention & Sales Analytics — Artem Kalinin</title>
+  <style>
+    :root{color-scheme:dark;--bg:#111b20;--surface:#17262c;--surface2:#1d3036;--ink:#f1f4ed;--muted:#aab8b5;--line:#30444a;--accent:#a9e5c2;--mint:#d5f0df;--sand:#e7d4a8;--max:1120px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% -5%,#234b46 0,transparent 34%),var(--bg);color:var(--ink);font:15px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:inherit;text-decoration:none}a:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:4px}.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+    .top{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:900;letter-spacing:-.05em}.brand span{color:var(--accent)}.top nav{display:flex;gap:22px;color:var(--muted);font-size:12px}.top nav a:hover{color:var(--accent)}
+    .hero{padding:85px 0 65px;display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center}.kicker{color:var(--accent);font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:850}
+    h1{font-size:clamp(42px,6vw,72px);letter-spacing:-.07em;line-height:1.02;margin:19px 0 21px;max-width:720px}h1 em{font-family:Georgia,serif;font-weight:400;color:var(--accent)}
+    .lead{max-width:690px;color:#c3d0ca;font-size:16px;line-height:1.8}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.button{display:inline-flex;align-items:center;gap:14px;padding:12px 16px;background:var(--accent);color:#10231c;font-size:12px;font-weight:850;border-radius:6px}.button.secondary{background:transparent;color:var(--ink);border:1px solid #60766e}
+    .hero-panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(155deg,#20353a,#17262c);padding:22px;box-shadow:0 24px 65px #0003}.panel-head{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.13em}.panel-title{font-size:17px;font-weight:800;margin:20px 0 6px}.panel-copy{color:var(--muted);font-size:11px;margin:0 0 20px}.pipeline{display:grid;grid-template-columns:1fr 24px 1fr;gap:9px;align-items:center}.pipe-node{border:1px solid #46605c;background:#20363a;border-radius:7px;padding:12px 10px;min-height:70px}.pipe-node strong{display:block;font-size:11px}.pipe-node small{display:block;color:#aabbb2;font-size:9px;margin-top:4px}.pipe-arrow{text-align:center;color:var(--accent);font-size:17px}.pipe-node:last-child{grid-column:1/-1}.source-note{margin-top:15px;color:#96aaa3;font-size:9px}
+    section{border-top:1px solid var(--line);padding:65px 0}.heading{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:27px}.heading h2{font-size:clamp(27px,4vw,40px);letter-spacing:-.055em;line-height:1.1;margin:7px 0 0}.heading p{max-width:440px;color:var(--muted);font-size:12px;margin:0}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:21px}.card small{color:var(--accent);font-size:9px;letter-spacing:.14em;font-weight:850}.card h3{font-size:16px;margin:12px 0 7px}.card p{font-size:11px;color:var(--muted);margin:0}
+    .dataset{display:grid;grid-template-columns:1fr 1fr;gap:25px}.dataset-box{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:23px}.dataset-box h3{margin:0 0 10px;font-size:18px}.dataset-box p,.dataset-box li{font-size:12px;color:var(--muted)}.dataset-box ul{padding-left:18px;margin:12px 0}.dataset-box li{margin:6px 0}.source-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:17px;font-size:11px;font-weight:800;color:var(--accent)}
+    .method{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.method article{padding:17px 14px;border-top:2px solid #6b9e86;background:#17262c}.method span{color:var(--accent);font:italic 16px Georgia,serif}.method h3{font-size:12px;margin:10px 0 5px}.method p{font-size:10px;color:var(--muted);margin:0}
+    .run-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.run-card{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--surface)}.run-card h3{font-size:16px;margin:0 0 10px}.run-card p{font-size:11px;color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0d161a;border:1px solid #2a3d42;padding:14px;border-radius:7px;color:#d6efdf;font-size:11px;line-height:1.7}
+    .notice{border:1px solid #736b4d;background:#26271f;color:#d7d2ba;padding:17px 19px;border-radius:8px;font-size:11px;margin-top:19px}.notice strong{color:var(--sand)}
+    footer{padding:25px 0 35px;color:#91a19b;font-size:10px}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;gap:30px;padding-top:60px}.cards{grid-template-columns:1fr 1fr}.method{grid-template-columns:1fr 1fr}.method article:last-child{grid-column:1/-1}.heading{display:block}.heading p{margin-top:13px}}
+    @media(max-width:560px){.wrap{width:calc(100% - 32px)}.top{height:auto;min-height:65px;padding:14px 0;align-items:flex-start}.top nav{gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:10px}.hero{padding-top:48px}.hero-panel{padding:16px}.cards,.dataset,.run-grid,.method{grid-template-columns:1fr}.method article:last-child{grid-column:auto}.pipeline{grid-template-columns:1fr 18px 1fr}.pipe-node{padding:10px 7px}.foot{flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <header class="wrap top"><a class="brand" href="https://github.com/blvxx">ARTEM<span>.</span></a><nav aria-label="Page navigation"><a href="#scope">Scope</a><a href="#method">Method</a><a href="#run">Run locally</a><a href="#source">Data source</a></nav></header>
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="kicker">Data analytics · Python · Customer behaviour</p>
+        <h1>From raw transactions to <em>retention signals.</em></h1>
+        <p class="lead">An end-to-end retail analytics case study built around the public UCI Online Retail dataset. The workflow makes data quality visible, separates refunds from positive sales, calculates business KPIs and explores customer purchasing patterns through RFM and cohort analysis.</p>
+        <div class="actions"><a class="button" href="https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics">Explore source code ↗</a><a class="button secondary" href="https://github.com/blvxx/portfolio/blob/main/customer-retention-analytics/docs/analysis-brief.md">Read analysis brief</a></div>
+      </div>
+      <aside class="hero-panel">
+        <div class="panel-head"><span>Analytics workflow</span><span>Python / pandas</span></div>
+        <div class="panel-title">A reproducible pipeline</div>
+        <p class="panel-copy">A clear path from raw workbook to interpretable outputs.</p>
+        <div class="pipeline">
+          <div class="pipe-node"><strong>01 · Source</strong><small>UCI Online Retail</small></div><div class="pipe-arrow">→</div><div class="pipe-node"><strong>02 · Quality</strong><small>Types, missing IDs, returns</small></div>
+          <div class="pipe-arrow">↓</div><div class="pipe-node"><strong>03 · Metrics</strong><small>Sales, orders, repeat purchase</small></div><div class="pipe-arrow">→</div><div class="pipe-node"><strong>04 · Customers</strong><small>RFM and cohorts</small></div>
+          <div class="pipe-node"><strong>05 · Outputs</strong><small>CSV, JSON, findings and dashboard</small></div>
+        </div>
+        <p class="source-note">Methodology and code are documented. Dataset-specific findings are not claimed until the original workbook is processed.</p>
+      </aside>
+    </section>
+
+    <section id="scope"><div class="wrap">
+      <div class="heading"><div><p class="kicker">01 / Project scope</p><h2>Business questions,<br>not just charts.</h2></div><p>The focus is on turning a transaction table into a set of understandable metrics and customer-level views, with explicit definitions and limitations.</p></div>
+      <div class="cards">
+        <article class="card"><small>01 / SALES</small><h3>Sales performance</h3><p>Gross sales, refunds, net sales, monthly trends, country contribution and top products.</p></article>
+        <article class="card"><small>02 / CUSTOMERS</small><h3>Repeat purchasing</h3><p>Identified customers, invoice frequency and the observed repeat-customer rate.</p></article>
+        <article class="card"><small>03 / SEGMENTATION</small><h3>RFM groups</h3><p>Recency, frequency and monetary scores using relative quartiles within the observation window.</p></article>
+        <article class="card"><small>04 / RETENTION</small><h3>Cohort analysis</h3><p>Monthly customer cohorts and the share returning in later observed months.</p></article>
+        <article class="card"><small>05 / QUALITY</small><h3>Data validation</h3><p>Invalid dates, quantities and prices, cancellations, returns and missing customer IDs.</p></article>
+        <article class="card"><small>06 / DELIVERY</small><h3>Reproducible outputs</h3><p>Python pipeline, unit tests, CSV/JSON exports and a Streamlit + Plotly dashboard.</p></article>
+      </div>
+    </div></section>
+
+    <section id="source"><div class="wrap">
+      <div class="heading"><div><p class="kicker">02 / Data provenance</p><h2>Open data, clear<br>attribution.</h2></div><p>The project uses the original published UCI workbook. The raw file is downloaded on demand rather than copied into this repository.</p></div>
+      <div class="dataset">
+        <article class="dataset-box"><h3>UCI Online Retail</h3><p>A historical transaction dataset for a UK-based non-store retailer. The source describes 541,909 transaction rows over the period 1 December 2010 to 9 December 2011. Unit prices are denominated in sterling.</p><ul><li>541,909 published transaction rows</li><li>Historical period: Dec 2010 – Dec 2011</li><li>Source license: CC BY 4.0</li></ul><div class="source-links"><a href="https://archive.ics.uci.edu/dataset/352/online+retail" target="_blank" rel="noopener noreferrer">Official UCI dataset ↗</a><a href="https://doi.org/10.24432/C5BW33" target="_blank" rel="noopener noreferrer">Dataset DOI ↗</a></div></article>
+        <article class="dataset-box"><h3>Data handling rules</h3><p>Sales and customer metrics use explicit treatment rules so the result can be interpreted and reproduced.</p><ul><li>Negative-quantity lines and cancellation invoices are separated as refunds/cancellations.</li><li>Sales without CustomerID remain in revenue KPIs but not customer-level calculations.</li><li>RFM scores are relative segments, not churn probabilities.</li><li>Historical observations do not establish marketing causality or current market trends.</li></ul></article>
+      </div>
+      <div class="notice"><strong>Transparency:</strong> the included CSV preview is a small synthetic test fixture, not a subset of UCI records. The source workbook is not bundled. No numerical findings are presented on this page until the original dataset is downloaded and processed.</div>
+    </div></section>
+
+    <section id="method"><div class="wrap">
+      <div class="heading"><div><p class="kicker">03 / Method</p><h2>Make the analysis<br>auditable.</h2></div><p>Each stage has a defined purpose, from the initial cleanup to the final report. Tests cover the business rules and edge cases.</p></div>
+      <div class="method">
+        <article><span>01</span><h3>Load</h3><p>Retrieve the original workbook from UCI and inspect its schema.</p></article>
+        <article><span>02</span><h3>Validate</h3><p>Normalize types and isolate invalid rows, returns and cancellations.</p></article>
+        <article><span>03</span><h3>Measure</h3><p>Calculate revenue, orders, repeat purchases and segment metrics.</p></article>
+        <article><span>04</span><h3>Explore</h3><p>Compare customer cohorts and relative RFM groups.</p></article>
+        <article><span>05</span><h3>Explain</h3><p>Export tables, document definitions and state limitations.</p></article>
+      </div>
+    </div></section>
+
+    <section id="run"><div class="wrap">
+      <div class="heading"><div><p class="kicker">04 / Reproducibility</p><h2>Run it locally.</h2></div><p>Python 3.10+ is required. The Streamlit dashboard can use a small synthetic preview fixture or the original workbook uploaded locally.</p></div>
+      <div class="run-grid">
+        <article class="run-card"><h3>Download and run the analysis</h3><pre>python -m venv .venv
+pip install -e ".[dev]"
+python scripts/download_data.py
+python scripts/run_analysis.py
+pytest</pre><p>The pipeline writes CSV tables, a JSON KPI summary and a generated findings report into outputs/.</p></article>
+        <article class="run-card"><h3>Launch the dashboard</h3><pre>pip install -e ".[dashboard,dev]"
+streamlit run app.py</pre><p>Upload the official UCI workbook in the sidebar to switch from the synthetic preview to the source dataset.</p></article>
+      </div>
+      <div class="source-links"><a href="https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics/tests">Review unit tests ↗</a><a href="https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml">View CI workflow ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics">Browse repository ↗</a></div>
+    </div></section>
+  </main>
+  <footer><div class="wrap foot"><span>© 2026 Artem Kalinin · Customer Retention & Sales Analytics</span><span>Public dataset · Reproducible code · Transparent limitations</span><a href="https://github.com/blvxx">GitHub profile ↗</a></div></footer>
+</body>
+</html>
