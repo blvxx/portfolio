@@ -54,6 +54,8 @@ p95 latency: histogram_quantile(0.95, sum by (le, service) (rate(http_request_du
 
 Target availability: up{job=~"payment-service|ledger-service"}
 
+Practice controlled outages and recovery checks with the [Observability Incident Drills](incident-drills.md).
+
 ## Alert rules
 
 - FintechServiceDown: a Payment or Ledger target cannot be scraped for 30 seconds.
