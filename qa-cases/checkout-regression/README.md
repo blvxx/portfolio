@@ -48,6 +48,7 @@ The suite loads repository HTML, CSS and JavaScript into an isolated browser pag
 
 ## Repository map
 
+- `architecture.md`: application state model, browser test harness and explicit non-goals.
 - `app/`: static responsive storefront and business rules.
 - `tests/test_checkout.py`: 24 Playwright scenarios.
 - `conftest.py`: browser lifecycle, fresh context per test, trace capture and failure screenshots.
