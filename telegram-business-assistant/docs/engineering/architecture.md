@@ -62,9 +62,10 @@ The current SQLite table stores:
 - submitted contact;
 - selected service;
 - request description;
-- UTC creation timestamp.
+- UTC creation timestamp;
+- nullable idempotency key derived from Telegram chat ID and message ID.
 
-The database schema is managed by forward-only migrations tracked with SQLite PRAGMA user_version. Fresh databases and existing version-1 databases are upgraded during startup. Downgrades are not automated; operators should take and verify a backup before deployment.
+The database schema is managed by forward-only migrations tracked with SQLite PRAGMA user_version. Fresh databases and existing version-1 databases are upgraded during startup. Version 3 adds a unique index for the nullable Telegram idempotency key. Repeated submissions with the same key return the existing lead ID and do not enqueue a second notification. Downgrades are not automated; operators should take and verify a backup before deployment.
 
 ## Runtime and deployment assumptions
 
@@ -87,7 +88,7 @@ The current data store is suitable only for the documented single-instance MVP a
 | Telegram API unavailable | Polling or message operations may fail | Recovery and operational visibility are limited |
 | Host storage is ephemeral | SQLite file may be lost after replacement | Persistence must be verified before real data collection |
 
-Lead creation and event enqueue are atomic. Remote delivery is asynchronous and at-least-once, not exactly-once. A crash after Telegram accepts a message but before the local delivered marker commits can produce a duplicate on retry. Events have a unique lead-created key, worker leases are fenced with per-claim tokens, and only exception type names are persisted to avoid retaining sensitive error text.
+Lead creation and event enqueue are atomic. Telegram-originated submissions carry a stable `telegram:<chat_id>:<message_id>` idempotency key; the unique database index and write transaction make concurrent replays converge on one lead. Remote delivery is asynchronous and at-least-once, not exactly-once. A crash after Telegram accepts a message but before the local delivered marker commits can produce a duplicate on retry. Events have a unique lead-created key, worker leases are fenced with per-claim tokens, and only exception type names are persisted to avoid retaining sensitive error text.
 
 ## Remaining target architecture (not implemented)
 
