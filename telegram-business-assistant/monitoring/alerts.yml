@@ -10,6 +10,15 @@ groups:
           summary: "Telegram Assistant metrics endpoint is unavailable"
           description: "Prometheus has failed to scrape the bot metrics endpoint for at least two minutes."
 
+      - alert: TelegramAssistantDependenciesNotReady
+        expr: telegram_app_readiness == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Telegram Assistant database or Redis dependency is not ready"
+          description: "The application readiness probe cannot reach one or more required dependencies."
+
   - name: telegram-business-assistant-outbox
     rules:
       - alert: TelegramAssistantDeadLetterEvents
@@ -31,7 +40,7 @@ groups:
           description: "More than ten notifications have remained pending for at least five minutes."
 
       - alert: TelegramAssistantOutboxStalled
-        expr: telegram_outbox_pending > 0 and increase(telegram_outbox_delivery_total[10m]) == 0
+        expr: telegram_outbox_pending > 0 and sum(increase(telegram_outbox_delivery_total[10m])) == 0
         for: 10m
         labels:
           severity: critical
