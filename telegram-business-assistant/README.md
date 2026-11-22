@@ -29,7 +29,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 - aiogram 3.x
 - PostgreSQL / asyncpg for shared multi-instance persistence; SQLite / aiosqlite for local fallback
 - Redis for persistent FSM state and cross-instance event isolation
-- aiohttp health/readiness endpoints and Prometheus metrics
+- aiohttp health/readiness endpoints and Prometheus metrics, plus Prometheus rules for target/dependency failures, dead letters and stalled outbox
 - pytest, pytest-asyncio and service-backed integration tests
 - GitHub Actions with PostgreSQL and Redis service containers
 
