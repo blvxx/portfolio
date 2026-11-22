@@ -2,7 +2,7 @@
 
 Practical engineering portfolio covering incident investigation, REST API testing, automation, SQL / PostgreSQL analytics and frontend work.
 
-**[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
+**[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/web-development-portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
 
 [![FinTech QA](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
 [![Checkout Playwright QA](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml)
@@ -156,7 +156,7 @@ A self-contained FastAPI target and **31 pytest cases** covering response contra
 [Open the API QA case](./qa-cases/api-contract-negative/) · [Requirements-to-tests traceability](./qa-cases/api-contract-negative/test-matrix.md)
 
 ## Separate freelance direction
-For website creation, redesign and small-business projects, visit the **[freelance web portfolio](https://blvxx.github.io/portfolio/)** or the [frontend source repository](https://github.com/blvxx/web-development-portfolio).
+For website creation, redesign and small-business projects, visit the **[freelance web portfolio](https://blvxx.github.io/web-development-portfolio/)** or the [frontend source repository](https://github.com/blvxx/web-development-portfolio).
 
 ## Transparency
 - Payment systems and incidents are simulated.
