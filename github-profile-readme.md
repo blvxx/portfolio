@@ -68,7 +68,7 @@ A reproducible analytics case study based on 360 synthetic e-commerce orders.
 
 [Interactive dashboard](https://github.com/blvxx/portfolio/tree/main/data-analytics/dashboard)
 
-### 6. [Todo Test — Playwright UI Automation](https://github.com/blvxx/todo-test)
+### 6. [Todo Test — Playwright UI Automation](https://github.com/blvxx/playwright-qa-lab)
 A browser app with 8 authored Playwright scenarios and 17 documented manual test cases.
 
 **Demonstrates:** UI test design, browser automation and QA documentation.
