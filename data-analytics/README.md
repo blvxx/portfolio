@@ -38,6 +38,17 @@ See [data dictionary](docs/data_dictionary.md) for field definitions and metric 
 
 The pipeline validates the CSV, calculates recognised revenue only for paid/non-returned orders, and exports KPI, monthly, region, category and channel reports.
 
+### Interactive dashboard
+
+The optional [Business Analytics Dashboard](dashboard/README.md) presents the validated dataset through Streamlit and Plotly. It includes date, region and category filters; headline KPIs; monthly revenue, category, channel and payment-status charts; a filtered order table; and CSV export.
+
+Run it separately from the core analysis:
+
+```bash
+pip install -r requirements-dashboard.txt
+streamlit run dashboard/app.py
+```
+
 ### Findings
 
 See [Analysis Findings](docs/analysis-findings.md) for the calculated KPI snapshot, segment comparisons, interpretation and limitations.
@@ -131,6 +142,9 @@ If your terminal starts in another directory, adjust the CSV and SQL paths. The 
 data-analytics/
 ├── data/
 │   └── orders.csv
+├── dashboard/
+│   ├── app.py
+│   └── README.md
 ├── docs/
 │   ├── analysis-findings.md
 │   └── data_dictionary.md
@@ -144,6 +158,7 @@ data-analytics/
 ├── tests/
 │   └── test_analysis.py
 ├── requirements.txt
+├── requirements-dashboard.txt
 └── README.md
 ```
 
@@ -160,4 +175,5 @@ data-analytics/
 - The dataset is synthetic and intentionally small.
 - No causal conclusions can be drawn from the patterns.
 - No real-world seasonality or business context is claimed.
-- A next iteration could add customer cohorts, an interactive dashboard and automated SQL/Python reconciliation checks.
+- The dashboard is a local optional UI and has not been represented as a hosted production service.
+- A next iteration could add customer cohorts and automated SQL/Python reconciliation checks.

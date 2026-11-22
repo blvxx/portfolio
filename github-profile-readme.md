@@ -6,6 +6,7 @@ I investigate technical issues, validate API and user workflows, work with SQL d
 
 **[Engineering portfolio & case studies](https://blvxx.github.io/portfolio/engineering/)** · **[Web development portfolio](https://blvxx.github.io/portfolio/)** · **[GitHub repositories](https://github.com/blvxx?tab=repositories)**
 
+[![Support Engineering Lab](https://github.com/blvxx/portfolio/actions/workflows/support-engineering-lab.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/support-engineering-lab.yml)
 [![FinTech QA](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 [![Data Analytics](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml)
@@ -24,7 +25,12 @@ I investigate technical issues, validate API and user workflows, work with SQL d
 
 ## Selected projects
 
-### 1. [Incident Investigation Lab — Payment Webhook Failure](https://github.com/blvxx/portfolio/tree/main/incident-lab)
+### 1. [Linux Support Engineering Lab](https://github.com/blvxx/portfolio/tree/main/support-engineering-lab)
+A reproducible operations lab with 10 Linux incident playbooks, a Python log triage CLI, severity-ranked evidence and CI-generated JSON reports.
+
+**Demonstrates:** Linux troubleshooting, systemd, Nginx, DNS, TLS, resource diagnosis and incident documentation.
+
+### 2. [Incident Investigation Lab — Payment Webhook Failure](https://github.com/blvxx/portfolio/tree/main/incident-lab)
 A simulated payment incident investigated from first symptoms to recovery.
 
 - Python log analyzer and unified operations CLI.
@@ -33,7 +39,7 @@ A simulated payment incident investigated from first symptoms to recovery.
 
 **Demonstrates:** incident investigation, troubleshooting, evidence-based analysis and operational documentation.
 
-### 2. [FinTech QA Engineering Platform](https://github.com/blvxx/portfolio/tree/main/fintech-qa-platform)
+### 3. [FinTech QA Engineering Platform](https://github.com/blvxx/portfolio/tree/main/fintech-qa-platform)
 A multi-service payment sandbox designed for API, integration and browser-level testing.
 
 - Payment and Ledger services with PostgreSQL persistence.
@@ -42,16 +48,16 @@ A multi-service payment sandbox designed for API, integration and browser-level 
 
 **Demonstrates:** end-to-end QA thinking, test design, service integration and CI.
 
-### 3. [Python API Automation](https://github.com/blvxx/portfolio/tree/main/api-automation)
+### 4. [Python API Automation](https://github.com/blvxx/portfolio/tree/main/api-automation)
 A reusable requests client and pytest suite for a public demo REST API.
 
 - CRUD contract tests and positive/negative scenarios.
-- JSON Schema validation, parametrization and mocked unit tests.
-- Postman collection and CI workflow.
+- Safe retry policy for idempotent methods, optional bearer-token configuration and bounded pagination.
+- JSON Schema validation, parametrization, mocked unit tests and Postman.
 
 **Demonstrates:** API testing, Python automation and maintainable test structure.
 
-### 4. [SQL + Python Data Analytics](https://github.com/blvxx/portfolio/tree/main/data-analytics)
+### 5. [SQL + Python Data Analytics](https://github.com/blvxx/portfolio/tree/main/data-analytics)
 A reproducible analytics case study based on 360 synthetic e-commerce orders.
 
 - PostgreSQL schema and SQL reporting.
@@ -60,7 +66,9 @@ A reproducible analytics case study based on 360 synthetic e-commerce orders.
 
 **Demonstrates:** structured data analysis, SQL and Python reporting.
 
-### 5. [Todo Test — Playwright UI Automation](https://github.com/blvxx/todo-test)
+[Interactive dashboard](https://github.com/blvxx/portfolio/tree/main/data-analytics/dashboard)
+
+### 6. [Todo Test — Playwright UI Automation](https://github.com/blvxx/todo-test)
 A browser app with 8 authored Playwright scenarios and 17 documented manual test cases.
 
 **Demonstrates:** UI test design, browser automation and QA documentation.

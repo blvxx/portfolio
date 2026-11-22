@@ -32,6 +32,14 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - The Postman collection mirrors the main Posts API scenarios for manual execution.
 - Transport exceptions such as request timeouts are not swallowed by the client.
 
+## Client resilience features
+
+The reusable client supports optional bearer-token configuration through `bearer_token` or the `API_BEARER_TOKEN` environment variable. When it creates its own session, it retries transient connection and selected HTTP status failures for **GET / HEAD / OPTIONS only**. It does not automatically retry write methods, avoiding duplicate side effects. A bounded `iter_posts(page_size, max_pages)` helper demonstrates pagination and validates response shapes.
+
+The authentication option is for a compatible protected test environment configured through `API_BASE_URL`; the public JSONPlaceholder demo does not require a token.
+
+Additional isolated tests in `tests/test_client_resilience.py` cover token handling, safe retry configuration, pagination boundaries and invalid options.
+
 ## Test documentation
 
 - [Test Plan](docs/test-plan.md) — scope, test types, environment, test data, risks, entry/exit criteria and coverage traceability.
@@ -159,6 +167,7 @@ api-automation/
 │   └── README.md
 └── tests/
     ├── test_api_client.py
+    ├── test_client_resilience.py
     └── test_posts_api.py
 ```
 
@@ -166,8 +175,9 @@ api-automation/
 
 - The public demo API may be temporarily unavailable or slow; live API tests can therefore fail because of external conditions.
 - Demo write operations are not persistent and must not be treated as database persistence checks.
-- The project currently focuses on the Posts resource; it does not claim authentication, database, load, security or end-to-end coverage.
-- Future extensions can add relationship endpoints, pagination checks, reusable test data builders and a local mock API for deterministic failure scenarios.
+- The project currently focuses on the Posts resource; the optional bearer-token setting demonstrates client configuration, not a verified authorization flow against the public demo API.
+- No database, load, security or production end-to-end coverage is claimed.
+- Future extensions can add a deterministic local mock API, contract drift checks and broader pagination edge cases.
 
 ## Maintainer
 
