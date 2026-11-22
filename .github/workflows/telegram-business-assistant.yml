@@ -81,5 +81,18 @@ jobs:
           restored=$(psql postgresql://assistant:assistant@localhost:5432/restore_test -Atc \
             "SELECT value FROM backup_verification WHERE id = 1")
           test "$restored" = "backup-ok"
+      - name: Validate Prometheus scrape config and alert rules
+        working-directory: telegram-business-assistant
+        run: |
+          docker run --rm \
+            --volume "$PWD/monitoring:/etc/prometheus:ro" \
+            --entrypoint /bin/promtool \
+            prom/prometheus:v3.0.1 \
+            check config /etc/prometheus/prometheus.yml
+          docker run --rm \
+            --volume "$PWD/monitoring:/etc/prometheus:ro" \
+            --entrypoint /bin/promtool \
+            prom/prometheus:v3.0.1 \
+            check rules /etc/prometheus/alerts.yml
       - name: Build Docker image
         run: docker build -t telegram-business-assistant:test .
