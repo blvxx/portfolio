@@ -142,7 +142,7 @@ Minimum alert policies to configure in the hosting/monitoring platform:
 - last successful backup exceeds the agreed backup interval.
 - PostgreSQL/Redis availability or storage capacity crosses agreed thresholds.
 
-Thresholds must be tuned to actual traffic; CI alone cannot establish meaningful production SLOs.
+Prometheus evaluates rules locally at 15-second intervals. The UI is bound to 127.0.0.1:9090 in the supplied Compose profile. Alertmanager notification delivery is not configured by default: connect an approved email/chat receiver through the host's secret manager and test delivery before treating alerts as operationally actionable. Thresholds must be tuned to actual traffic; CI alone cannot establish meaningful production SLOs.
 
 ## Shutdown
 
