@@ -8,6 +8,15 @@ A self-contained API system and automated quality suite built around a fictional
 
 > **Transparency:** the API is an authored local test target. The suite proves behavior of this sandbox only; it does not claim testing of a third-party or production system.
 
+## At a glance
+
+| Asset | Included |
+|---|---|
+| Local API target | FastAPI + Pydantic, isolated in-memory repository |
+| Automated suite | 31 pytest cases including parametrized boundary scenarios |
+| Local execution | 31 passed; 100% statement coverage for app.py and store.py in the development run |
+| CI evidence | JUnit XML and coverage XML artifacts |
+
 ## Quality objectives
 
 | Quality risk | Test strategy |
@@ -61,7 +70,7 @@ pytest --cov=app --cov=store --cov-report=term-missing --cov-report=xml
 
 ## CI evidence
 
-GitHub Actions runs the suite on pushes and pull requests affecting this case, and can be started manually. The workflow publishes JUnit XML and coverage XML as downloadable artifacts. The badge above reflects the latest workflow state.
+GitHub Actions runs the suite on pushes and pull requests affecting this case, and can be started manually. The workflow publishes JUnit XML and coverage XML as downloadable artifacts. The badge above reflects the latest workflow state. The local 31-test run passed with 100% statement coverage for the two application modules; the CI badge remains the separate, repeatable repository check.
 
 ## Test design notes
 
