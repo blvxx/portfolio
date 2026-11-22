@@ -1,26 +1,75 @@
-# QA Case: REST API Contract & Negative Testing
+# Booking API — API Quality Engineering Case
 
-> Fictional booking API. This is a designed test case pack, not testing performed against a live service.
+<sub>Python · FastAPI · pytest · Pydantic · HTTP contract testing · coverage · GitHub Actions</sub>
 
-## Scenario
-A reservation API exposes rooms, availability and booking creation. QA focuses on input validation, status codes, data integrity, authorization boundaries and retry behavior.
+![Booking API QA](https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml/badge.svg)
 
-## Scope
-- `GET /rooms`: filtering and pagination
-- `GET /availability`: date range and room id validation
-- `POST /bookings`: required fields, date constraints, guests, conflict handling
-- `GET /bookings/{id}`: existence and ownership
-- `DELETE /bookings/{id}`: cancellation state
+A self-contained API system and automated quality suite built around a fictional booking service. The project demonstrates how to translate API requirements into risk-based tests, isolate test state, verify contracts and protect critical booking invariants.
 
-## Files
-- [API test matrix](test-matrix.md)
-- [Sample requests and responses](examples.md)
-- [Simulated bug reports](bug-reports.md)
+> **Transparency:** the API is an authored local test target. The suite proves behavior of this sandbox only; it does not claim testing of a third-party or production system.
 
-## Risk-based focus
-P0: double-booking, unauthorized access to booking details, booking with invalid date ranges.
-P1: incorrect validation/status code, pagination/filtering regressions.
-P2: error payload consistency and response metadata.
+## Quality objectives
 
-## Assumptions
-API base URL is `https://api.example.test/v1`; endpoints and payloads are invented for this exercise. No real service was contacted. All simulated defects are explicitly hypothetical.
+| Quality risk | Test strategy |
+|---|---|
+| Double booking | Overlap, adjacency and state-transition tests |
+| Duplicate writes on retry | Idempotency replay and key-reuse conflict |
+| Unauthorized data access | Missing/invalid identity and cross-user access |
+| Invalid business input | Date, capacity, email and payload-boundary validation |
+| Contract drift | Response shape, status codes and headers |
+| Unstable tests | Per-test app/store isolation and fixed test data |
+
+## Verified scope in code
+
+- Room catalogue and pagination.
+- Availability and half-open date interval rules.
+- Booking creation and capacity validation.
+- Bearer-token authorization in a deliberately simplified sandbox.
+- Owner-only read and cancellation.
+- Idempotency key replay, payload mismatch and per-user key scope.
+- Cancellation state and availability recovery.
+
+## Repository map
+
+| File | Responsibility |
+|---|---|
+| `app.py` | FastAPI routes, request/response contracts and HTTP semantics |
+| `store.py` | Isolated in-memory repository, atomic booking and idempotency operations |
+| `test_api.py` | Automated API tests using FastAPI TestClient |
+| `test-matrix.md` | Risk-based requirements-to-test traceability |
+| `examples.md` | Human-readable request / response examples |
+| `bug-reports.md` | Hypothetical defect-report examples |
+
+## Run locally
+
+Python 3.10+:
+
+```bash
+cd qa-cases/api-contract-negative
+python -m venv .venv
+# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+# macOS / Linux: source .venv/bin/activate
+python -m pip install -r requirements.txt
+pytest
+```
+
+Run with coverage:
+
+```bash
+pytest --cov=app --cov=store --cov-report=term-missing --cov-report=xml
+```
+
+## CI evidence
+
+GitHub Actions runs the suite on pushes and pull requests affecting this case, and can be started manually. The workflow publishes JUnit XML and coverage XML as downloadable artifacts. The badge above reflects the latest workflow state.
+
+## Test design notes
+
+- Each test receives a fresh app instance and repository; there is no shared mutable state between tests.
+- Reservation intervals use `[start_date, end_date)`: adjacent bookings are allowed, overlapping bookings are rejected.
+- The idempotency key is scoped to the authenticated user. Same key + same payload replays the original booking; same key + changed payload returns conflict.
+- Cross-user access intentionally returns 404 to avoid confirming the existence of another user's booking.
+
+## Limitations
+
+The store is in memory and not a substitute for a transactional database. The token scheme is a test fixture, not real authentication. Distributed concurrency, persistence, rate limits, observability and external integrations are intentionally out of scope.
