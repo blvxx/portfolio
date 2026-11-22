@@ -70,7 +70,7 @@ with left:
         st.info("Нет продаж для выбранного фильтра.")
     else:
         st.plotly_chart(
-            px.line(monthly, x="month", y="revenue_gbp", markers=True, title="Net of refunds at invoice-line level"),
+            px.line(monthly, x="month", y="revenue_gbp", markers=True, title="Gross sales from positive invoice lines (refunds excluded)"),
             use_container_width=True,
         )
 with right:
