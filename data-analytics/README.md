@@ -40,7 +40,7 @@ The pipeline validates the CSV, calculates recognised revenue only for paid/non-
 
 ### Findings
 
-See [Analysis Findings](docs/analysis_findings.md) for the calculated KPI snapshot, segment comparisons, interpretation and limitations.
+See [Analysis Findings](docs/analysis-findings.md) for the calculated KPI snapshot, segment comparisons, interpretation and limitations.
 
 ### Data quality and tests
 
@@ -132,7 +132,7 @@ data-analytics/
 ├── data/
 │   └── orders.csv
 ├── docs/
-│   ├── analysis_findings.md
+│   ├── analysis-findings.md
 │   └── data_dictionary.md
 ├── sql/
 │   ├── 00_schema.sql
