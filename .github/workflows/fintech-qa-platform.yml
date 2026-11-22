@@ -104,7 +104,17 @@ jobs:
           echo "Prometheus and Grafana observability smoke checks passed."
 
       - name: Run controlled Ledger outage and recovery drill
-        run: python fintech-qa-platform/scripts/incident_drill.py --execute-local-drill --timeout-seconds 90
+        run: |
+          mkdir -p fintech-qa-platform/reports
+          python fintech-qa-platform/scripts/incident_drill.py --execute-local-drill --timeout-seconds 90 | tee fintech-qa-platform/reports/incident-drill.json
+
+      - name: Upload operational drill evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fintech-operational-drill-evidence
+          path: fintech-qa-platform/reports/incident-drill.json
+          if-no-files-found: ignore
 
   ui-e2e:
     runs-on: ubuntu-24.04
