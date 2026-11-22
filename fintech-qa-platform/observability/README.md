@@ -14,6 +14,18 @@ Open Grafana at http://localhost:3000 (demo credentials: admin / admin_demo_pass
 
 The Grafana dashboard is provisioned automatically in the FinTech Demo folder. Allow 10–20 seconds for the first scrape and generate a few requests before expecting populated charts.
 
+## Automated local fault-injection drill
+
+With the full local Compose stack running, execute the guarded Ledger outage scenario from the project directory:
+
+```bash
+python scripts/incident_drill.py --execute-local-drill --timeout-seconds 60
+```
+
+The script validates that all configured URLs use loopback HTTP addresses, checks the baseline, stops only the local Ledger container, waits for Prometheus to observe the target as DOWN, verifies that Payment readiness remains available while a business request returns 502, restores Ledger, waits for the target to return UP and retries the same payment idempotency key. It prints a JSON evidence summary and exits non-zero if an expected state transition is missing.
+
+The explicit flag is required because the drill stops a running container. Do not point this exercise at shared, staging or production infrastructure. It creates one small synthetic payment in the local demo database after recovery.
+
 ## Generate traffic
 
 ```bash
