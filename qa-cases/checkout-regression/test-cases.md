@@ -1,6 +1,6 @@
 # Checkout Regression Test Catalogue
 
-The following 23 Playwright tests execute against the local Northstar Market QA sandbox. The test names map directly to `tests/test_checkout.py`.
+The following 24 Playwright tests execute against the local Northstar Market QA sandbox. The test names map directly to `tests/test_checkout.py`.
 
 | ID | Priority | Scenario | Automated test |
 |---|---|---|---|
