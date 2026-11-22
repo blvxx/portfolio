@@ -43,3 +43,31 @@ async def test_recent_leads_are_limited_and_newest_first(tmp_path):
     leads = await database.get_recent_leads(limit=2)
 
     assert [lead["telegram_user_id"] for lead in leads] == [1003, 1002]
+
+
+@pytest.mark.asyncio
+async def test_recent_leads_returns_empty_when_database_has_no_leads(tmp_path):
+    database = Database(str(tmp_path / "leads.sqlite3"))
+    await database.initialize()
+
+    assert await database.get_recent_leads() == []
+
+
+@pytest.mark.asyncio
+async def test_recent_leads_limit_is_clamped_to_safe_range(tmp_path):
+    database = Database(str(tmp_path / "leads.sqlite3"))
+    await database.initialize()
+
+    for index in range(51):
+        await database.add_lead(
+            telegram_user_id=2000 + index,
+            username=None,
+            customer_name=f"Customer {index}",
+            contact=f"customer{index}@example.com",
+            service="Приём заявок",
+            details="A sufficiently detailed test request.",
+        )
+
+    assert len(await database.get_recent_leads(limit=0)) == 1
+    assert len(await database.get_recent_leads(limit=-10)) == 1
+    assert len(await database.get_recent_leads(limit=100)) == 50
