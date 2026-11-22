@@ -20,6 +20,7 @@ Demo environment only. No real money, banks, customer records or production syst
 - GitHub Actions runs linting, API tests, a Docker Compose integration smoke test and browser E2E tests.
 - Allure generates an HTML report and preserves raw result files as CI artifacts.
 - Prometheus scrapes service-level HTTP metrics; Grafana is provisioned with an operational dashboard.
+- A guarded local fault-injection script stops Ledger, captures a controlled 502, restores the dependency and verifies an idempotent retry.
 
 ## Architecture diagram
 
@@ -57,7 +58,7 @@ Services:
 - Payment metrics: http://localhost:8000/metrics
 - Ledger metrics: http://localhost:8001/metrics
 
-Monitoring setup, dashboard queries and outage exercise: [Observability Lab](observability/README.md).
+Monitoring setup, dashboard queries, incident runbooks and the [automated local fault-injection drill](observability/README.md#automated-local-fault-injection-drill) are documented in the Observability Lab.
 
 ## Run tests locally
 
