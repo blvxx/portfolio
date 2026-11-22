@@ -50,7 +50,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
                       v
               Telegram notification
 
-The bot keeps conversational state in aiogram MemoryStorage. Lead records and notification events are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. The outbox uses atomic event creation, exclusive claims, per-claim lease tokens, bounded exponential retry and a dead state after five failed attempts. Delivery is at-least-once, not exactly-once: a crash after Telegram accepts a message but before the local delivered marker commits can cause a duplicate. For a multi-instance production deployment, replace MemoryStorage with Redis and evaluate a shared database such as PostgreSQL.
+The bot keeps conversational state in aiogram MemoryStorage. Lead records and notification events are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. The schema is versioned with forward-only migrations and upgraded automatically on startup; take a verified backup before deploying a schema change. The outbox uses atomic event creation, exclusive claims, per-claim lease tokens, bounded exponential retry and a dead state after five failed attempts. Delivery is at-least-once, not exactly-once: a crash after Telegram accepts a message but before the local delivered marker commits can cause a duplicate. For a multi-instance production deployment, replace MemoryStorage with Redis and evaluate a shared database such as PostgreSQL.
 
 ## Run locally
 
@@ -136,7 +136,7 @@ For a single-instance MVP this setup is sufficient. MemoryStorage keeps unfinish
 
        pytest -q
 
-Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy, Telegram handler orchestration, outbox transaction atomicity, concurrent claims, lease fencing, retry/dead-letter transitions and dispatcher delivery. They do not require a live Telegram token or network access.
+Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy, Telegram handler orchestration, outbox transaction atomicity, concurrent claims, lease fencing, retry/dead-letter transitions, dispatcher delivery and schema migration/upgrade behaviour. They do not require a live Telegram token or network access.
 
 ## Configuration
 

@@ -8,6 +8,8 @@ from typing import Any
 
 import aiosqlite
 
+from src.migrations import migrate
+
 
 def _utc_now() -> datetime:
     return datetime.now(timezone.utc).replace(microsecond=0)
@@ -38,50 +40,7 @@ class Database:
 
         async with aiosqlite.connect(self.path) as connection:
             await self._configure(connection)
-            await connection.execute(
-                """
-                CREATE TABLE IF NOT EXISTS leads (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    telegram_user_id INTEGER NOT NULL,
-                    username TEXT,
-                    customer_name TEXT NOT NULL,
-                    contact TEXT NOT NULL,
-                    service TEXT NOT NULL,
-                    details TEXT NOT NULL,
-                    created_at TEXT NOT NULL
-                )
-                """
-            )
-            await connection.execute(
-                "CREATE INDEX IF NOT EXISTS idx_leads_created_at ON leads(created_at)"
-            )
-            await connection.execute(
-                """
-                CREATE TABLE IF NOT EXISTS notification_outbox (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    event_type TEXT NOT NULL,
-                    aggregate_id INTEGER NOT NULL REFERENCES leads(id) ON DELETE CASCADE,
-                    payload_json TEXT NOT NULL,
-                    status TEXT NOT NULL DEFAULT 'pending'
-                        CHECK (status IN ('pending', 'processing', 'delivered', 'dead')),
-                    attempts INTEGER NOT NULL DEFAULT 0,
-                    available_at TEXT NOT NULL,
-                    locked_at TEXT,
-                    lease_token TEXT,
-                    last_error TEXT,
-                    created_at TEXT NOT NULL,
-                    delivered_at TEXT,
-                    UNIQUE(event_type, aggregate_id)
-                )
-                """
-            )
-            await connection.execute(
-                """
-                CREATE INDEX IF NOT EXISTS idx_outbox_due
-                ON notification_outbox(status, available_at, locked_at)
-                """
-            )
-            await connection.commit()
+            await migrate(connection)
 
     async def add_lead(
         self,

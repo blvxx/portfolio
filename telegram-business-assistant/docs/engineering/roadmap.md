@@ -43,7 +43,7 @@ Status: Planned; conditional on requirements
 
 - [x] Add a transactional outbox for administrator notifications (PR #17).
 - [x] Add bounded exponential retry, expired-lease recovery, unique event keys and per-claim lease fencing (PR #17).
-- [ ] Introduce a versioned database migration framework.
+- [x] Introduce forward-only SQLite schema migrations tracked by PRAGMA user_version (PR #18).
 - [ ] Evaluate PostgreSQL for multi-instance or higher-concurrency operation.
 - [ ] Evaluate Redis if FSM state must be shared across replicas.
 - [x] Add notification delivery states: pending, processing, delivered and dead. (PR #17)
@@ -53,7 +53,7 @@ Exit criteria:
 - Lead and outbox event are committed atomically.
 - Duplicate enqueue for the same lead-created event is prevented by a unique constraint.
 - Remote delivery is explicitly at-least-once; exactly-once delivery is not claimed.
-- Database schema changes are versioned and repeatable (still planned).
+- Database schema changes are versioned and repeatable; fresh install, existing version-1 upgrade, idempotent startup and future-version rejection are tested.
 - Migration and rollback are tested using non-production data.
 
 ## M3 — AI workflow extension
