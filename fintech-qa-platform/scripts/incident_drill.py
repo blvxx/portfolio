@@ -108,11 +108,21 @@ def run_drill(
     if not {"payment", "ledger", "prometheus"}.issubset(set(services)):
         raise RuntimeError("Expected payment, ledger and prometheus services in this Compose project.")
 
+    def baseline_is_ready() -> bool:
+        payment_status = request_json(payment_url.rstrip("/") + "/health/ready")[0]
+        ledger_status = request_json(ledger_url.rstrip("/") + "/health/ready")[0]
+        target_status = query_ledger_target(prometheus_url)
+        return payment_status == 200 and ledger_status == 200 and target_status is True
+
+    if not wait_until(baseline_is_ready, timeout_seconds):
+        raise RuntimeError(
+            "Baseline check failed: Payment, Ledger and the Prometheus Ledger target "
+            "must all be ready before fault injection."
+        )
+
     payment_ready = request_json(payment_url.rstrip("/") + "/health/ready")
     ledger_ready = request_json(ledger_url.rstrip("/") + "/health/ready")
     target_before = query_ledger_target(prometheus_url)
-    if payment_ready[0] != 200 or ledger_ready[0] != 200 or target_before is not True:
-        raise RuntimeError("Baseline check failed. Start the full Compose stack and confirm all targets are UP first.")
 
     idempotency_key = "ops-drill-" + uuid.uuid4().hex[:24]
     payment_payload = {
