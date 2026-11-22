@@ -33,6 +33,9 @@ The current application does not use an LLM. AI-specific threats are listed as f
 - SQL queries use parameters.
 - User-provided strings included in HTML-formatted Telegram messages are escaped.
 - The leads command checks the configured administrator user ID.
+- Lead creation and optional notification enqueue occur in one SQLite transaction.
+- Outbox updates use per-claim lease tokens so an expired worker cannot overwrite a newer claim.
+- Arbitrary exception text is not stored; the outbox records exception type names only.
 - The bot token is read from an environment variable.
 - The Docker container runs as a non-root user, uses a read-only root filesystem, drops Linux capabilities and enables no-new-privileges.
 - Docker Compose stores the SQLite directory in a named volume for that deployment mode.
@@ -48,7 +51,7 @@ These controls reduce specific risks but do not establish that the live hosted d
 | Malicious message content | HTML escaping and input length limits | Add abuse controls, rate limiting and broader boundary tests |
 | Data loss | Docker named volume in Compose setup | Verify actual host persistence and test backup/restore |
 | Excessive data retention | No retention workflow implemented | Define retention policy and deletion workflow |
-| Notification failure | Exception is logged | Add durable outbox, retry policy and delivery state |
+| Notification failure | Transactional outbox, bounded retry, lease fencing and dead state | Add alerting and an operator replay interface; duplicate delivery remains possible in the remote-send crash window |
 | Sensitive data in logs | No deliberate logging of message bodies in current handlers | Review dependency/runtime logs and operational access |
 | Service abuse / flooding | No explicit application rate limit | Add per-user limits and resource bounds |
 | Supply-chain risk | Dependency version ranges are declared | Add lock/constraint strategy and dependency/security scanning |
