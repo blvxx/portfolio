@@ -55,7 +55,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "data: refresh aggregate UCI retail analysis [skip ci]"
-          file_pattern: |
-            customer-retention-analytics/docs/generated/*.json
-            customer-retention-analytics/docs/generated/*.csv
-            customer-retention-analytics/docs/generated/*.md
+          file_pattern: "customer-retention-analytics/docs/generated/"
