@@ -87,6 +87,17 @@ async def consent_yes(callback: CallbackQuery, state: FSMContext) -> None:
         )
 
 
+@router.callback_query(F.data == "flow:cancel")
+async def cancel_flow(callback: CallbackQuery, state: FSMContext) -> None:
+    """Cancel the request flow from its inline keyboard."""
+    await state.clear()
+    await callback.answer("Сценарий отменён")
+    if callback.message:
+        await callback.message.answer(
+            "Текущий сценарий отменён.", reply_markup=main_menu()
+        )
+
+
 @router.callback_query(F.data == "consent:no")
 async def consent_no(callback: CallbackQuery, state: FSMContext) -> None:
     await state.clear()
