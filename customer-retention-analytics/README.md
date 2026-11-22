@@ -52,7 +52,7 @@ pip install -r requirements-dashboard.txt
 streamlit run app.py
 ```
 
-Without an uploaded workbook, the app opens with a clearly labelled synthetic preview fixture. Use the sidebar uploader to load the official UCI Excel workbook and review the actual dataset.
+By default, the dashboard uses the published aggregate-only UCI outputs in `docs/generated/`. Upload the original workbook in the sidebar to recalculate country-filtered sales, customer segments and cohorts interactively. The small bundled synthetic CSV is only a fallback for offline preview when generated outputs are absent.
 
 ## Repository map
 
