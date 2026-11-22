@@ -130,7 +130,7 @@ For a single-instance MVP this setup is sufficient. MemoryStorage keeps unfinish
 
        pytest -q
 
-Tests cover lead persistence, newest-first ordering, result limits, validation boundaries and application-service policy (consent, identity, contact, service and request details). They do not require a live Telegram token or network access.
+Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy (consent, identity, contact, service and request details), and Telegram handler orchestration (success, policy rejection, optional admin notification and missing sender). They do not require a live Telegram token or network access.
 
 ## Configuration
 
