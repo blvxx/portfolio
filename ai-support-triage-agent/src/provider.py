@@ -3,7 +3,6 @@
 from typing import Protocol
 
 from openai import AsyncOpenAI
-from pydantic import BaseModel
 
 from src.schemas import SupportTriageResult
 
