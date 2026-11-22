@@ -186,3 +186,14 @@ def test_checkout_layout_has_no_horizontal_overflow_on_mobile(page: Page) -> Non
 def test_required_inputs_have_programmatic_labels(page: Page) -> None:
     for selector in ("#customer-name", "#email", "#fulfilment", "#address"):
         assert page.locator(selector).evaluate("el => Boolean(el.labels && el.labels.length)")
+
+def test_discount_recalculates_after_removing_eligible_product(page: Page) -> None:
+    add_product(page, "Basic")
+    add_product(page, "Premium")
+    page.get_by_label("Promo code").fill("SAVE10")
+    page.get_by_role("button", name="Apply code").click()
+    expect(page.get_by_test_id("discount")).to_have_text("− CU 35.00")
+    page.get_by_role("button", name="Remove Premium").click()
+    expect(page.get_by_test_id("subtotal")).to_have_text("CU 100.00")
+    expect(page.get_by_test_id("discount")).to_have_text("− CU 10.00")
+    expect(page.get_by_test_id("total")).to_have_text("CU 110.00")
