@@ -45,6 +45,7 @@ async def test_submit_valid_enquiry_normalizes_fields_and_persists() -> None:
         "contact": "demo@example.com",
         "service": "Приём заявок",
         "details": "Нужна автоматизация обработки обращений.",
+        "admin_chat_id": None,
     }
 
 
