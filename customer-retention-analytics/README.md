@@ -19,7 +19,7 @@ An end-to-end retail analytics case study built around the public **UCI Online R
 - Cross-checks that reconcile SQL gross sales and repeat-customer rates with the pandas pipeline.
 - Streamlit + Plotly dashboard with country filters and methodology notes.
 - Unit tests for data cleaning, metrics, RFM and cohort calculations.
-- GitHub Actions test workflow.
+- SQLite schema, CTEs, window-function RFM/cohort queries and reconciliation checks against pandas.\n- GitHub Actions test workflow.
 
 ## Dataset
 
@@ -55,6 +55,11 @@ The local exploratory pipeline writes detailed working outputs under outputs/. T
 - [RFM segment summary](docs/generated/rfm_segments.csv)
 - [Cohort sizes](docs/generated/cohort_sizes.csv)
 - [Cohort retention matrix](docs/generated/cohort_retention.csv)
+- [SQL monthly sales](docs/generated/sql_monthly_sales.csv)
+- [SQL country contribution](docs/generated/sql_country_sales.csv)
+- [SQL repeat-customer KPI](docs/generated/sql_repeat_customers.csv)
+- [SQL RFM segments](docs/generated/sql_rfm_segments.csv)
+- [SQL cohort retention](docs/generated/sql_cohort_retention.csv)
 
 The [Retail Dataset Analysis workflow](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml) downloads the original workbook in GitHub Actions, generates the public report, runs unit tests, uploads an artifact and commits only aggregate outputs. The raw workbook and customer-level records stay outside Git.
 
@@ -81,7 +86,17 @@ customer-retention-analytics/
 │   └── analysis-brief.md
 ├── scripts/
 │   ├── download_data.py
-│   └── run_analysis.py
+│   ├── run_analysis.py
+│   ├── build_public_report.py
+│   └── sql_analysis.py
+├── sql/
+│   ├── schema.sql
+│   └── queries/
+│       ├── monthly_sales.sql
+│       ├── country_sales.sql
+│       ├── repeat_customers.sql
+│       ├── rfm_segments.sql
+│       └── cohort_retention.sql
 ├── src/retail_analytics/
 │   ├── analysis.py
 │   └── etl.py
