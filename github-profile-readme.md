@@ -81,7 +81,7 @@ An end-to-end business analytics case study using all 541,909 rows of UCI Online
 
 **Stack:** Python · pandas · Streamlit · Plotly · pytest.
 
-[Open the analytics case](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
+[Live case study](https://blvxx.github.io/portfolio/customer-retention-analytics/) · [Repository and generated findings](https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics) · [Dataset provenance](https://github.com/blvxx/portfolio/blob/main/customer-retention-analytics/data/README.md)
 
 ### 7. [Todo Test — Playwright UI Automation](https://github.com/blvxx/playwright-qa-lab)
 A browser app with 8 authored Playwright scenarios and 17 documented manual test cases.
