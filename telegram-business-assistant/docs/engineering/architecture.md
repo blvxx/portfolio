@@ -30,8 +30,6 @@ Telegram Bot API
       -> administrator commands
   -> Application Service (src/application/enquiries.py)
       -> consent, identity, contact and request policy
-  -> Application Service (src/application/enquiries.py)
-      -> consent, identity, contact and request policy
   -> SQLite transaction
       -> leads table
       -> notification_outbox table
