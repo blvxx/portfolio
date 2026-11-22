@@ -94,7 +94,7 @@ async def test_missing_knowledge_evidence_forces_escalation() -> None:
     agent = CaseTriageAgent(knowledge_base(), provider)
 
     output = await agent.triage(
-        "An unfamiliar proprietary signal ZXQ-9481 appeared with no matching knowledge article."
+        "ZXQ9481 VVMNN2048 QPQW0098 opaque token sequence."
     )
 
     assert output.escalation_required is True
