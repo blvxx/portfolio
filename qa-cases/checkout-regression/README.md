@@ -1,43 +1,65 @@
-# QA Case: Checkout & Cart Regression
+# Checkout & Cart — Web QA Automation Case
 
-> Fictional e-commerce application. All requirements, test results, and defects in this case are authored simulations; they are not claims about testing a real production system.
+<sub>Manual QA design · Playwright · Python · pytest · Chromium · browser traces · GitHub Actions</sub>
 
-## Context
-A storefront is releasing changes to cart totals, promo codes, delivery selection, and checkout validation. The QA objective is to protect the order path and prevent incorrect totals or duplicate orders.
+![Checkout E2E](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml/badge.svg)
 
-## Scope
-**In scope:** cart add/remove/update, quantity boundaries, subtotal/discount/shipping calculation, promo-code validation, delivery option, required checkout fields, order confirmation, repeated submission.
-**Out of scope:** payment-provider certification, real inventory, email delivery, load testing.
+A self-contained web application and browser regression suite focused on the revenue-critical checkout path. It demonstrates risk-based test design, data-driven state transitions, price calculation assertions, form validation, duplicate-submit protection and responsive smoke testing.
 
-## Risk-based priorities
-- **P0:** order amount is incorrect or duplicate orders can be created.
-- **P1:** checkout is blocked for valid customers or discounts/shipping are wrong.
-- **P2:** validation messages, layout, and low-impact usability defects.
+> **Transparency:** Northstar Market is a fictional application authored for this portfolio. Prices, stock and orders are simulated. The suite does not claim to have tested a real merchant or payment system.
 
-## Deliverables
-- [Test plan](test-plan.md)
-- [Test cases](test-cases.md)
-- [Exploratory charter](exploratory-charter.md)
-- [Simulated defect reports](bug-reports.md)
+## At a glance
 
-## Approach
-1. Review requirements and identify calculation/transaction risks.
-2. Execute happy-path and negative checks across cart and checkout.
-3. Explore quantity, promo-code, and submit-button state transitions.
-4. Record defects with reproducible steps, expected/actual, severity, and evidence placeholder.
-5. Regression focus: total calculation and duplicate order prevention.
+| Asset | Included |
+|---|---|
+| System under test | Responsive local storefront with cart and checkout |
+| Browser automation | Playwright + Chromium |
+| Test runner | pytest |
+| Automated coverage | 23 browser scenarios |
+| Test techniques | Positive, negative, boundary, state-transition, risk-based regression |
+| Evidence | JUnit XML, Playwright traces, failure screenshots via CI artifact |
 
-## Exit criteria (proposed)
-- All P0 tests pass.
-- No open P1 defects.
-- P2 issues documented and accepted by product owner.
-- Order totals are consistent across cart and checkout.
+## What is being tested
 
-## Test data
-| Item | Price | Stock (simulated) |
-|---|---:|---:|
-| Basic | 100.00 | 10 |
-| Premium | 250.00 | 3 |
-| Gift item | 25.00 | 0 |
+- Cart add/remove, quantity boundaries and stock limits.
+- Subtotal and line-total recalculation.
+- Valid, expired and unknown promotions; protection against duplicate discount.
+- Delivery and pickup cost transitions.
+- Required checkout fields and email format.
+- Delivery-specific address validation.
+- Successful order confirmation and rapid duplicate submission.
+- Mobile viewport overflow and programmatic form labels.
 
-Promo examples: `SAVE10` (10% off eligible subtotal), `EXPIRED` (expired), `INVALID` (unknown code). Currency is fictional test currency (CU).
+## Run locally
+
+Python 3.10+ and a Chromium browser are required.
+
+```bash
+cd qa-cases/checkout-regression
+python -m venv .venv
+# Windows PowerShell: .venv\\Scripts\\Activate.ps1
+# macOS / Linux: source .venv/bin/activate
+python -m pip install -r requirements.txt
+python -m playwright install chromium
+pytest -v
+```
+
+The suite loads repository HTML, CSS and JavaScript into an isolated browser page. It does not depend on a running backend or external service.
+
+## Repository map
+
+- `app/`: static responsive storefront and business rules.
+- `tests/test_checkout.py`: 23 Playwright scenarios.
+- `conftest.py`: browser lifecycle, fresh context per test, trace capture and failure screenshots.
+- `test-plan.md`: risks, scope, data and exit criteria.
+- `test-cases.md`: requirement-to-test traceability catalogue.
+- `exploratory-charter.md`: complementary manual exploratory missions.
+- `bug-reports.md`: examples of defect reports, clearly marked hypothetical.
+
+## CI evidence
+
+GitHub Actions runs the browser regression suite on relevant pushes and pull requests. The workflow uploads the JUnit report, per-test Playwright traces and failure screenshots as a downloadable artifact. The badge above reflects the workflow status.
+
+## Limitations
+
+The app has no backend, database, payment provider or real inventory service. It does not demonstrate cross-browser coverage, production load, network resilience or payment certification. These are separate test layers that require a real environment.
