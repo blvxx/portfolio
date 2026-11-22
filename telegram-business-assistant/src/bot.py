@@ -1,6 +1,6 @@
 """Application entry point supporting polling and horizontally-scalable webhooks."""
 
-import asyncio
+import asyncio  # noqa: I001
 import logging
 import signal
 from datetime import timedelta
