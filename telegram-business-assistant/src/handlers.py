@@ -13,7 +13,12 @@ from src.config import Settings
 from src.database import Database
 from src.keyboards import SERVICES, consent_menu, main_menu, service_menu
 from src.states import RequestFlow
-from src.validation import validate_contact, validate_details
+from src.application.enquiries import (
+    CreateEnquiry,
+    EnquiryPolicyError,
+    EnquiryService,
+)
+from src.validation import validate_contact
 
 logger = logging.getLogger(__name__)
 router = Router()
@@ -177,29 +182,30 @@ async def receive_text_contact(message: Message, state: FSMContext) -> None:
 async def receive_details(
     message: Message,
     state: FSMContext,
-    db: Database,
+    enquiry_service: EnquiryService,
     settings: Settings,
 ) -> None:
-    details = (message.text or "").strip()
-    valid, error = validate_details(details)
-    if not valid:
-        await message.answer(error)
-        return
-
     user = message.from_user
     if user is None:
         await message.answer("Не удалось определить отправителя. Попробуйте ещё раз.")
         return
 
     data = await state.get_data()
-    lead_id = await db.add_lead(
+    command = CreateEnquiry(
         telegram_user_id=user.id,
         username=user.username,
         customer_name=user.full_name,
-        contact=data["contact"],
-        service=data["service"],
-        details=details,
+        contact=data.get("contact") or "",
+        service=data.get("service") or "",
+        details=message.text or "",
+        consent_given=bool(data.get("consent")),
     )
+    try:
+        lead_id = await enquiry_service.submit(command)
+    except EnquiryPolicyError as exc:
+        await message.answer(str(exc))
+        return
+
     await state.clear()
     await message.answer(
         f"Спасибо! Заявка №{lead_id} сохранена. "
@@ -211,9 +217,9 @@ async def receive_details(
         notification = (
             f"<b>Новая заявка №{lead_id}</b>\n"
             f"<b>Имя:</b> {html.escape(user.full_name)}\n"
-            f"<b>Контакт:</b> {html.escape(data['contact'])}\n"
-            f"<b>Услуга:</b> {html.escape(data['service'])}\n"
-            f"<b>Описание:</b> {html.escape(details)}\n"
+            f"<b>Контакт:</b> {html.escape(command.contact.strip())}\n"
+            f"<b>Услуга:</b> {html.escape(command.service.strip())}\n"
+            f"<b>Описание:</b> {html.escape(command.details.strip())}\n"
             f"<b>Telegram ID:</b> <code>{user.id}</code>"
         )
         try:
