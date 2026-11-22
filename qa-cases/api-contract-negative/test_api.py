@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 import pytest
 from fastapi.testclient import TestClient
 from app import app, bookings, idempotency
