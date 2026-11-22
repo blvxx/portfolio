@@ -77,7 +77,10 @@ async def main() -> None:
         token=settings.bot_token,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
-    dispatcher = Dispatcher(storage=storage)
+    dispatcher = Dispatcher(
+        storage=storage,
+        events_isolation=storage.create_isolation() if redis_client else None,
+    )
     enquiry_service = EnquiryService(database)
     notification_dispatcher = NotificationOutboxDispatcher(
         database,
