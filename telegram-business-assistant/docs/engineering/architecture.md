@@ -28,6 +28,8 @@ Telegram Bot API
       -> consent and service selection
       -> contact and text validation
       -> administrator commands
+  -> Application Service (src/application/enquiries.py)
+      -> consent, identity, contact and request policy
   -> SQLite persistence adapter (aiosqlite)
 
 Conversation state is held in aiogram MemoryStorage.
@@ -38,11 +40,12 @@ Conversation state is held in aiogram MemoryStorage.
 | Configuration | Read and validate environment settings | src/config.py |
 | Telegram interface | Handle commands, callbacks and messages | src/handlers.py |
 | Conversation state | Track the visitor's current step | aiogram MemoryStorage |
+| Application service | Enforce enquiry submission rules without Telegram dependencies | src/application/enquiries.py |
 | Validation | Validate contact and request text | src/validation.py |
 | Persistence | Initialize schema and store/read enquiries | src/database.py |
 | UI controls | Build inline keyboards and service catalog | src/keyboards.py |
 
-The current handler module coordinates Telegram interaction and calls the database adapter directly. A dedicated application/service layer is a planned refactoring, not a current capability.
+The Telegram handler translates the final message and FSM state into a typed CreateEnquiry command. EnquiryService applies application-level policy and delegates persistence through an EnquiryRepository protocol. The current SQLite Database adapter satisfies that protocol. The service has focused tests using a fake repository; complete Telegram adapter tests remain planned.
 
 ## Data model
 
