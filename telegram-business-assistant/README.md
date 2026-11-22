@@ -15,7 +15,8 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 - Lets a visitor choose the type of enquiry.
 - Accepts a phone number, email address or Telegram shared contact.
 - Validates the contact and request description.
-- Stores each enquiry in SQLite with a UTC timestamp.
+- Stores each enquiry in SQLite with a UTC timestamp and a stable Telegram message idempotency key.
+- Repeated processing of the same chat/message identity returns the existing enquiry instead of creating a duplicate.
 - When ADMIN_CHAT_ID is configured, inserts a notification event in the same database transaction as the enquiry.
 - Runs a background worker that claims notification events, sends them through Telegram and records delivery/retry state.
 - Provides /my_id to display the numeric IDs needed for administrator setup.
@@ -52,7 +53,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
                       v
               Telegram notification
 
-The bot keeps conversational state in aiogram MemoryStorage. Lead records and notification events are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. The schema is versioned with forward-only migrations and upgraded automatically on startup; take a verified backup before deploying a schema change. The outbox uses atomic event creation, exclusive claims, per-claim lease tokens, bounded exponential retry and a dead state after five failed attempts. Delivery is at-least-once, not exactly-once: a crash after Telegram accepts a message but before the local delivered marker commits can cause a duplicate. For a multi-instance production deployment, replace MemoryStorage with Redis and evaluate a shared database such as PostgreSQL.
+The bot keeps conversational state in aiogram MemoryStorage. Lead records and notification events are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. The schema is versioned with forward-only migrations and upgraded automatically on startup; take a verified backup before deploying a schema change. Telegram submissions use a unique key derived from chat ID and message ID, so a replay returns the original lead ID and does not add a second notification event. The outbox uses atomic event creation, exclusive claims, per-claim lease tokens, bounded exponential retry and a dead state after five failed attempts. Delivery is at-least-once, not exactly-once: a crash after Telegram accepts a message but before the local delivered marker commits can cause a duplicate. For a multi-instance production deployment, replace MemoryStorage with Redis and evaluate a shared database such as PostgreSQL.
 
 ## Run locally
 
@@ -138,7 +139,7 @@ For a single-instance MVP this setup is sufficient. MemoryStorage keeps unfinish
 
        pytest -q
 
-Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy, Telegram handler orchestration, outbox transaction atomicity, concurrent claims, lease fencing, retry/dead-letter transitions, dispatcher delivery and schema migration/upgrade behaviour. They do not require a live Telegram token or network access.
+Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy, Telegram handler orchestration, outbox transaction atomicity, concurrent claims, lease fencing, retry/dead-letter transitions, dispatcher delivery, schema migration/upgrade behaviour and repeated/concurrent Telegram submission replays. They do not require a live Telegram token or network access.
 
 ## Configuration
 
@@ -156,6 +157,7 @@ The engineering notes distinguish the current implementation from future design 
 - [Current-state architecture and target design](./docs/engineering/architecture.md)
 - [ADR-0001: storage and conversation state](./docs/engineering/decisions/0001-storage-and-state.md)
 - [ADR-0002: transactional notification outbox](./docs/engineering/decisions/0002-transactional-notification-outbox.md)
+- [ADR-0003: idempotent Telegram submissions](./docs/engineering/decisions/0003-idempotent-telegram-submissions.md)
 - [Security threat model and control gaps](./docs/engineering/security/threat-model.md)
 - [Operations runbook: deploy, backup and restore](./docs/engineering/operations/runbook.md)
 - [Evidence-based engineering roadmap](./docs/engineering/roadmap.md)

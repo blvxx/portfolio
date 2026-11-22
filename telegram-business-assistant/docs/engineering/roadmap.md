@@ -45,6 +45,7 @@ Status: Planned; conditional on requirements
 - [x] Add a transactional outbox for administrator notifications (PR #17).
 - [x] Add bounded exponential retry, expired-lease recovery, unique event keys and per-claim lease fencing (PR #17).
 - [x] Introduce forward-only SQLite schema migrations tracked by PRAGMA user_version (PR #18).
+- [x] Make Telegram enquiry submission idempotent by chat/message identity, including concurrent replay handling (PR #23).
 - [ ] Evaluate PostgreSQL for multi-instance or higher-concurrency operation.
 - [ ] Evaluate Redis if FSM state must be shared across replicas.
 - [x] Add notification delivery states: pending, processing, delivered and dead. (PR #17)
@@ -53,6 +54,7 @@ Exit criteria:
 - A failed notification is retried with bounded backoff; exhausted events are visible for operator review.
 - Lead and outbox event are committed atomically.
 - Duplicate enqueue for the same lead-created event is prevented by a unique constraint.
+- Replayed Telegram message submissions reuse the existing lead ID instead of creating another lead or outbox event.
 - Remote delivery is explicitly at-least-once; exactly-once delivery is not claimed.
 - Database schema changes are versioned and repeatable; fresh install, existing version-1 upgrade, idempotent startup and future-version rejection are tested.
 - Migration and rollback are tested using non-production data.
@@ -94,4 +96,4 @@ Exit criteria:
 
 - Live Telegram MVP: https://t.me/blvlxxbot
 - Source: https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant
-- Existing tests cover database persistence, ordering, limits, input validation, application-service rules, selected Telegram handler orchestration and admin authorization cases, outbox atomicity, lease claims, retries, dead-letter transition and dispatcher delivery. They do not yet cover the complete Telegram conversation flow or real Bot API delivery.
+- Existing tests cover database persistence, ordering, limits, input validation, application-service rules, selected Telegram handler orchestration and admin authorization cases, outbox atomicity, lease claims, retries, dead-letter transition, dispatcher delivery, schema upgrades and idempotent Telegram message replays. They do not yet cover the complete Telegram conversation flow or real Bot API delivery.

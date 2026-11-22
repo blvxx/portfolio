@@ -17,6 +17,8 @@ def make_message(*, full_name: str = "Demo Customer"):
             full_name=full_name,
         ),
         text="<b>Please contact me</b> about the service.",
+        chat=SimpleNamespace(id=9876, type="private"),
+        message_id=555,
         answer=AsyncMock(),
         bot=bot,
     )
@@ -52,6 +54,7 @@ async def test_receive_details_submits_enquiry_and_notifies_admin() -> None:
     assert command.service == "Приём заявок"
     assert command.consent_given is True
     assert command.admin_chat_id == 98765
+    assert command.idempotency_key == "telegram:9876:555"
 
     state.clear.assert_awaited_once()
     message.answer.assert_awaited_once()

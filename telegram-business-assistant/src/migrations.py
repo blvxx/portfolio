@@ -58,9 +58,27 @@ async def _create_notification_outbox(connection: aiosqlite.Connection) -> None:
     )
 
 
+
+async def _add_enquiry_idempotency_key(connection: aiosqlite.Connection) -> None:
+    """Version 3: make Telegram message replay safe for lead creation."""
+    cursor = await connection.execute("PRAGMA table_info(leads)")
+    columns = {row[1] for row in await cursor.fetchall()}
+    if "idempotency_key" not in columns:
+        await connection.execute(
+            "ALTER TABLE leads ADD COLUMN idempotency_key TEXT"
+        )
+    await connection.execute(
+        """
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_leads_idempotency_key
+        ON leads(idempotency_key)
+        """
+    )
+
+
 MIGRATIONS: tuple[tuple[int, Migration], ...] = (
     (1, _create_initial_schema),
     (2, _create_notification_outbox),
+    (3, _add_enquiry_idempotency_key),
 )
 LATEST_SCHEMA_VERSION = MIGRATIONS[-1][0]
 

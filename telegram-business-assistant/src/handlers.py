@@ -197,6 +197,7 @@ async def receive_details(
         details=message.text or "",
         consent_given=bool(data.get("consent")),
         admin_chat_id=settings.admin_chat_id,
+        idempotency_key=f"telegram:{message.chat.id}:{message.message_id}",
     )
     try:
         lead_id = await enquiry_service.submit(command)
