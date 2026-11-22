@@ -14,9 +14,9 @@ Current workflow:
 3. The visitor selects a service category.
 4. The visitor provides a phone number, email address or Telegram contact.
 5. The visitor describes the request.
-6. The application writes the enquiry to SQLite.
+6. The application writes the enquiry and, when an administrator chat is configured, a notification event to SQLite in one transaction.
 7. The visitor receives a confirmation.
-8. If an administrator chat is configured, the bot attempts to send a notification.
+8. A background worker claims the event and sends the administrator notification with bounded retries.
 
 The application does not currently connect to a CRM, process payments or use an LLM.
 
@@ -30,7 +30,13 @@ Telegram Bot API
       -> administrator commands
   -> Application Service (src/application/enquiries.py)
       -> consent, identity, contact and request policy
-  -> SQLite persistence adapter (aiosqlite)
+  -> Application Service (src/application/enquiries.py)
+      -> consent, identity, contact and request policy
+  -> SQLite transaction
+      -> leads table
+      -> notification_outbox table
+  -> Background outbox worker (src/application/notifications.py)
+      -> Telegram sender adapter (src/infrastructure/telegram_notifications.py)
 
 Conversation state is held in aiogram MemoryStorage.
 
@@ -42,10 +48,12 @@ Conversation state is held in aiogram MemoryStorage.
 | Conversation state | Track the visitor's current step | aiogram MemoryStorage |
 | Application service | Enforce enquiry submission rules without Telegram dependencies | src/application/enquiries.py |
 | Validation | Validate contact and request text | src/validation.py |
-| Persistence | Initialize schema and store/read enquiries | src/database.py |
+| Persistence and outbox | Atomically store enquiries and notification events; lease, retry and record delivery | src/database.py |
+| Notification dispatcher | Claim and deliver queued events with bounded retry | src/application/notifications.py |
+| Telegram notification adapter | Format and send administrator messages | src/infrastructure/telegram_notifications.py |
 | UI controls | Build inline keyboards and service catalog | src/keyboards.py |
 
-The Telegram handler translates the final message and FSM state into a typed CreateEnquiry command. EnquiryService applies application-level policy and delegates persistence through an EnquiryRepository protocol. The current SQLite Database adapter satisfies that protocol. The service has focused tests using a fake repository; complete Telegram adapter tests remain planned.
+The Telegram handler translates the final message and FSM state into a typed CreateEnquiry command. EnquiryService applies application-level policy and delegates persistence through an EnquiryRepository protocol. The SQLite adapter writes the lead and its optional notification event atomically. A background dispatcher leases due events, sends them through a Telegram adapter, and records delivery or retry state. Handler and dispatcher tests use isolated test doubles; a live Telegram Bot API end-to-end test remains separate.
 
 ## Data model
 
@@ -77,13 +85,13 @@ The current data store is suitable only for the documented single-instance MVP a
 |---|---|---|
 | Process restart | Unfinished FSM flow is lost | Visitor may need to restart |
 | SQLite unavailable | Lead write fails; no durable fallback | User-facing error path and alerting need improvement |
-| Admin notification fails | Lead remains stored; notification exception is logged | No retry queue or delivery state exists |
+| Admin notification fails | Event is rescheduled with exponential backoff; exhausted events become dead | Delivery is at-least-once; operator review is required for dead events |
 | Telegram API unavailable | Polling or message operations may fail | Recovery and operational visibility are limited |
 | Host storage is ephemeral | SQLite file may be lost after replacement | Persistence must be verified before real data collection |
 
-A successful database write and a successful administrator notification are separate outcomes. The current application does not implement an outbox or guaranteed notification delivery.
+Lead creation and event enqueue are atomic. Remote delivery is asynchronous and at-least-once, not exactly-once. A crash after Telegram accepts a message but before the local delivered marker commits can produce a duplicate on retry. Events have a unique lead-created key, worker leases are fenced with per-claim tokens, and only exception type names are persisted to avoid retaining sensitive error text.
 
-## Proposed target architecture (not implemented)
+## Remaining target architecture (not implemented)
 
 Telegram Adapter / HTTP API
   -> Application Services
@@ -92,7 +100,7 @@ Telegram Adapter / HTTP API
       -> Notification orchestration
   -> Persistence Ports -> PostgreSQL (when requirements justify it)
   -> Integration Ports -> Telegram / CRM / n8n
-  -> Durable outbox -> background worker
+  -> Current SQLite outbox -> background worker
   -> Redis for shared FSM state, if multi-instance operation is required
   -> Observability: structured logs, metrics, traces and alert rules
 
@@ -103,7 +111,7 @@ A modular monolith is the preferred first target. Separate deployable microservi
 - Prefer a simple modular monolith before distributed services.
 - Keep Telegram-specific types out of core business rules.
 - Make persistence and notification outcomes explicit.
-- Use idempotency for retried external events.
+- Use a unique event key and lease fencing for retry coordination; document external delivery as at-least-once.
 - Keep personal data out of ordinary application logs.
 - Treat LLM output as untrusted input if an AI capability is added.
 - Require human approval for high-impact external actions.
@@ -114,7 +122,7 @@ A modular monolith is the preferred first target. Separate deployable microservi
 - What enquiry retention period is appropriate for the intended operator?
 - Which persistent host/storage guarantee is available for the live demo?
 - Is PostgreSQL required now, or only when requirements justify it?
-- Does the operator need a retry workflow for administrator notifications?
+- Does the operator need operational alerts and a dead-letter review workflow for notifications?
 - Which service-level objectives are meaningful for this application?
 - What data should be visible to an administrator, and for how long?
 
