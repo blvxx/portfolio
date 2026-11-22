@@ -97,10 +97,13 @@ jobs:
             sleep 2
           done
 
-          curl --silent --fail http://localhost:8000/metrics | grep -q 'http_requests_total{'
-          curl --silent --fail http://localhost:8001/metrics | grep -q 'http_requests_total{'
-          curl --silent --fail http://localhost:9090/api/v1/targets | grep -q 'payment-service'
-          curl --silent --fail http://localhost:9090/api/v1/targets | grep -q 'ledger-service'
+          payment_metrics=$(curl --silent --show-error --fail http://localhost:8000/metrics)
+          ledger_metrics=$(curl --silent --show-error --fail http://localhost:8001/metrics)
+          python -c 'import sys; assert "http_requests_total" in sys.stdin.read()' <<< "$payment_metrics"
+          python -c 'import sys; assert "http_requests_total" in sys.stdin.read()' <<< "$ledger_metrics"
+
+          targets=$(curl --silent --show-error --fail http://localhost:9090/api/v1/targets)
+          python -c 'import json,sys; data=json.load(sys.stdin); jobs={item.get("labels", {}).get("job") for item in data.get("data", {}).get("activeTargets", [])}; assert {"payment-service", "ledger-service"}.issubset(jobs), jobs' <<< "$targets"
           echo "Prometheus and Grafana observability smoke checks passed."
 
       - name: Run controlled Ledger outage and recovery drill
