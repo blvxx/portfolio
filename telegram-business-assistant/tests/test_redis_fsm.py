@@ -1,5 +1,6 @@
 """Integration tests for Redis-backed FSM persistence across instances."""
 
+import asyncio
 import os
 import uuid
 
@@ -34,6 +35,32 @@ async def test_fsm_state_survives_storage_reconnect_and_is_shared() -> None:
 
         assert await second.get_state(key) == RequestFlow.waiting_contact.state
         assert await second.get_data(key) == {"selected_service": "Support"}
+
+        first_isolation = first.create_isolation()
+        second_isolation = second.create_isolation()
+        order: list[str] = []
+        first_acquired = asyncio.Event()
+        release_first = asyncio.Event()
+
+        async def hold_first_lock() -> None:
+            async with first_isolation.lock(key):
+                order.append("first")
+                first_acquired.set()
+                await release_first.wait()
+
+        async def wait_for_second_lock() -> None:
+            await first_acquired.wait()
+            async with second_isolation.lock(key):
+                order.append("second")
+
+        first_task = asyncio.create_task(hold_first_lock())
+        await first_acquired.wait()
+        second_task = asyncio.create_task(wait_for_second_lock())
+        await asyncio.sleep(0.05)
+        assert order == ["first"]
+        release_first.set()
+        await asyncio.gather(first_task, second_task)
+        assert order == ["first", "second"]
 
         await first.close()
         first = RedisStorage(
