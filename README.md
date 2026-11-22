@@ -44,6 +44,8 @@ An independently developed and deployed Telegram application for structured busi
 
 **Live demo:** [@blvlxxbot](https://t.me/blvlxxbot) · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
 
+**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox/migration refactor. Current source changes pass CI, but the hosted instance has not yet been smoke-tested after those changes.
+
 **Scope:** deployed portfolio MVP, not a commercial client project. The live host's persistent-storage guarantee remains unverified, and the application must not collect real customer data until storage and backup/restore are verified.
 
 ## Featured engineering projects
