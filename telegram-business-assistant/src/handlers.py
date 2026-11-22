@@ -7,15 +7,15 @@ from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
-from src.config import Settings
-from src.database import Database
-from src.keyboards import SERVICES, consent_menu, main_menu, service_menu
-from src.states import RequestFlow
 from src.application.enquiries import (
     CreateEnquiry,
     EnquiryPolicyError,
     EnquiryService,
 )
+from src.config import Settings
+from src.database import Database
+from src.keyboards import SERVICES, consent_menu, main_menu, service_menu
+from src.states import RequestFlow
 from src.validation import validate_contact
 
 router = Router()

@@ -13,10 +13,10 @@ from src.application.notifications import (
     NotificationOutboxDispatcher,
     run_outbox_worker,
 )
-from src.infrastructure.telegram_notifications import TelegramLeadNotificationSender
 from src.config import Settings
 from src.database import Database
 from src.handlers import router
+from src.infrastructure.telegram_notifications import TelegramLeadNotificationSender
 
 
 async def main() -> None:
