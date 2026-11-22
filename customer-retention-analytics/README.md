@@ -11,6 +11,7 @@ An end-to-end retail analytics case study built around the public **UCI Online R
 ## What the project demonstrates
 
 - Reproducible retrieval of the official UCI workbook.
+- Automated CI refresh that computes aggregate-only public results from the official source and publishes generated findings and CSV outputs without customer-level identifiers.
 - Data cleaning with explicit treatment of cancellations, returns, invalid rows and missing customer identifiers.
 - Gross sales, refunds, net sales, invoices, customer and repeat-purchase KPIs.
 - Monthly sales, country contribution and top-product analysis.
@@ -40,9 +41,9 @@ python scripts/run_analysis.py
 pytest
 ```
 
-The reproducible pipeline writes monthly sales, country performance, top products, customer RFM, cohort retention, a JSON KPI summary and a generated findings report under outputs/.
+The local exploratory pipeline writes detailed working outputs under outputs/. The public-report pipeline writes a privacy-conscious aggregate summary, monthly trends, leading countries/products, RFM segment counts and cohort retention under docs/generated/. Customer-level identifiers are never included in the public report.
 
-## Interactive dashboard
+## Generated report and data refresh\n\n- [Aggregate findings](docs/generated/findings.md)\n- [Summary metrics (JSON)](docs/generated/summary.json)\n- [Generated monthly sales](docs/generated/monthly_sales.csv)\n- [Top countries](docs/generated/country_sales_top10.csv)\n- [RFM segment summary](docs/generated/rfm_segments.csv)\n- [Cohort retention matrix](docs/generated/cohort_retention.csv)\n\nThe [Retail Dataset Analysis workflow](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml) retrieves the original workbook in GitHub Actions, runs the public-report generator and tests, uploads an artifact and commits only aggregate outputs. The raw workbook stays outside Git.\n\n## Interactive dashboard
 
 Install the optional dashboard dependencies:
 
@@ -82,7 +83,7 @@ customer-retention-analytics/
 - Net sales subtract the observed refund/cancellation line values; the output should be interpreted using the documented row-level rules.
 - RFM scores are relative quartiles within the observed time window, not model probabilities.
 - The dataset is historical and observational. It does not support current-market claims or causal conclusions about marketing activity.
-- No headline finding is claimed until the full UCI workbook has been downloaded and the pipeline has been run.
+- Public findings are generated only by the CI refresh from the original UCI workbook. The small bundled CSV remains a synthetic offline fixture and is never used to populate the published headline metrics.
 
 ## Source attribution
 
