@@ -3,7 +3,7 @@
 import re
 
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-_PHONE_RE = re.compile(r"^\+?[0-9\s().-]{7,25}$")
+_PHONE_RE = re.compile(r"^\+?[0-9\s().-]+$")
 
 
 def validate_contact(value: str) -> bool:
@@ -11,7 +11,12 @@ def validate_contact(value: str) -> bool:
     normalized = value.strip()
     if not normalized or len(normalized) > 120:
         return False
-    return bool(_EMAIL_RE.fullmatch(normalized) or _PHONE_RE.fullmatch(normalized))
+    if _EMAIL_RE.fullmatch(normalized):
+        return True
+    if not _PHONE_RE.fullmatch(normalized):
+        return False
+    digits = re.sub(r"\D", "", normalized)
+    return 7 <= len(digits) <= 15
 
 
 def validate_details(value: str) -> tuple[bool, str]:
