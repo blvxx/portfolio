@@ -1,3 +1,7 @@
+[![Customer Retention Analytics](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml)
+
+[**Live case study page**](https://blvxx.github.io/portfolio/customer-retention-analytics/) · [Repository source](https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics)
+
 # Customer Retention & Sales Analytics
 
 An end-to-end retail analytics case study built around the public **UCI Online Retail** transaction dataset. The project covers data validation, cancellation/refund handling, SQL-style business metrics in pandas, RFM segmentation, cohort retention and an interactive dashboard.
