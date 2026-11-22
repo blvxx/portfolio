@@ -233,8 +233,8 @@ class PostgresDatabase:
                         OR
                         (status = 'processing' AND locked_at <= $2)
                     ORDER BY id ASC
-                    FOR UPDATE SKIP LOCKED
                     LIMIT 1
+                    FOR UPDATE SKIP LOCKED
                     """,
                     now,
                     stale_before,
