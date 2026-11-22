@@ -42,7 +42,7 @@ def clean_transactions(raw: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     frame["Quantity"] = pd.to_numeric(frame["Quantity"], errors="coerce")
     frame["UnitPrice"] = pd.to_numeric(frame["UnitPrice"], errors="coerce")
     raw_dates = frame["InvoiceDate"].astype("string").str.strip()
-    iso_date_mask = raw_dates.str.match(r"^\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}", na=False)
+    iso_date_mask = raw_dates.str.match(r"^[0-9]{4}[-/][0-9]{1,2}[-/][0-9]{1,2}", na=False)
     parsed_dates = pd.Series(pd.NaT, index=frame.index, dtype="datetime64[ns]")
     parsed_dates.loc[iso_date_mask] = pd.to_datetime(
         raw_dates.loc[iso_date_mask], errors="coerce", dayfirst=False
