@@ -6,7 +6,6 @@ import uuid
 import pytest
 from aiogram.fsm.storage.base import StorageKey
 from aiogram.fsm.storage.redis import RedisStorage
-from aiogram.fsm.state import State
 from redis.asyncio import Redis
 
 from src.states import RequestFlow
