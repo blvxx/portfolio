@@ -204,6 +204,13 @@
           <div class="stack"><span>Python</span><span>FastAPI</span><span>Pydantic</span><span>pytest</span><span>Coverage</span><span>GitHub Actions</span></div>
           <div class="project-links"><a href="../qa-cases/api-contract-negative/">Case and test strategy ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/qa-cases/api-contract-negative">API source ↗</a><a href="https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml">CI workflow ↗</a></div>
         </div></article>
+        <article class="project"><div class="project-visual api"><span>10 / Telegram automation</span></div><div class="project-body">
+          <div class="project-meta"><span>Automation Engineering</span><span class="status">Functional MVP · deployment not connected</span></div><h3>Telegram Business Assistant</h3>
+          <p>A Telegram lead-intake workflow with explicit consent, service selection, contact validation, request capture, SQLite persistence and optional administrator notifications.</p>
+          <ul><li>aiogram router and finite-state request flow with cancellation</li><li>Parameterized SQLite storage, UTC timestamps and restricted administrator access</li><li>pytest coverage for persistence and input validation, plus GitHub Actions CI</li></ul>
+          <div class="stack"><span>Python 3.11</span><span>aiogram 3</span><span>SQLite</span><span>pytest</span><span>GitHub Actions</span></div>
+          <div class="project-links"><a href="../telegram-business-assistant/">Technical case overview ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant">Source code ↗</a></div>
+        </div></article>
       </div>
       <div class="transparency"><strong>Scope and transparency.</strong> Payment environments, incident evidence and analytics data are synthetic. The API automation project uses a public demo service. These projects demonstrate practical workflows and technical methods; they are not presented as commercial client deliveries or production incidents.</div>
     </div></section>
@@ -266,7 +273,12 @@
             "Модель отчётности на PostgreSQL, которая восстанавливает состояние подписок по событиям жизненного цикла и объясняет помесячные изменения регулярной выручки.",
             "Небольшое браузерное приложение для демонстрации проектирования тестов, ручной QA-документации и сквозной автоматизации.",
             "Адаптивный интернет-магазин и исполняемый набор браузерных тестов для проверки покупки, расчёта цен и оформления заказа.",
-            "Сервис FastAPI и набор pytest-тестов для проверки целостности бронирований, границ доступа и безопасных повторных запросов."
+            "Сервис FastAPI и набор pytest-тестов для проверки целостности бронирований, границ доступа и безопасных повторных запросов.",
+            "10 / Telegram-автоматизация",
+            "Automation Engineering",
+            "Функциональный MVP · без публичного развёртывания",
+            "Telegram Business Assistant",
+            "Telegram-бот для структурированного приёма заявок: согласие, выбор услуги, контакт, описание задачи, сохранение в SQLite и уведомления администратору. Для публичного запуска нужен токен и хостинг."
           ],
           ".project ul": [
             "<li>10 инструкций: systemd, диски, Nginx, DNS, TLS, OOM и PostgreSQL</li><li>Python CLI для анализа логов: уровень критичности, строки-доказательства и JSON-вывод</li><li>Модульные тесты и формирование артефактов в GitHub Actions</li>",
@@ -278,7 +290,8 @@
             "<li>Помесячная динамика MRR / ARR: новые подписки, расширение, сокращение и отток</li><li>GRR / NRR, снимки на конец месяца, когорты и отчёты по каналам и регионам</li><li>CTE, ROW_NUMBER(), LAG(), SQL-проверки качества и сверка MRR с точностью до цента</li>",
             "<li>8 собственных сквозных сценариев Playwright</li><li>17 задокументированных ручных тест-кейсов</li><li>GitHub Actions workflow для Chromium</li>",
             "<li>24 сценария Playwright для корзины, остатков, скидок, доставки и оформления заказа</li><li>Каталог рисков P0–P2 с трассировкой требований к тестам</li><li>Отдельный контекст браузера на тест, сохранение trace и скриншотов ошибок в CI-артефактах</li>",
-            "<li>31 автотест: контракт ответа, валидация, пересечение дат, авторизация и отмена</li><li>Изоляция хранилища для каждого теста и атомарные операции бронирования в памяти</li><li>Локальный запуск: 31 passed, покрытие app.py и store.py операторами — 100%</li>"
+            "<li>31 автотест: контракт ответа, валидация, пересечение дат, авторизация и отмена</li><li>Изоляция хранилища для каждого теста и атомарные операции бронирования в памяти</li><li>Локальный запуск: 31 passed, покрытие app.py и store.py операторами — 100%</li>",
+            "<li>aiogram и FSM-сценарий: согласие, выбор услуги, отмена и сбор контакта</li><li>SQLite с параметризованными запросами, UTC-временем и разграничением доступа администратора</li><li>pytest для проверки хранения и валидации данных, GitHub Actions CI</li>"
           ],
           ".project-links a": [
             "Открыть лабораторию и инструкции ↗", "CLI для анализа логов ↗",
@@ -290,7 +303,9 @@
             "Открыть BI-кейс ↗", "SQL-код ↗", "Успешный PostgreSQL CI ↗",
             "Открыть репозиторий ↗", "CI workflow ↗",
             "Кейс, приложение и тест-план ↗", "Исходный код браузерных тестов ↗", "CI workflow ↗",
-            "Кейс и стратегия тестирования ↗", "Исходный код API ↗", "CI workflow ↗"
+            "Кейс и стратегия тестирования ↗", "Исходный код API ↗", "CI workflow ↗",
+            "Открыть технический кейс ↗",
+            "Исходный код ↗"
           ],
           ".transparency": "<strong>Границы и прозрачность.</strong> Платёжные среды, доказательства инцидентов и аналитические данные синтетические. В проекте API Automation используется публичный демо-сервис. Эти проекты демонстрируют практические процессы и технические методы, но не выдаются за коммерческие внедрения или инциденты в production.",
           "#approach .section-kicker": "02 / Метод работы",
