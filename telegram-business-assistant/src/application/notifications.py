@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 class NotificationOutbox(Protocol):
     async def claim_notification(
-        self, *, lease_seconds: int = 60
+        self, *, lease_seconds: int = 120
     ) -> dict[str, Any] | None: ...
 
     async def mark_notification_delivered(
@@ -48,7 +48,7 @@ class NotificationOutboxDispatcher:
         *,
         max_attempts: int = 5,
         base_delay_seconds: int = 5,
-        lease_seconds: int = 60,
+        lease_seconds: int = 120,
     ) -> None:
         self._outbox = outbox
         self._sender = sender
