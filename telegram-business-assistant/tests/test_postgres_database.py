@@ -1,6 +1,6 @@
 """Integration tests for shared PostgreSQL persistence and worker coordination."""
 
-import asyncio
+import asyncio  # noqa: I001
 import os
 import uuid
 
