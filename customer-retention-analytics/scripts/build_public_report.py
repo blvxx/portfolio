@@ -6,6 +6,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from sql_analysis import run_sql_analysis
+
 from retail_analytics import (
     build_cohort_retention,
     build_rfm,
@@ -51,6 +53,7 @@ def build_public_report(input_path: Path, output_dir: Path) -> dict:
     products = top_products(sales, limit=10)
     rfm = build_rfm(sales, refunds)
     cohorts = build_cohort_retention(sales)
+    sql_outputs = run_sql_analysis(sales, refunds, output_dir)
 
     # Aggregate RFM: no customer identifiers or customer-level records are exported.
     if rfm.empty:
@@ -158,6 +161,12 @@ def build_public_report(input_path: Path, output_dir: Path) -> dict:
         "rfm_segment_customers": segment_totals,
         "identified_customers_with_multiple_invoices": int(kpis["repeat_customers"]),
         "cohort_count": int(len(cohort_sizes)),
+        "sql_gross_sales_gbp": round(float(sql_outputs["monthly_sales"]["revenue_gbp"].sum()), 2),
+        "sql_repeat_customer_rate_pct": (
+            float(sql_outputs["repeat_customers"].iloc[0]["repeat_customer_rate_pct"])
+            if not sql_outputs["repeat_customers"].empty
+            else 0.0
+        ),
         "weighted_month_1_retention_pct": (
             round(
                 float(
@@ -182,6 +191,7 @@ def build_public_report(input_path: Path, output_dir: Path) -> dict:
     rfm_segments.to_csv(output_dir / "rfm_segments.csv", index=False)
     cohort_sizes.to_csv(output_dir / "cohort_sizes.csv", index=False)
     cohorts.to_csv(output_dir / "cohort_retention.csv", index=True)
+    # SQL result files are written by run_sql_analysis() in the same generated folder.
     (output_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),
         encoding="utf-8",
@@ -244,6 +254,8 @@ def build_public_report(input_path: Path, output_dir: Path) -> dict:
         "- Refunds and cancellations are aggregated as absolute line amounts. The report does not attempt to match every return to its original sale line.",
         "- The dataset is observational; it does not establish why customers purchased or stopped purchasing or prove marketing impact.",
         "- Country and product rankings reflect gross positive invoice lines, before refunds.",
+        "- A separate SQLite SQL layer independently computes monthly sales, country contribution, repeat purchases, RFM segments and cohorts; gross sales and repeat-customer rate are reconciled against the pandas pipeline.",
+        "- SQL RFM scoring uses NTILE(4) window functions; ties can be split across quartiles, so its segment allocation may differ slightly from pandas rank-based quartiles."
         "",
         "## Reproduction",
         "",
