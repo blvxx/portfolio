@@ -4,8 +4,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "customer-retention-analytics/scripts/build_public_report.py"
-      - "customer-retention-analytics/scripts/download_data.py"
+      - "customer-retention-analytics/scripts/**"
       - "customer-retention-analytics/src/retail_analytics/**"
       - ".github/workflows/customer-retention-data-refresh.yml"
   workflow_dispatch:
