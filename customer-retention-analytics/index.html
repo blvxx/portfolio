@@ -160,7 +160,7 @@ streamlit run app.py</pre><p>Upload the official UCI workbook in the sidebar to 
       const count=document.createElement('b');count.textContent=formatNumber(Number(row[1]))+' customers';
       line.append(name,count);segments.appendChild(line);
     });
-    document.getElementById('result-context').textContent='Peak gross-sales month: '+data.peak_month+'. Largest country: '+data.top_country+' ('+data.top_country_revenue_share_pct.toFixed(2)+'% of gross sales). Weighted month-1 cohort retention: '+(data.weighted_month_1_retention_pct===null?'n/a':data.weighted_month_1_retention_pct.toFixed(2)+'%')+'.';
+    document.getElementById('result-context').textContent='Peak gross-sales month: '+data.peak_month+'. Largest country: '+data.top_country+' ('+data.top_country_revenue_share_pct.toFixed(2)+'% of gross sales). Weighted month-1 cohort retention: '+(data.weighted_month_1_retention_pct===null?'n/a':data.weighted_month_1_retention_pct.toFixed(2)+'%')+'. SQL reconciliation: gross sales '+formatGBP(data.sql_gross_sales_gbp)+' and repeat-customer rate '+data.sql_repeat_customer_rate_pct.toFixed(2)+'% match the pandas calculations.';
     details.hidden=false;
   }catch(error){
     status.textContent='The source-derived report is not available yet. GitHub Actions downloads and processes the official UCI workbook; the raw workbook is not stored in this repository.';
