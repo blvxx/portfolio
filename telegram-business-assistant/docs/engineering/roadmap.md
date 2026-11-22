@@ -24,16 +24,16 @@ Exit criteria:
 
 Status: Planned
 
-- [ ] Move enquiry use cases out of Telegram handlers into an application/service layer.
-- [ ] Introduce typed request/result objects for application use cases.
-- [ ] Keep aiogram message and callback types inside the Telegram adapter.
-- [ ] Add repository interfaces and focused persistence tests.
+- [x] Move enquiry submission policy into a framework-independent application service (PR #15).
+- [x] Introduce a typed CreateEnquiry command for the application use case (PR #15).
+- [x] Keep aiogram message and callback types inside the Telegram adapter for enquiry submission.
+- [x] Introduce an EnquiryRepository protocol and focused application service tests (PR #15).
 - [ ] Add structured error handling and correlation identifiers.
 - [ ] Add static analysis and formatting checks to CI.
 
 Exit criteria:
-- Business rules can be tested without a Telegram network connection.
-- Adapter tests cover the main user flow.
+- Enquiry submission policy can be tested without a Telegram network connection.
+- Adapter tests cover the main user flow (still planned).
 - CI runs unit tests, lint and type checks.
 
 ## M2 — Durable workflows
@@ -89,4 +89,4 @@ Exit criteria:
 
 - Live Telegram MVP: https://t.me/blvlxxbot
 - Source: https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant
-- Existing tests cover database persistence, ordering, limits and input validation. They do not yet cover the complete Telegram conversation flow.
+- Existing tests cover database persistence, ordering, limits, input validation and application-service rules. They do not yet cover the complete Telegram conversation flow.
