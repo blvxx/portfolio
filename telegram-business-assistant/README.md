@@ -1,10 +1,8 @@
 # Telegram Business Assistant
 
-A live Telegram bot MVP for small businesses to collect structured enquiries and route them to an administrator.
+A Telegram bot MVP for small businesses to collect structured enquiries and route them to an administrator.
 
-**Live demo:** [@blvlxxbot](https://t.me/blvlxxbot)
-
-**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox, migration and idempotency refactors. The current source in `main` passes CI, but the hosted instance has not yet been smoke-tested against these latest changes.
+**Demo status:** the former Dada Cloud single-worker demo is retired and is not presented as a live service. The current PostgreSQL/Redis/webhook profile is validated in CI but has not been deployed to a public host.
 
 This portfolio project demonstrates a lead-capture workflow with consent, validation, shared PostgreSQL persistence, Redis-backed conversation state and a durable administrator-notification outbox. SQLite remains available as a local, single-instance fallback.
 
@@ -15,7 +13,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 - Lets a visitor choose the type of enquiry.
 - Accepts a phone number, email address or Telegram shared contact.
 - Validates the contact and request description.
-- Stores each enquiry in SQLite with a UTC timestamp and a stable Telegram message idempotency key.
+- Stores each enquiry through the configured persistence adapter: PostgreSQL for the shared runtime, or SQLite for the local single-instance fallback. Records include a UTC timestamp and a stable Telegram message idempotency key.
 - Repeated processing of the same chat/message identity returns the existing enquiry instead of creating a duplicate.
 - When ADMIN_CHAT_ID is configured, inserts a notification event in the same database transaction as the enquiry.
 - Runs a background worker that claims notification events, sends them through Telegram and records delivery/retry state.
@@ -83,24 +81,13 @@ PostgreSQL schema migrations are serialized with a database advisory lock. Lead 
 
 To receive private notifications, the administrator must open the bot and send /start first. Use the numeric Telegram chat ID for ADMIN_CHAT_ID and the numeric Telegram user ID for ADMIN_USER_ID. Keep both IDs and the bot token out of source control.
 
-## Deployment
+## Hosted deployment status
 
-The previously verified hosted demo runs as a background worker on Dada Cloud using Telegram long polling. That host validation predates the PostgreSQL/Redis/webhook runtime changes in this branch; do not treat the new topology as deployed or live-tested there.
+The former Dada Cloud demo ran as one background worker using Telegram long polling. It is retired and is not maintained as a live deployment. No public-host deployment of the current PostgreSQL/Redis/webhook runtime is claimed.
 
-For a new deployment:
+The current source has CI evidence for PostgreSQL and Redis integration, a disposable-database backup/restore drill, Prometheus rule validation and a Docker image build. These checks do not prove that a particular host has persistent storage, scheduled off-host backups, working alert notifications or a successful host-level restore.
 
-1. Connect the GitHub repository and choose the branch to deploy.
-2. Set the working directory to `telegram-business-assistant` if the platform supports monorepo subdirectory setting.
-3. Select background worker mode (not a web service).
-4. Configure environment variables in the platform's secret/environment settings:
-   - `BOT_TOKEN` (required; never put in Git)
-   - `DATABASE_PATH` (set to a path on verified persistent storage, if available)
-   - `ADMIN_CHAT_ID` (optional)
-   - `ADMIN_USER_ID` (optional)
-5. Use the start command `python -m src.bot`.
-6. Check runtime logs and test the bot flow.
-
-**Hosted-demo warning:** the current Dada Cloud deployment has no verified PostgreSQL/Redis services or persistent-volume/backup guarantee. Do not collect real customer enquiries there until the new release is deployed, storage is verified across a rebuild, and backup/restore is exercised on that host. A container filesystem may be replaced during redeploy/rebuild.
+Do not collect real customer enquiries through an unverified deployment. Use the Docker Compose instructions below for local evaluation. Before using a new host with real data, provision persistent PostgreSQL and Redis, configure secrets and HTTPS webhook delivery, then complete the smoke, restart, backup and restore checks in the operations runbook.
 
 ## Docker deployment
 
@@ -126,15 +113,15 @@ The repository includes a Dockerfile and Docker Compose configuration with Postg
 
        docker compose logs -f --tail=100 bot
 
-6. Confirm readiness and metrics through the internal service port:
+7. Confirm readiness and metrics through the internal service port:
  
        docker compose exec -T bot python -c "import urllib.request; print(urllib.request.urlopen('http://127.0.0.1:8080/readyz').read().decode())"
 
-7. Open the bot in Telegram and send /start, then /my_id. Copy the displayed IDs into ADMIN_CHAT_ID and ADMIN_USER_ID in .env and restart:
+8. Open the bot in Telegram and send /start, then /my_id. Copy the displayed IDs into ADMIN_CHAT_ID and ADMIN_USER_ID in .env and restart:
 
        docker compose up -d
 
-The Compose file stores SQLite data in a named persistent volume. It runs as a non-root user, uses a read-only container filesystem, drops Linux capabilities and restarts the process after a failure. Keep the VPS firewall closed to inbound ports other than the SSH access you administer. Do not commit .env or share the bot token.
+The Compose file stores PostgreSQL, Redis and Prometheus data in named volumes; SQLite is only the local single-instance fallback and is not used by this Compose stack. The bot runs as a non-root user, uses a read-only container filesystem, drops Linux capabilities and restarts the process after a failure. Keep the VPS firewall closed to inbound ports other than the SSH access you administer. Do not commit .env or share the bot token.
 
 To stop the service without deleting data:
 
