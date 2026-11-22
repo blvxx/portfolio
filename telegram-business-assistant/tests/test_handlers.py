@@ -5,7 +5,18 @@ import pytest
 
 from src.application.enquiries import EnquiryPolicyError
 from src.config import Settings
-from src.handlers import list_leads, receive_details
+from src.handlers import (
+    cancel,
+    cancel_flow,
+    choose_service,
+    consent_no,
+    consent_yes,
+    list_leads,
+    receive_details,
+    stale_consent_no,
+    stale_consent_yes,
+)
+from src.states import RequestFlow
 
 
 def make_message(*, full_name: str = "Demo Customer"):
@@ -181,3 +192,143 @@ async def test_list_leads_allows_configured_admin_in_private_chat_and_escapes_da
     assert "&lt;b&gt;Customer&lt;/b&gt;" in response
     assert "Need &lt;i&gt;help&lt;/i&gt; &amp; advice" in response
     assert "<script>" not in response
+
+
+
+def make_callback(data: str = "service:lead"):
+    message = SimpleNamespace(answer=AsyncMock())
+    return SimpleNamespace(
+        data=data,
+        message=message,
+        answer=AsyncMock(),
+    )
+
+
+@pytest.mark.asyncio
+async def test_consent_yes_moves_flow_to_service_selection() -> None:
+    callback = make_callback("consent:yes")
+    state = SimpleNamespace(
+        set_data=AsyncMock(),
+        set_state=AsyncMock(),
+    )
+
+    await consent_yes(callback, state)
+
+    state.set_data.assert_awaited_once_with({"consent": True})
+    state.set_state.assert_awaited_once_with(RequestFlow.waiting_service)
+    callback.answer.assert_awaited_once()
+    callback.message.answer.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_consent_no_clears_state_and_does_not_collect_data() -> None:
+    callback = make_callback("consent:no")
+    state = SimpleNamespace(clear=AsyncMock())
+
+    await consent_no(callback, state)
+
+    state.clear.assert_awaited_once()
+    callback.answer.assert_awaited_once_with("Заявка не создавалась")
+    callback.message.answer.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_stale_consent_callbacks_are_rejected() -> None:
+    yes_callback = make_callback("consent:yes")
+    no_callback = make_callback("consent:no")
+
+    await stale_consent_yes(yes_callback)
+    await stale_consent_no(no_callback)
+
+    yes_callback.answer.assert_awaited_once_with(
+        "Сначала начните оформление заявки.",
+        show_alert=True,
+    )
+    no_callback.answer.assert_awaited_once_with(
+        "Сначала начните оформление заявки.",
+        show_alert=True,
+    )
+    yes_callback.message.answer.assert_not_awaited()
+    no_callback.message.answer.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_choose_service_requires_recorded_consent() -> None:
+    callback = make_callback("service:lead")
+    state = SimpleNamespace(
+        get_data=AsyncMock(return_value={"consent": False}),
+        update_data=AsyncMock(),
+        set_state=AsyncMock(),
+    )
+
+    await choose_service(callback, state)
+
+    callback.answer.assert_awaited_once_with(
+        "Сначала подтвердите согласие на обработку заявки.",
+        show_alert=True,
+    )
+    state.update_data.assert_not_awaited()
+    state.set_state.assert_not_awaited()
+    callback.message.answer.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_choose_service_rejects_unknown_service_slug() -> None:
+    callback = make_callback("service:not-a-real-service")
+    state = SimpleNamespace(
+        get_data=AsyncMock(return_value={"consent": True}),
+        update_data=AsyncMock(),
+        set_state=AsyncMock(),
+    )
+
+    await choose_service(callback, state)
+
+    callback.answer.assert_awaited_once_with(
+        "Неизвестный тип заявки.",
+        show_alert=True,
+    )
+    state.update_data.assert_not_awaited()
+    state.set_state.assert_not_awaited()
+    callback.message.answer.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_choose_service_updates_state_for_valid_service() -> None:
+    callback = make_callback("service:lead")
+    state = SimpleNamespace(
+        get_data=AsyncMock(return_value={"consent": True}),
+        update_data=AsyncMock(),
+        set_state=AsyncMock(),
+    )
+
+    await choose_service(callback, state)
+
+    state.update_data.assert_awaited_once_with(service="Приём заявок")
+    state.set_state.assert_awaited_once_with(RequestFlow.waiting_contact)
+    callback.answer.assert_awaited_once()
+    callback.message.answer.assert_awaited_once()
+    assert "Вы выбрали:" in callback.message.answer.await_args.args[0]
+
+
+@pytest.mark.asyncio
+async def test_inline_cancel_clears_fsm_and_returns_main_menu() -> None:
+    callback = make_callback("flow:cancel")
+    state = SimpleNamespace(clear=AsyncMock())
+
+    await cancel_flow(callback, state)
+
+    state.clear.assert_awaited_once()
+    callback.answer.assert_awaited_once_with("Сценарий отменён")
+    callback.message.answer.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_cancel_command_clears_fsm_and_confirms_cancellation() -> None:
+    message = SimpleNamespace(answer=AsyncMock())
+    state = SimpleNamespace(clear=AsyncMock())
+
+    await cancel(message, state)
+
+    state.clear.assert_awaited_once()
+    message.answer.assert_awaited_once()
+    assert message.answer.await_args.args[0] == "Текущий сценарий отменён."

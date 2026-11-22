@@ -14,7 +14,7 @@ Status: Planned
 - [ ] Add rate limiting and request-size limits.
 - [x] Add handler-level tests for enquiry submission, policy rejection, optional admin notification and missing sender. (PR #16)
 - [x] Enforce private-chat-only access to the admin lead listing and test unauthorized/group access (PR #20).
-- [ ] Add handler-level tests for cancellation and invalid callbacks.
+- [x] Add handler-level tests for consent transitions, stale consent callbacks, invalid service callbacks and cancellation (PR #25).
 - [ ] Define what is and is not safe to log.
 
 Exit criteria:
@@ -96,4 +96,4 @@ Exit criteria:
 
 - Live Telegram MVP: https://t.me/blvlxxbot
 - Source: https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant
-- Existing tests cover database persistence, ordering, limits, input validation, application-service rules, selected Telegram handler orchestration and admin authorization cases, outbox atomicity, lease claims, retries, dead-letter transition, dispatcher delivery, schema upgrades and idempotent Telegram message replays. They do not yet cover the complete Telegram conversation flow or real Bot API delivery.
+- Existing tests cover database persistence, ordering, limits, input validation, application-service rules, selected Telegram handler orchestration, FSM transition/cancellation and admin authorization cases, outbox atomicity, lease claims, retries, dead-letter transition, dispatcher delivery, schema upgrades and idempotent Telegram message replays. They do not yet cover the complete Telegram conversation flow or real Bot API delivery.
