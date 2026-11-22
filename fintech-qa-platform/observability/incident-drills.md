@@ -65,3 +65,26 @@ After restoring a dependency:
 - Before / during / after observations.
 - Commands and HTTP status codes.
 - A clear statement that this is a controlled local simulation.
+
+
+## Drill 4 — Automated local fault injection
+
+**Objective:** collect repeatable evidence for a dependency outage, a controlled 502 and recovery through an idempotent retry.
+
+1. Start the full local stack and confirm the baseline health checks and Prometheus targets are UP.
+2. From the project root, run:
+
+```bash
+python scripts/incident_drill.py --execute-local-drill --timeout-seconds 60
+```
+
+3. Review the JSON output.
+
+**Expected evidence:**
+- Payment and Ledger are ready before the drill.
+- Prometheus observes the Ledger target transition to DOWN.
+- Payment readiness remains HTTP 200 while a business request that depends on Ledger returns HTTP 502.
+- The script restores the Ledger container and waits for readiness and a Prometheus UP state.
+- Retrying the same idempotency key posts the payment successfully and returns the duplicate/retry indicator.
+
+The script rejects non-loopback URLs and does not run without the explicit `--execute-local-drill` flag. It stops only the Compose service named `ledger` in this project. It is a local simulation and must never be used against shared or production systems.
