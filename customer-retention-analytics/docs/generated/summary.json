@@ -43,5 +43,7 @@
   },
   "identified_customers_with_multiple_invoices": 2845,
   "cohort_count": 13,
+  "sql_gross_sales_gbp": 10666684.54,
+  "sql_repeat_customer_rate_pct": 65.58,
   "weighted_month_1_retention_pct": 22.5
 }

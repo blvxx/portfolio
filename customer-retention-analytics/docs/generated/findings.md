@@ -50,6 +50,12 @@
 - The dataset is observational; it does not establish why customers purchased or stopped purchasing or prove marketing impact.
 - Country and product rankings reflect gross positive invoice lines, before refunds.
 
+## SQL cross-check
+- SQL gross sales: £10,666,684.54 (reconciled against the pandas calculation).
+- SQL repeat-customer rate: 65.58% (reconciled against the pandas calculation).
+- SQLite CTEs independently calculate monthly sales, country contribution, repeat purchases, RFM segments and cohort retention.
+- SQL RFM scoring uses NTILE(4) window functions; ties can be split across quartiles, so its segment allocation may differ slightly from pandas rank-based quartiles.
+
 ## Reproduction
 
 ```bash

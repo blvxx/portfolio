@@ -1,0 +1,6 @@
+segment,customers,avg_recency_days,avg_frequency,avg_monetary_gbp
+Needs attention,1509,185.85,1.25,380.26
+Loyal customers,1019,21.65,5.26,2067.62
+Promising,661,23.67,1.46,394.21
+At risk,659,115.19,4.17,1606.71
+Champions,490,6.17,15.46,8802.41
