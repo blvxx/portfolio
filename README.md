@@ -12,7 +12,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 
 | Direction | Case study | Evidence |
 |---|---|---|
-| **Application / Technical Support** | [Incident Investigation Lab](./incident-lab/) | Log analysis, webhook diagnostics, SQL reconciliation, RCA, recovery runbooks and a unified CLI |
+| **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) | Payment/Ledger services, API and integration tests, Playwright E2E, PostgreSQL, Docker and observability |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
@@ -21,7 +21,19 @@ Practical engineering portfolio covering incident investigation, REST API testin
 
 ## Featured engineering projects
 
-### 1. Incident Investigation Lab — Payment Webhook Failure
+### 1. Linux Support Engineering Lab
+
+A reproducible troubleshooting lab for Linux and web-service incidents, aimed at Application Support L2 and Technical Support workflows.
+
+- 10 incident playbooks covering systemd, disk/inodes, Nginx 502/504, DNS, TLS, OOM, PostgreSQL pools, permissions and port conflicts.
+- Python CLI classifies synthetic logs by severity, preserves source line evidence and suggests the next diagnostic checks.
+- Unit tests and GitHub Actions workflow generate a JSON triage report artifact.
+
+**Skills demonstrated:** Linux · systemd · journalctl · Nginx · DNS · TLS · Python · log analysis · incident response.
+
+[Open the lab](./support-engineering-lab/)
+
+### 2. Incident Investigation Lab — Payment Webhook Failure
 
 A simulated support incident: the payment provider reports successful payments while some storefront orders remain in `pending_payment`.
 
@@ -34,7 +46,7 @@ A simulated support incident: the payment provider reports successful payments w
 
 [Open the case study](./incident-lab/)
 
-### 2. FinTech QA Engineering Platform
+### 3. FinTech QA Engineering Platform
 
 An end-to-end QA sandbox for a fictional payment product with separate Payment and Ledger services.
 
@@ -46,17 +58,18 @@ An end-to-end QA sandbox for a fictional payment product with separate Payment a
 
 **Stack:** Python · FastAPI · pytest · Playwright · SQLAlchemy · PostgreSQL · Docker · Postman · Allure · GitHub Actions.
 
-[Open the project overview and screenshots](./fintech-qa-platform/overview.html) · [Source and setup](./fintech-qa-platform/)
+[Open the project overview and screenshots](./fintech-qa-platform/overview.html) · [Source and setup](./fintech-qa-platform/) · [Observability incident drills](./fintech-qa-platform/observability/incident-drills.md)
 
 ![FinTech demo payment UI](./fintech-qa-platform/docs/screenshots/payment-ui.png)
 
-### 3. Python API Automation
+### 4. Python API Automation
 
 A REST API automation suite for the public JSONPlaceholder demo service.
 
 - GET, POST, PUT, PATCH and DELETE contract checks.
 - Positive, negative and parametrized scenarios.
-- Reusable requests client with explicit timeouts.
+- Reusable requests client with explicit timeouts, optional bearer-token configuration and bounded pagination.
+- Safe retries for transient failures on GET / HEAD / OPTIONS only; write requests are not automatically replayed.
 - JSON Schema validation and isolated unit tests with mocked HTTP sessions.
 - Postman collection and GitHub Actions CI.
 
@@ -64,7 +77,7 @@ A REST API automation suite for the public JSONPlaceholder demo service.
 
 [Open project](./api-automation/)
 
-### 4. SQL + Python Data Analytics
+### 5. SQL + Python Data Analytics
 
 An end-to-end analysis of 360 synthetic e-commerce orders.
 
@@ -75,9 +88,9 @@ An end-to-end analysis of 360 synthetic e-commerce orders.
 
 **Stack:** SQL · PostgreSQL · Python · pandas · pytest.
 
-[Open project and findings](./data-analytics/)
+[Open project and findings](./data-analytics/) · [Interactive dashboard](./data-analytics/dashboard/README.md)
 
-### 5. Todo Test — Playwright UI Automation
+### 6. Todo Test — Playwright UI Automation
 
 A browser-based task tracker used as the target for manual and automated QA.
 
