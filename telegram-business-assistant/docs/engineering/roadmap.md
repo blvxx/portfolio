@@ -41,16 +41,19 @@ Exit criteria:
 
 Status: Planned; conditional on requirements
 
-- [ ] Add a transactional outbox for administrator notifications.
-- [ ] Add retry/backoff and idempotency rules.
-- [ ] Introduce database migrations.
+- [x] Add a transactional outbox for administrator notifications (PR #17).
+- [x] Add bounded exponential retry, expired-lease recovery, unique event keys and per-claim lease fencing (PR #17).
+- [ ] Introduce a versioned database migration framework.
 - [ ] Evaluate PostgreSQL for multi-instance or higher-concurrency operation.
 - [ ] Evaluate Redis if FSM state must be shared across replicas.
-- [ ] Add an explicit enquiry lifecycle and notification delivery state.
+- [x] Add notification delivery states: pending, processing, delivered and dead. (PR #17)
 
 Exit criteria:
-- A failed notification is recoverable without creating duplicate enquiries.
-- Database schema changes are versioned and repeatable.
+- A failed notification is retried with bounded backoff; exhausted events are visible for operator review.
+- Lead and outbox event are committed atomically.
+- Duplicate enqueue for the same lead-created event is prevented by a unique constraint.
+- Remote delivery is explicitly at-least-once; exactly-once delivery is not claimed.
+- Database schema changes are versioned and repeatable (still planned).
 - Migration and rollback are tested using non-production data.
 
 ## M3 — AI workflow extension
@@ -90,4 +93,4 @@ Exit criteria:
 
 - Live Telegram MVP: https://t.me/blvlxxbot
 - Source: https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant
-- Existing tests cover database persistence, ordering, limits, input validation, application-service rules and selected Telegram handler orchestration cases. They do not yet cover the complete Telegram conversation flow.
+- Existing tests cover database persistence, ordering, limits, input validation, application-service rules, selected Telegram handler orchestration cases and outbox atomicity, lease claims, retries, dead-letter transition and dispatcher delivery. They do not yet cover the complete Telegram conversation flow or real Bot API delivery.
