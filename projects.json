@@ -17,13 +17,13 @@
       "Responsive"
     ],
     "status": "Концепт · демонстрационный проект",
-    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/noir-coffee",
+    "url": "https://github.com/blvxx/web-development-portfolio/tree/main/projects/noir-coffee",
     "link": "Код на GitHub",
-    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/noir-coffee/",
+    "demo_url": "https://blvxx.github.io/web-development-portfolio/projects/noir-coffee/",
     "demo_label": "Открыть сайт",
     "preview": {
       "type": "iframe",
-      "src": "https://blvxx.github.io/frontend-portfolio/projects/noir-coffee/",
+      "src": "https://blvxx.github.io/web-development-portfolio/projects/noir-coffee/",
       "alt": "Живое превью сайта NOIR Coffee Studio"
     }
   },
@@ -45,13 +45,13 @@
       "Responsive"
     ],
     "status": "Концепт · вымышленная студия",
-    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/frame-studio",
+    "url": "https://github.com/blvxx/web-development-portfolio/tree/main/projects/frame-studio",
     "link": "Код на GitHub",
-    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/frame-studio/",
+    "demo_url": "https://blvxx.github.io/web-development-portfolio/projects/frame-studio/",
     "demo_label": "Открыть сайт",
     "preview": {
       "type": "iframe",
-      "src": "https://blvxx.github.io/frontend-portfolio/projects/frame-studio/",
+      "src": "https://blvxx.github.io/web-development-portfolio/projects/frame-studio/",
       "alt": "Живое превью сайта FRAME Digital Studio"
     }
   },
@@ -73,13 +73,13 @@
       "Responsive"
     ],
     "status": "Концепт · заявки демонстрационные",
-    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/iron-district",
+    "url": "https://github.com/blvxx/web-development-portfolio/tree/main/projects/iron-district",
     "link": "Код на GitHub",
-    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/iron-district/",
+    "demo_url": "https://blvxx.github.io/web-development-portfolio/projects/iron-district/",
     "demo_label": "Открыть сайт",
     "preview": {
       "type": "iframe",
-      "src": "https://blvxx.github.io/frontend-portfolio/projects/iron-district/",
+      "src": "https://blvxx.github.io/web-development-portfolio/projects/iron-district/",
       "alt": "Живое превью сайта IRON DISTRICT"
     }
   },
@@ -101,13 +101,13 @@
       "E-commerce UI"
     ],
     "status": "Концепт · без реальных продаж",
-    "url": "https://github.com/blvxx/frontend-portfolio/tree/main/projects/vera-skin",
+    "url": "https://github.com/blvxx/web-development-portfolio/tree/main/projects/vera-skin",
     "link": "Код на GitHub",
-    "demo_url": "https://blvxx.github.io/frontend-portfolio/projects/vera-skin/",
+    "demo_url": "https://blvxx.github.io/web-development-portfolio/projects/vera-skin/",
     "demo_label": "Открыть сайт",
     "preview": {
       "type": "iframe",
-      "src": "https://blvxx.github.io/frontend-portfolio/projects/vera-skin/",
+      "src": "https://blvxx.github.io/web-development-portfolio/projects/vera-skin/",
       "alt": "Живое превью сайта VÉRA SKIN"
     }
   },
@@ -191,7 +191,7 @@
       "GitHub Actions"
     ],
     "status": "Практический QA-проект",
-    "url": "https://github.com/blvxx/todo-test",
+    "url": "https://github.com/blvxx/playwright-qa-lab",
     "link": "Открыть репозиторий",
     "preview": {
       "type": "artifact",
@@ -310,7 +310,7 @@
     "id": 11,
     "category": "prototype",
     "kicker": "PERSONAL WEB APP",
-    "title": "Treker — трекер восстановления",
+    "title": "Вдох — трекер восстановления",
     "description": "Самостоятельное одностраничное веб-приложение с временными этапами, прогрессом и адаптивным интерфейсом. Реализовано без внешних зависимостей.",
     "highlights": [
       "Одностраничный интерфейс на HTML, CSS и JavaScript",
@@ -324,12 +324,12 @@
       "Responsive UI"
     ],
     "status": "Личный прототип",
-    "url": "https://github.com/blvxx/Treker",
+    "url": "https://github.com/blvxx/vdoh-recovery-tracker",
     "link": "Открыть репозиторий",
     "preview": {
       "type": "artifact",
       "label": "PERSONAL WEB APP",
-      "headline": "Treker · progress tracker",
+      "headline": "Вдох · progress tracker",
       "lines": [
         "Single-page interface",
         "Responsive layout",
