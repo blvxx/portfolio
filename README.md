@@ -1,9 +1,10 @@
-# Artem Kalinin | Application Support · Technical Support · QA Automation · Data Analytics
+# Artem Kalinin | Python Automation & Application Engineering
 
-Practical engineering portfolio covering incident investigation, REST API testing, automation, SQL / PostgreSQL analytics and frontend work.
+Practical engineering portfolio covering Python application development, API integrations, workflow automation, QA engineering, systems troubleshooting and SQL / PostgreSQL analytics.
 
 **[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/web-development-portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
 
+[![Telegram Business Assistant](https://github.com/blvxx/portfolio/actions/workflows/telegram-business-assistant.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/telegram-business-assistant.yml)
 [![FinTech QA](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
 [![Checkout Playwright QA](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml)
 [![Booking API QA](https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml)
@@ -17,6 +18,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 
 | Direction | Case study | Evidence |
 |---|---|---|
+| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram application, application service boundary, SQLite transactions, durable notification outbox, lease fencing, retry/dead-letter handling, migrations and operational documentation |
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
@@ -26,6 +28,23 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | **Support Analytics** | [Support Operations Analytics — SQL case](./support-operations-analytics/) | SLA, ticket backlog, priority mix, agent workload, percentiles and SQL data-quality checks |
 | **UI Automation** | [Todo Test](https://github.com/blvxx/playwright-qa-lab) | 8 authored Playwright scenarios and 17 documented manual test cases |
 | **Web Development** | [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
+
+## Featured application engineering project
+
+### Telegram Business Assistant
+
+An independently developed and deployed Telegram application for structured business enquiries.
+
+- Framework-independent enquiry submission service with typed command and repository boundary.
+- SQLite lead creation and notification enqueue committed atomically.
+- Background outbox worker with exclusive claims, lease-token fencing, bounded exponential retry and dead-letter state.
+- Forward-only, versioned schema migrations.
+- Admin enquiry listing restricted to the configured user in private chats.
+- Automated tests, Ruff lint, Docker image build and architecture/security/operations documentation.
+
+**Live demo:** [@blvlxxbot](https://t.me/blvlxxbot) · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
+
+**Scope:** deployed portfolio MVP, not a commercial client project. The live host's persistent-storage guarantee remains unverified, and the application must not collect real customer data until storage and backup/restore are verified.
 
 ## Featured engineering projects
 
