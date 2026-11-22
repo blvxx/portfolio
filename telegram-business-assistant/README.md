@@ -1,8 +1,10 @@
 # Telegram Business Assistant
 
-A Telegram bot starter for small businesses that need a structured way to receive and route enquiries.
+A live Telegram bot MVP for small businesses to collect structured enquiries and route them to an administrator.
 
-The project demonstrates a complete lead-capture workflow: consent, service selection, contact validation, request description, SQLite persistence and optional administrator notifications.
+**Live demo:** [@blvlxxbot](https://t.me/blvlxxbot)
+
+This portfolio project demonstrates a complete lead-capture workflow: consent, service selection, contact validation, request description, SQLite persistence and optional administrator notifications.
 
 ## What it does
 
@@ -24,8 +26,6 @@ The project demonstrates a complete lead-capture workflow: consent, service sele
 - aiosqlite / SQLite
 - pytest and pytest-asyncio
 - GitHub Actions
-
-SQLite is intentional for a compact, easy-to-run MVP. A production deployment with multiple workers or higher throughput should use a managed database such as PostgreSQL and a persistent volume.
 
 ## Architecture
 
@@ -67,22 +67,24 @@ The bot keeps conversational state in aiogram MemoryStorage. Lead records are pe
 
 To receive private notifications, the administrator must open the bot and send /start first. Use the numeric Telegram chat ID for ADMIN_CHAT_ID and the numeric Telegram user ID for ADMIN_USER_ID. Keep both IDs and the bot token out of source control.
 
-## Dada Cloud deployment (long-polling worker)
+## Deployment
 
-The bot uses aiogram long polling and does not need an inbound HTTP port. When creating a Dada Cloud app, use the **background worker / Worker** mode.
+The bot is currently deployed as a background worker on Dada Cloud using Telegram long polling. The user has confirmed that the bot responds and the main flow has been tested in Telegram.
+
+For a new deployment:
 
 1. Connect the GitHub repository and choose the branch to deploy.
-2. Set the working directory to `telegram-business-assistant` if the platform supports a monorepo subdirectory setting. If it does not, use the Docker deployment below or deploy the bot from an archive containing only this folder.
+2. Set the working directory to `telegram-business-assistant` if the platform supports monorepo subdirectory setting.
 3. Select background worker mode (not a web service).
 4. Configure environment variables in the platform's secret/environment settings:
    - `BOT_TOKEN` (required; never put in Git)
-   - `DATABASE_PATH` (set to the path on a verified persistent disk, e.g. `/app/data/leads.sqlite3`, only if the platform supports mounting persistent storage)
+   - `DATABASE_PATH` (set to a path on verified persistent storage, if available)
    - `ADMIN_CHAT_ID` (optional)
    - `ADMIN_USER_ID` (optional)
 5. Use the start command `python -m src.bot`.
-6. Check the build and runtime logs for successful startup. Then test /start, request consent, service selection, contact, details, database saving, and admin notification.
+6. Check runtime logs and test the bot flow.
 
-**Storage warning:** Do not collect real customer requests until the SQLite file is confirmed to be on persistent storage and backups are understood. A container's local filesystem may be replaced during redeploy/rebuild. The free tier may not include backups. This README does not claim a live deployment or verified hosting behavior.
+**Storage warning:** The current hosted deployment has no confirmed persistent volume for SQLite. Do not collect real customer enquiries until persistence, backups and retention are verified. A container filesystem may be replaced during redeploy/rebuild. The current hosting trial is not a guarantee of permanent free hosting.
 
 ## Docker deployment
 
@@ -149,8 +151,6 @@ Tests cover lead persistence, newest-first ordering, result limits and validatio
 - Tokens belong in environment variables or deployment secrets, never in commits.
 - Define a retention period and publish a business-specific privacy notice before using this template with real customers.
 
-## Current scope and next production steps
+## Production improvements
 
-This is a functional MVP and portfolio engineering project, not a deployed service. It does not currently connect to a live CRM, payment provider, external AI model or public business account.
-
-For a client deployment, confirm the data fields, privacy notice and retention policy; replace SQLite if the expected load requires it; add monitoring and backups; and integrate the specific CRM or messaging channel only after the API and access requirements are agreed.
+Before a client deployment, confirm data persistence and backups, define a privacy notice and retention policy, add monitoring, and integrate the client's CRM or messaging channel only after API/access requirements are agreed. This is a deployed portfolio MVP, not yet a hardened production service.
