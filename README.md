@@ -19,6 +19,7 @@ Practical engineering portfolio covering Python application development, API int
 | Direction | Case study | Evidence |
 |---|---|---|
 | **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram app with single-instance SQLite fallback and multi-replica PostgreSQL + Redis webhook profile, replay-safe transactions, SKIP LOCKED outbox workers, Redis FSM/event isolation, health/readiness endpoints, Prometheus metrics and tested backup/restore scripts |
+| **AI Automation** | [AI Support Triage Agent](./ai-support-triage-agent/) | OpenAI Responses API, Pydantic Structured Outputs, runbook retrieval, evidence allow-listing, prompt-injection handling, safe read-only diagnostics, escalation guardrails and live regression evaluator |
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
@@ -49,6 +50,21 @@ An independently developed and deployed Telegram application for structured busi
 **Deployment validation:** the previously hosted Dada Cloud bot was verified as a single long-polling worker before these shared-runtime changes. The PostgreSQL/Redis/webhook profile is not yet deployed on that host; it must pass live smoke, restart and restore checks before the hosted demo can be described as multi-replica or production-ready.
 
 **Scope:** independently developed portfolio MVP, not a commercial client project. CI tests the multi-replica adapters and backup/restore mechanism on disposable services; the Dada Cloud host's persistent storage, external backup schedule and host-level restore remain unverified. Do not collect real customer data until those host-level checks are complete.
+
+## AI Automation case
+
+### AI Support Triage Agent
+
+A retrieval-grounded support agent that turns synthetic incident reports into structured L2 triage recommendations.
+- Retrieves matching runbook evidence from a local knowledge base.
+- Uses the OpenAI Responses API and strict Pydantic output schema for severity, category, hypotheses, read-only checks, citations and a customer reply draft.
+- Verifies evidence IDs against retrieved documents and forces escalation when evidence is missing, confidence is low or severity is critical.
+- Removes state-changing suggestions, treats incident text as untrusted, and has no tools to mutate systems or contact users.
+- Includes offline tests and a separate live-model regression evaluator for synthetic cases.
+
+**Scope:** provider integration is implemented, but a live API evaluation requires an API key and has not been claimed. The case data is synthetic and requires human review.
+
+[Agent README and setup](./ai-support-triage-agent/) · [Synthetic evaluation cases](./ai-support-triage-agent/evals/cases.json)
 
 ## Featured engineering projects
 
@@ -163,7 +179,7 @@ A browser-based task tracker used as a target for manual and automated QA.
 ## Technologies
 **Support & troubleshooting:** HTTP · REST APIs · Webhooks · SQL · PostgreSQL · Logs · Incident Triage · RCA · Runbooks  
 **QA & automation:** Python · pytest · requests · Playwright · Postman · JSON Schema · Allure · Ruff  
-**Development & delivery:** FastAPI · aiogram · PostgreSQL · Redis · Docker · GitHub Actions · Prometheus · Grafana · JavaScript · HTML5 · CSS3  
+**Development & delivery:** FastAPI · aiogram · OpenAI Responses API · Pydantic · PostgreSQL · Redis · Docker · GitHub Actions · Prometheus · Grafana · JavaScript · HTML5 · CSS3  
 **Analytics:** SQL · PostgreSQL · Python · pandas · CTEs · Window Functions · KPI Modelling · Cohort Analysis · CSV / JSON reporting
 
 ## QA automation case studies
