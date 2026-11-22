@@ -12,7 +12,7 @@ The application currently uses SQLite through aiosqlite for saved enquiries and 
 
 ## Decision
 
-Keep SQLite for the documented single-instance MVP while persistence, backup and restore behaviour are verified in the target hosting environment.
+Keep SQLite for the documented single-instance MVP while persistence, backup and restore behaviour are verified in the target hosting environment. Manage schema evolution with forward-only migrations tracked by PRAGMA user_version.
 
 Keep MemoryStorage for the demo's conversational state, with the explicit limitation that in-progress flows are lost when the process restarts.
 
@@ -36,7 +36,7 @@ Negative:
 - SQLite is not a shared write store for multiple replicas.
 - Data durability depends on the storage volume being persistent and backed up.
 - MemoryStorage loses unfinished conversations on restart.
-- There is no database migration history.
+- The database schema uses forward-only migrations tracked with SQLite PRAGMA user_version; automated downgrade is intentionally unsupported.
 - There is no transactional outbox for administrator notifications.
 - The current hosted storage persistence is unverified.
 
