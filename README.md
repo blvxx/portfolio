@@ -146,7 +146,7 @@ A browser-based task tracker used as a target for manual and automated QA.
 ## QA automation case studies
 
 ### Checkout & Cart — Web Regression
-A standalone responsive storefront plus **23 Playwright browser tests**. The suite covers cart and stock boundaries, promotion calculations, shipping transitions, checkout validation, duplicate submission and mobile layout. Each test runs in a fresh Chromium context; CI retains JUnit output, Playwright traces and screenshots for failures.
+A standalone responsive storefront plus **24 Playwright browser tests**. The suite covers cart and stock boundaries, promotion calculations, shipping transitions, checkout validation, duplicate submission and mobile layout. Each test runs in a fresh Chromium context; CI retains JUnit output, Playwright traces and screenshots for failures.
 
 [Open the application and test suite](./qa-cases/checkout-regression/) · [Test catalogue](./qa-cases/checkout-regression/test-cases.md)
 
