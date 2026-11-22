@@ -4,7 +4,6 @@ import html
 import logging
 
 from aiogram import F, Router
-from aiogram.enums import ParseMode
 from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -24,7 +23,7 @@ router = Router()
 async def start(message: Message, state: FSMContext) -> None:
     await state.clear()
     await message.answer(
-        "<b>Business Assistant</b>\n\n"
+        "<b>Business Assistant</b>\\n\\n"
         "Помогаю принять обращение, уточнить задачу и передать заявку ответственному "
         "специалисту. Выберите, что нужно сделать:",
         reply_markup=main_menu(),
@@ -36,11 +35,11 @@ async def show_services(callback: CallbackQuery) -> None:
     await callback.answer()
     if callback.message:
         await callback.message.answer(
-            "<b>Что можно автоматизировать</b>\n\n"
-            "• Приём заявок и контактов\n"
-            "• Ответы на типовые вопросы\n"
-            "• Каталог услуг и первичный заказ\n"
-            "• Передачу обращений в CRM или таблицу\n\n"
+            "<b>Что можно автоматизировать</b>\\n\\n"
+            "• Приём заявок и контактов\\n"
+            "• Ответы на типовые вопросы\\n"
+            "• Каталог услуг и первичный заказ\\n"
+            "• Передачу обращений в CRM или таблицу\\n\\n"
             "Сценарий и интеграции подбираются под процесс компании.",
             reply_markup=main_menu(),
         )
@@ -51,11 +50,11 @@ async def show_process(callback: CallbackQuery) -> None:
     await callback.answer()
     if callback.message:
         await callback.message.answer(
-            "<b>Как работает сценарий</b>\n\n"
-            "1. Клиент выбирает тип обращения.\n"
-            "2. Оставляет контакт и описание задачи.\n"
-            "3. Бот сохраняет заявку в SQLite.\n"
-            "4. При настройке ADMIN_CHAT_ID отправляет уведомление администратору.\n\n"
+            "<b>Как работает сценарий</b>\\n\\n"
+            "1. Клиент выбирает тип обращения.\\n"
+            "2. Оставляет контакт и описание задачи.\\n"
+            "3. Бот сохраняет заявку в SQLite.\\n"
+            "4. При настройке ADMIN_CHAT_ID отправляет уведомление администратору.\\n\\n"
             "В демонстрационной версии нет подключённой CRM или платёжной системы.",
             reply_markup=main_menu(),
         )
@@ -64,10 +63,11 @@ async def show_process(callback: CallbackQuery) -> None:
 @router.callback_query(F.data == "request:start")
 async def request_start(callback: CallbackQuery, state: FSMContext) -> None:
     await state.clear()
+    await state.set_state(RequestFlow.waiting_consent)
     await callback.answer()
     if callback.message:
         await callback.message.answer(
-            "<b>Перед отправкой заявки</b>\n\n"
+            "<b>Перед отправкой заявки</b>\\n\\n"
             "Бот сохранит указанные вами имя, контакт, выбранную услугу и описание "
             "задачи, чтобы передать обращение ответственному специалисту. "
             "Не отправляйте пароли, коды подтверждения или платёжные данные. "
@@ -76,15 +76,21 @@ async def request_start(callback: CallbackQuery, state: FSMContext) -> None:
         )
 
 
-@router.callback_query(F.data == "consent:yes")
+@router.callback_query(F.data == "consent:yes", StateFilter(RequestFlow.waiting_consent))
 async def consent_yes(callback: CallbackQuery, state: FSMContext) -> None:
     await state.set_data({"consent": True})
+    await state.set_state(RequestFlow.waiting_service)
     await callback.answer()
     if callback.message:
         await callback.message.answer(
             "Выберите, с какой задачей нужна помощь:",
             reply_markup=service_menu(),
         )
+
+
+@router.callback_query(F.data == "consent:yes")
+async def stale_consent_yes(callback: CallbackQuery) -> None:
+    await callback.answer("Сначала начните оформление заявки.", show_alert=True)
 
 
 @router.callback_query(F.data == "flow:cancel")
@@ -98,19 +104,28 @@ async def cancel_flow(callback: CallbackQuery, state: FSMContext) -> None:
         )
 
 
-@router.callback_query(F.data == "consent:no")
+@router.callback_query(F.data == "consent:no", StateFilter(RequestFlow.waiting_consent))
 async def consent_no(callback: CallbackQuery, state: FSMContext) -> None:
     await state.clear()
     await callback.answer("Заявка не создавалась")
     if callback.message:
-        await callback.message.answer("Хорошо. Заявка не создавалась.", reply_markup=main_menu())
+        await callback.message.answer(
+            "Хорошо. Заявка не создавалась.", reply_markup=main_menu()
+        )
 
 
-@router.callback_query(F.data.startswith("service:"))
+@router.callback_query(F.data == "consent:no")
+async def stale_consent_no(callback: CallbackQuery) -> None:
+    await callback.answer("Сначала начните оформление заявки.", show_alert=True)
+
+
+@router.callback_query(F.data.startswith("service:"), StateFilter(RequestFlow.waiting_service))
 async def choose_service(callback: CallbackQuery, state: FSMContext) -> None:
     data = await state.get_data()
     if not data.get("consent"):
-        await callback.answer("Сначала подтвердите согласие на обработку заявки.", show_alert=True)
+        await callback.answer(
+            "Сначала подтвердите согласие на обработку заявки.", show_alert=True
+        )
         return
 
     slug = (callback.data or "").partition(":")[2]
@@ -124,7 +139,7 @@ async def choose_service(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     if callback.message:
         await callback.message.answer(
-            f"Вы выбрали: <b>{html.escape(service)}</b>.\n\n"
+            f"Вы выбрали: <b>{html.escape(service)}</b>.\\n\\n"
             "Оставьте телефон или email для обратной связи. "
             "Можно отправить номер как текст или поделиться контактом Telegram."
         )
@@ -194,11 +209,11 @@ async def receive_details(
 
     if settings.admin_chat_id is not None:
         notification = (
-            f"<b>Новая заявка №{lead_id}</b>\n"
-            f"<b>Имя:</b> {html.escape(user.full_name)}\n"
-            f"<b>Контакт:</b> {html.escape(data['contact'])}\n"
-            f"<b>Услуга:</b> {html.escape(data['service'])}\n"
-            f"<b>Описание:</b> {html.escape(details)}\n"
+            f"<b>Новая заявка №{lead_id}</b>\\n"
+            f"<b>Имя:</b> {html.escape(user.full_name)}\\n"
+            f"<b>Контакт:</b> {html.escape(data['contact'])}\\n"
+            f"<b>Услуга:</b> {html.escape(data['service'])}\\n"
+            f"<b>Описание:</b> {html.escape(details)}\\n"
             f"<b>Telegram ID:</b> <code>{user.id}</code>"
         )
         try:
@@ -222,9 +237,9 @@ async def show_ids(message: Message) -> None:
         return
 
     await message.answer(
-        "<b>Данные этого чата</b>\n"
-        f"User ID: <code>{user.id}</code>\n"
-        f"Chat ID: <code>{message.chat.id}</code>\n\n"
+        "<b>Данные этого чата</b>\\n"
+        f"User ID: <code>{user.id}</code>\\n"
+        f"Chat ID: <code>{message.chat.id}</code>\\n\\n"
         "Используйте эти значения в ADMIN_USER_ID и ADMIN_CHAT_ID. "
         "Не публикуйте их вместе с персональными данными заявок."
     )
@@ -258,7 +273,7 @@ async def list_leads(message: Message, db: Database, settings: Settings) -> None
                 f"<i>{html.escape(lead['created_at'])}</i>",
             ]
         )
-    await message.answer("\n".join(lines))
+    await message.answer("\\n".join(lines))
 
 
 @router.message(StateFilter(None), F.text)
