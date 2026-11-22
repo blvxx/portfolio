@@ -2,7 +2,7 @@
 
 ## Scope and evidence boundary
 
-This runbook covers the PostgreSQL + Redis Docker Compose deployment and the single-process local fallback. It does not certify the existing Dada Cloud worker's storage, network, backup or alerting guarantees. The Dada Cloud demo has not yet been migrated to the shared-runtime branch.
+This runbook covers the PostgreSQL + Redis Docker Compose deployment and the single-process local fallback. The former Dada Cloud single-worker demo is retired; no current public-host deployment is claimed. This runbook does not certify any provider's storage, network, backup or alert-notification guarantees.
 
 Never paste bot tokens, database credentials or webhook secrets into chat, issues, screenshots or shell transcripts.
 
@@ -154,17 +154,18 @@ This retains named data volumes. The following is destructive and deletes the Po
 
 Do not run the destructive command except during deliberate environment teardown.
 
-## Dada Cloud migration checklist
+## Deployment acceptance checklist
 
-The previously tested Dada Cloud deployment used one background worker, Telegram long polling and did not have a verified persistent-storage guarantee. This branch is not yet deployed there.
+The former Dada Cloud deployment used one background worker and Telegram long polling. It is retired and is not a supported live environment for the current shared-runtime release.
 
-Before migration:
+Before treating a new host as production-ready:
 
-- Provision managed PostgreSQL and Redis or a host that guarantees persistent volumes.
-- Add DATABASE_URL, REDIS_URL, BOT_MODE, webhook URL, webhook secret and port settings through the provider's private secret manager.
-- Confirm the platform supports a public HTTPS webhook endpoint and health check.
-- Deploy exactly one webhook replica first.
-- Run the full smoke test, restart test, backup and restore drill.
-- Confirm external retention and backup policy.
+- Provision PostgreSQL and Redis with documented persistent-storage and recovery guarantees.
+- Add DATABASE_URL, REDIS_URL, BOT_MODE, webhook URL, webhook secret and other settings through the provider's private secret manager.
+- Confirm a public HTTPS webhook endpoint and a health check against /readyz.
+- Deploy one webhook replica first, then run the full smoke test and restart test.
+- Configure scheduled off-host PostgreSQL backups and retention; verify an actual restore on the target host.
+- Configure an Alertmanager or provider-native receiver and test notification delivery.
+- Record the host, release commit, test results, backup timestamp and restore evidence.
 
-Do not collect actual customer enquiries on the existing demo until these checks are completed and evidence is recorded.
+CI tests against disposable services are useful evidence, but they do not replace host-level verification. Do not collect real customer enquiries until the required checks have passed and their results are recorded.
