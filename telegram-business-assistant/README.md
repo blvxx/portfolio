@@ -166,7 +166,7 @@ The runbook is documentation, not proof that backup/restore has been exercised i
 - It does not request passwords, authentication codes or payment details.
 - SQL statements use parameters rather than string interpolation.
 - User-provided content is HTML-escaped before it is included in administrator messages.
-- The /leads command is restricted to ADMIN_USER_ID.
+- The /leads command is restricted to ADMIN_USER_ID and private chats.
 - Outbox events store the destination chat ID and lead reference rather than duplicating contact and request fields in the event payload.
 - Outbox error metadata stores exception type names, not arbitrary exception text.
 - Tokens belong in environment variables or deployment secrets, never in commits.

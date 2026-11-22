@@ -241,8 +241,11 @@ async def list_leads(message: Message, db: Database, settings: Settings) -> None
         user is None
         or settings.admin_user_id is None
         or user.id != settings.admin_user_id
+        or message.chat.type != "private"
     ):
-        await message.answer("Команда доступна только настроенному администратору.")
+        await message.answer(
+            "Команда доступна только настроенному администратору в личном чате."
+        )
         return
 
     leads = await db.get_recent_leads(limit=10)

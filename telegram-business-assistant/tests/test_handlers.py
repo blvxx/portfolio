@@ -5,7 +5,7 @@ import pytest
 
 from src.application.enquiries import EnquiryPolicyError
 from src.config import Settings
-from src.handlers import receive_details
+from src.handlers import list_leads, receive_details
 
 
 def make_message(*, full_name: str = "Demo Customer"):
@@ -109,3 +109,72 @@ async def test_receive_details_rejects_message_without_sender() -> None:
     state.clear.assert_not_awaited()
     enquiry_service.submit.assert_not_awaited()
     message.bot.send_message.assert_not_awaited()
+
+
+
+@pytest.mark.asyncio
+async def test_list_leads_rejects_non_admin_without_reading_database() -> None:
+    message = SimpleNamespace(
+        from_user=SimpleNamespace(id=111),
+        chat=SimpleNamespace(type="private"),
+        answer=AsyncMock(),
+    )
+    database = SimpleNamespace(get_recent_leads=AsyncMock(return_value=[]))
+    settings = Settings(bot_token="test-token", admin_user_id=12345)
+
+    await list_leads(message, database, settings)
+
+    message.answer.assert_awaited_once()
+    assert "настроенному администратору" in message.answer.await_args.args[0]
+    database.get_recent_leads.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_list_leads_rejects_admin_command_in_group_chat() -> None:
+    message = SimpleNamespace(
+        from_user=SimpleNamespace(id=12345),
+        chat=SimpleNamespace(type="supergroup"),
+        answer=AsyncMock(),
+    )
+    database = SimpleNamespace(get_recent_leads=AsyncMock(return_value=[]))
+    settings = Settings(bot_token="test-token", admin_user_id=12345)
+
+    await list_leads(message, database, settings)
+
+    message.answer.assert_awaited_once()
+    assert "личном чате" in message.answer.await_args.args[0]
+    database.get_recent_leads.assert_not_awaited()
+
+
+@pytest.mark.asyncio
+async def test_list_leads_allows_configured_admin_in_private_chat_and_escapes_data() -> None:
+    message = SimpleNamespace(
+        from_user=SimpleNamespace(id=12345),
+        chat=SimpleNamespace(type="private"),
+        answer=AsyncMock(),
+    )
+    database = SimpleNamespace(
+        get_recent_leads=AsyncMock(
+            return_value=[
+                {
+                    "id": 9,
+                    "service": "<script>service</script>",
+                    "customer_name": "<b>Customer</b>",
+                    "contact": "demo@example.com",
+                    "details": "Need <i>help</i> & advice",
+                    "created_at": "2026-11-22T12:00:00+00:00",
+                }
+            ]
+        )
+    )
+    settings = Settings(bot_token="test-token", admin_user_id=12345)
+
+    await list_leads(message, database, settings)
+
+    database.get_recent_leads.assert_awaited_once_with(limit=10)
+    message.answer.assert_awaited_once()
+    response = message.answer.await_args.args[0]
+    assert "&lt;script&gt;service&lt;/script&gt;" in response
+    assert "&lt;b&gt;Customer&lt;/b&gt;" in response
+    assert "Need &lt;i&gt;help&lt;/i&gt; &amp; advice" in response
+    assert "<script>" not in response
