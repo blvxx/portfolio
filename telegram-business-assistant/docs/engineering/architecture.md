@@ -2,127 +2,124 @@
 
 ## Document status
 
-This document separates implemented behaviour from proposed improvements. The project is an independently developed portfolio MVP with a live Telegram demo; it is not presented as a commercial client deployment.
+The repository contains two runtime profiles:
 
-## Product scope
+- Local/single-instance: Telegram long polling, SQLite and optional in-memory FSM fallback.
+- Shared/multi-replica: Telegram HTTPS webhook, PostgreSQL, Redis FSM and Redis event isolation.
 
-The application collects structured service enquiries in a Telegram chat and makes them available to a configured administrator.
+The shared profile is implemented in source and is exercised by GitHub Actions service-backed integration tests. It has not yet been deployed to the Dada Cloud demo host. This is an independently developed portfolio project, not a commercial client deployment.
 
-Current workflow:
-1. A visitor starts the bot.
-2. The bot explains the enquiry flow and asks for consent.
-3. The visitor selects a service category.
-4. The visitor provides a phone number, email address or Telegram contact.
-5. The visitor describes the request.
-6. The application writes the enquiry and, when an administrator chat is configured, a notification event to SQLite in one transaction.
-7. The visitor receives a confirmation.
-8. A background worker claims the event and sends the administrator notification with bounded retries.
+## Product workflow
 
-The application does not currently connect to a CRM, process payments or use an LLM.
+1. A visitor starts the bot and reviews the consent notice.
+2. The visitor selects a service category.
+3. The visitor provides a phone number, email address or Telegram contact.
+4. The visitor describes the request.
+5. EnquiryService validates a typed CreateEnquiry command.
+6. The selected persistence adapter stores the lead and, when configured, its notification event in one transaction.
+7. The visitor receives confirmation.
+8. An outbox worker delivers the administrator notification with bounded retry.
 
-## Current runtime architecture
+There is no CRM/payment integration. The assistant does not run an LLM in this project; AI support-triage is a separate portfolio case.
+
+## Runtime profiles
+
+### Local / single-instance
 
 Telegram Bot API
   -> aiogram Dispatcher (long polling)
   -> Telegram Router / Handlers
-      -> consent and service selection
-      -> contact and text validation
-      -> administrator commands
-  -> Application Service (src/application/enquiries.py)
-      -> consent, identity, contact and request policy
-  -> SQLite transaction
-      -> leads table
-      -> notification_outbox table
-  -> Background outbox worker (src/application/notifications.py)
-      -> Telegram sender adapter (src/infrastructure/telegram_notifications.py)
+  -> EnquiryService
+  -> SQLite transaction: leads + notification_outbox
+  -> outbox worker
+  -> Telegram notification
 
-Conversation state is held in aiogram MemoryStorage.
+- SQLite is a local/single-instance persistence adapter.
+- MemoryStorage is a development fallback only. It loses unfinished flows on process restart.
+- This mode is not the recommended production profile for multiple replicas.
 
-| Component | Responsibility | Current implementation |
+### Shared / multi-replica
+
+Telegram Bot API
+  -> HTTPS webhook / load balancer
+  -> aiogram webhook handler (one or more replicas)
+       -> Redis FSM state + data + event isolation
+       -> EnquiryService
+       -> PostgreSQL transaction: leads + notification_outbox
+  -> outbox workers using PostgreSQL row-level locks
+  -> Telegram notification
+
+The shared profile requires BOT_MODE=webhook, PostgreSQL DATABASE_URL, Redis REDIS_URL, public HTTPS WEBHOOK_BASE_URL, WEBHOOK_SECRET and WEBHOOK_PATH. Configuration validation rejects webhook mode when PostgreSQL, Redis, HTTPS URL or the secret is missing. Long polling and webhook delivery must not run simultaneously for the same bot token.
+
+Redis FSM state/data use a configurable TTL. Redis event isolation serializes updates for the same FSM key across replicas, reducing races when two webhook workers receive updates for one conversation.
+
+PostgreSQL is the shared source of truth for leads and notification events. A database advisory lock serializes schema migrations. Outbox workers use FOR UPDATE SKIP LOCKED so multiple workers can claim different due events without taking the same row. Lead creation and outbox enqueue share one transaction. Idempotency keys derived from Telegram chat/message identity make repeated submissions converge on one lead. Delivery remains at-least-once; a process crash after the Telegram send succeeds but before the delivered marker commits can produce a duplicate remote message.
+
+## Components
+
+| Component | Responsibility | Implementation |
 |---|---|---|
-| Entry point | Load settings, initialize dependencies and start polling | src/bot.py |
-| Configuration | Read and validate environment settings | src/config.py |
-| Telegram interface | Handle commands, callbacks and messages | src/handlers.py |
-| Conversation state | Track the visitor's current step | aiogram MemoryStorage |
-| Application service | Enforce enquiry submission rules without Telegram dependencies | src/application/enquiries.py |
-| Validation | Validate contact and request text | src/validation.py |
-| Persistence and outbox | Atomically store enquiries and notification events; lease, retry and record delivery | src/database.py |
-| Notification dispatcher | Claim and deliver queued events with bounded retry | src/application/notifications.py |
-| Telegram notification adapter | Format and send administrator messages | src/infrastructure/telegram_notifications.py |
-| UI controls | Build inline keyboards and service catalog | src/keyboards.py |
+| Runtime / lifecycle | Configure dependencies, start polling or webhook mode, shut down workers | src/bot.py |
+| Settings | Validate runtime profile and endpoints | src/config.py |
+| Telegram interface | Commands, callbacks, consent and FSM conversation | src/handlers.py |
+| Conversation state | Persist user state between events/restarts | RedisStorage in shared profile; MemoryStorage fallback locally |
+| Event isolation | Serialize updates for a conversation across replicas | Redis event isolation |
+| Application policy | Validate consent, identity, contact and request | src/application/enquiries.py |
+| Persistence | Store leads, outbox state and schema migrations | src/database.py, src/postgres_database.py, src/migrations.py |
+| Notification dispatch | Claim, retry and dead-letter outbox records | src/application/notifications.py |
+| Telegram notification adapter | Render and send admin notification | src/infrastructure/telegram_notifications.py |
+| Observability | Liveness, dependency readiness and Prometheus metrics | src/observability.py, src/metrics.py |
 
-The Telegram handler translates the final message and FSM state into a typed CreateEnquiry command. EnquiryService applies application-level policy and delegates persistence through an EnquiryRepository protocol. The SQLite adapter writes the lead and its optional notification event atomically. A background dispatcher leases due events, sends them through a Telegram adapter, and records delivery or retry state. Handler and dispatcher tests use isolated test doubles; a live Telegram Bot API end-to-end test remains separate.
+## Data and migrations
 
-## Data model
+The lead record stores a generated ID, Telegram sender ID, optional username, customer display name, submitted contact, selected service, request description, UTC timestamp and nullable idempotency key.
 
-The current SQLite table stores:
-- generated lead ID;
-- Telegram user ID and optional username;
-- customer display name;
-- submitted contact;
-- selected service;
-- request description;
-- UTC creation timestamp;
-- nullable idempotency key derived from Telegram chat ID and message ID.
+The SQLite adapter uses forward-only migrations tracked by PRAGMA user_version. The PostgreSQL adapter tracks versions in schema_migrations, applies them under a transaction and serializes startup migrations with an advisory lock.
 
-The database schema is managed by forward-only migrations tracked with SQLite PRAGMA user_version. Fresh databases and existing version-1 databases are upgraded during startup. Version 3 adds a unique index for the nullable Telegram idempotency key. Repeated submissions with the same key return the existing lead ID and do not enqueue a second notification. Downgrades are not automated; operators should take and verify a backup before deployment.
+Both adapters implement the same repository behaviour used by EnquiryService and the notification dispatcher. PostgreSQL is the multi-replica option; SQLite remains for local development. The unique nullable idempotency key prevents replay duplication.
 
-## Runtime and deployment assumptions
+## Observability and operations
 
-- The bot uses Telegram long polling.
-- The current deployment is a single background worker.
-- Docker Compose uses one named volume for the SQLite data directory.
-- The container runs as a non-root user, has a read-only root filesystem, drops Linux capabilities and enables no-new-privileges.
-- Conversational FSM state is held in process memory and is lost on restart.
-- The hosted Dada Cloud deployment has no verified persistent-volume guarantee. The README warns against collecting real customer enquiries until storage and backups are verified.
+- /healthz is a liveness endpoint.
+- /readyz checks the configured database and Redis dependency.
+- /metrics exports Prometheus outbox state gauges, dependency-readiness gauge and notification delivery counters. The Compose monitoring profile evaluates Prometheus alert rules for unavailable targets/dependencies, dead letters and stalled backlog.
+- Logs identify worker/event outcomes and exception type without persisting arbitrary exception messages or user contact details.
 
-The current data store is suitable only for the documented single-instance MVP assumptions. SQLite must not be treated as shared multi-replica storage.
+The repository includes PostgreSQL custom-format backup and guarded restore scripts. CI creates a backup, validates the archive, restores into a disposable database, and verifies a row. This proves the scripted mechanism on CI infrastructure, not a production backup schedule, off-host retention or successful restore on Dada Cloud. Those require host-level configuration and a separate drill.
 
-## Failure semantics
+## Deployment status
 
-| Failure | Current behaviour | Engineering concern |
+The existing @blvlxxbot hosted demo was previously verified as a single Dada Cloud background worker using long polling. That validation predates the PostgreSQL/Redis/webhook changes. The new multi-replica profile is source-complete only after CI passes; it must not be described as already deployed or live-tested on Dada Cloud.
+
+Do not collect real customer data on the current hosted demo until its persistent storage/managed services, backup schedule, retention policy and restore procedure are verified. Local Docker Compose persistent volumes are not evidence that the hosted provider guarantees persistence.
+
+## Failure semantics and limits
+
+| Failure | Expected behaviour | Remaining operational control |
 |---|---|---|
-| Process restart | Unfinished FSM flow is lost | Visitor may need to restart |
-| SQLite unavailable | Lead write fails; no durable fallback | User-facing error path and alerting need improvement |
-| Admin notification fails | Event is rescheduled with exponential backoff; exhausted events become dead | Delivery is at-least-once; operator review is required for dead events |
-| Telegram API unavailable | Polling or message operations may fail | Recovery and operational visibility are limited |
-| Host storage is ephemeral | SQLite file may be lost after replacement | Persistence must be verified before real data collection |
+| Replica restart | Redis FSM survives until its TTL expires | Verify external Redis persistence and availability |
+| PostgreSQL unavailable | Readiness fails; writes do not silently fall back | Configure alerts and database recovery |
+| Redis unavailable | Readiness fails; FSM-dependent shared mode is not ready | Configure alerts and Redis recovery |
+| Admin send fails | Outbox retries with bounded exponential backoff; exhausted events become dead | Alert and review dead events |
+| Worker concurrency | PostgreSQL row locks distribute work | Load-test pool sizes and throughput |
+| Remote send succeeds then process crashes | A later retry may send a duplicate | Delivery is at-least-once, not exactly-once |
+| Host / volume is lost | Recovery depends on external backup | Verify off-host backup and restore on actual host |
 
-Lead creation and event enqueue are atomic. Telegram-originated submissions carry a stable `telegram:<chat_id>:<message_id>` idempotency key; the unique database index and write transaction make concurrent replays converge on one lead. Remote delivery is asynchronous and at-least-once, not exactly-once. A crash after Telegram accepts a message but before the local delivered marker commits can produce a duplicate on retry. Events have a unique lead-created key, worker leases are fenced with per-claim tokens, and only exception type names are persisted to avoid retaining sensitive error text.
+## Security and design principles
 
-## Remaining target architecture (not implemented)
+- No secrets belong in Git, logs, screenshots or chat transcripts.
+- Personal data is excluded from ordinary logs.
+- User content is escaped before Telegram HTML rendering.
+- Admin enquiry listing requires configured admin user ID and a private chat.
+- Webhook mode requires an HTTPS public endpoint and secret header token.
+- Databases and Redis must remain private behind the application network.
+- LLM outputs, when used in a separate AI project, are untrusted; external actions require human approval.
+- Start with a modular monolith; do not introduce microservices without a clear scaling or ownership requirement.
 
-Telegram Adapter / HTTP API
-  -> Application Services
-      -> Enquiry use cases
-      -> Consent and policy checks
-      -> Notification orchestration
-  -> Persistence Ports -> PostgreSQL (when requirements justify it)
-  -> Integration Ports -> Telegram / CRM / n8n
-  -> Current SQLite outbox -> background worker
-  -> Redis for shared FSM state, if multi-instance operation is required
-  -> Observability: structured logs, metrics, traces and alert rules
+## Evidence still required
 
-A modular monolith is the preferred first target. Separate deployable microservices are not justified until independent scaling or ownership requirements exist.
-
-## Design principles
-
-- Prefer a simple modular monolith before distributed services.
-- Keep Telegram-specific types out of core business rules.
-- Make persistence and notification outcomes explicit.
-- Use a unique event key and lease fencing for retry coordination; document external delivery as at-least-once.
-- Keep personal data out of ordinary application logs.
-- Treat LLM output as untrusted input if an AI capability is added.
-- Require human approval for high-impact external actions.
-- Record architectural decisions and revise them when requirements change.
-
-## Open engineering questions
-
-- What enquiry retention period is appropriate for the intended operator?
-- Which persistent host/storage guarantee is available for the live demo?
-- Is PostgreSQL required now, or only when requirements justify it?
-- Does the operator need operational alerts and a dead-letter review workflow for notifications?
-- Which service-level objectives are meaningful for this application?
-- What data should be visible to an administrator, and for how long?
-
-These questions must be resolved before positioning the application as suitable for real customer data.
+- Deploy this branch to the hosted environment and run a safe non-personal-data Telegram smoke test.
+- Verify managed PostgreSQL/Redis persistence across restart/redeployment.
+- Configure off-host scheduled backups, retention and alert delivery.
+- Run and record a restore drill against the actual host.
+- Establish workload-specific pool limits, SLOs and alert thresholds.

@@ -337,3 +337,25 @@ class Database:
             )
             row = await cursor.fetchone()
             return dict(row) if row else None
+
+    async def ping(self) -> None:
+        """Execute a lightweight readiness probe against the SQLite database."""
+        async with aiosqlite.connect(self.path) as connection:
+            await self._configure(connection)
+            await connection.execute("SELECT 1")
+
+    async def close(self) -> None:
+        """No-op for the connection-per-operation SQLite adapter."""
+        return None
+
+    async def get_notification_stats(self) -> dict[str, int]:
+        """Return outbox state counts for monitoring."""
+        async with aiosqlite.connect(self.path) as connection:
+            cursor = await connection.execute(
+                "SELECT status, COUNT(*) FROM notification_outbox GROUP BY status"
+            )
+            rows = await cursor.fetchall()
+        stats = {"pending": 0, "processing": 0, "delivered": 0, "dead": 0}
+        for status, count in rows:
+            stats[str(status)] = int(count)
+        return stats

@@ -18,7 +18,8 @@ Practical engineering portfolio covering Python application development, API int
 
 | Direction | Case study | Evidence |
 |---|---|---|
-| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram application, application service boundary, SQLite transactions, replay-safe lead creation, durable notification outbox, lease fencing, retry/dead-letter handling, versioned migrations and operational documentation |
+| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram app with single-instance SQLite fallback and multi-replica PostgreSQL + Redis webhook profile, replay-safe transactions, SKIP LOCKED outbox workers, Redis FSM/event isolation, health/readiness endpoints, Prometheus metrics and tested backup/restore scripts |
+| **AI Automation** | [AI Support Triage Agent](./ai-support-triage-agent/) | OpenAI Responses API, Pydantic Structured Outputs, runbook retrieval, evidence allow-listing, prompt-injection handling, safe read-only diagnostics, escalation guardrails and live regression evaluator |
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
@@ -36,17 +37,34 @@ Practical engineering portfolio covering Python application development, API int
 An independently developed and deployed Telegram application for structured business enquiries.
 
 - Framework-independent enquiry submission service with typed command and repository boundary.
-- SQLite lead creation and notification enqueue committed atomically.
-- Background outbox worker with exclusive claims, lease-token fencing, bounded exponential retry and dead-letter state.
-- Forward-only, versioned schema migrations and replay-safe creation keyed by Telegram chat/message identity.
-- Admin enquiry listing restricted to the configured user in private chats.
-- Automated tests, Ruff lint, Docker image build and architecture/security/operations documentation.
+- Two runtime profiles: single-instance SQLite/long polling for local development, and PostgreSQL + Redis + HTTPS webhook for multi-replica deployment.
+- PostgreSQL lead creation and notification enqueue committed atomically; database advisory lock protects schema migrations.
+- Multiple outbox workers coordinate with PostgreSQL row locks (SKIP LOCKED), lease fencing, bounded retry and dead-letter handling.
+- Redis FSM state survives bot restarts until TTL expiry; Redis event isolation serializes updates for one conversation across replicas.
+- Health/readiness endpoints and Prometheus metrics expose dependency status and outbox outcomes.
+- Versioned migrations and replay-safe creation keyed by Telegram chat/message identity; admin enquiry listing remains restricted to a configured private-chat user.
+- CI uses real PostgreSQL and Redis services for integration checks and exercises a PostgreSQL backup/restore into a disposable database.
 
 **Live demo:** [@blvlxxbot](https://t.me/blvlxxbot) · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
 
-**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox, migration and idempotency refactors. Current source changes pass CI, but the hosted instance has not yet been smoke-tested after those changes.
+**Deployment validation:** the previously hosted Dada Cloud bot was verified as a single long-polling worker before these shared-runtime changes. The PostgreSQL/Redis/webhook profile is not yet deployed on that host; it must pass live smoke, restart and restore checks before the hosted demo can be described as multi-replica or production-ready.
 
-**Scope:** deployed portfolio MVP, not a commercial client project. The live host's persistent-storage guarantee remains unverified, and the application must not collect real customer data until storage and backup/restore are verified.
+**Scope:** independently developed portfolio MVP, not a commercial client project. CI tests the multi-replica adapters and backup/restore mechanism on disposable services; the Dada Cloud host's persistent storage, external backup schedule and host-level restore remain unverified. Do not collect real customer data until those host-level checks are complete.
+
+## AI Automation case
+
+### AI Support Triage Agent
+
+A retrieval-grounded support agent that turns synthetic incident reports into structured L2 triage recommendations.
+- Retrieves matching runbook evidence from a local knowledge base.
+- Uses the OpenAI Responses API and strict Pydantic output schema for severity, category, hypotheses, read-only checks, citations and a customer reply draft.
+- Verifies evidence IDs against retrieved documents and forces escalation when evidence is missing, confidence is low or severity is critical.
+- Removes state-changing suggestions, treats incident text as untrusted, and has no tools to mutate systems or contact users.
+- Includes offline tests and a separate live-model regression evaluator for synthetic cases.
+
+**Scope:** provider integration is implemented, but a live API evaluation requires an API key and has not been claimed. The case data is synthetic and requires human review.
+
+[Agent README and setup](./ai-support-triage-agent/) · [Synthetic evaluation cases](./ai-support-triage-agent/evals/cases.json)
 
 ## Featured engineering projects
 
@@ -151,6 +169,10 @@ A browser-based task tracker used as a target for manual and automated QA.
 
 [Repository](https://github.com/blvxx/playwright-qa-lab) · [Test documentation](https://github.com/blvxx/playwright-qa-lab/tree/main/docs)
 
+## Delivery process and business constraints
+
+A separate [delivery simulation pack](./docs/delivery-simulation/) demonstrates product-brief decomposition, prioritised backlog, acceptance criteria, a scope-change decision, simulated review comments, UAT, handover and an incident retrospective. It is explicitly fictional practice material, not a claim of client delivery or actual team employment. The GitHub PR/CI history shows independent implementation and engineering follow-through; real cross-functional ownership and commercial accountability still need to be demonstrated in paid work.
+
 ## How to evaluate the work
 1. Start with the [Engineering Showcase](https://blvxx.github.io/portfolio/engineering/) for a concise visual overview.
 2. Read the [Incident Investigation Lab](./incident-lab/) for a complete support-style investigation.
@@ -161,7 +183,7 @@ A browser-based task tracker used as a target for manual and automated QA.
 ## Technologies
 **Support & troubleshooting:** HTTP · REST APIs · Webhooks · SQL · PostgreSQL · Logs · Incident Triage · RCA · Runbooks  
 **QA & automation:** Python · pytest · requests · Playwright · Postman · JSON Schema · Allure · Ruff  
-**Development & delivery:** FastAPI · JavaScript · HTML5 · CSS3 · Docker · GitHub Actions · Prometheus · Grafana  
+**Development & delivery:** FastAPI · aiogram · OpenAI Responses API · Pydantic · PostgreSQL · Redis · Docker · GitHub Actions · Prometheus · Grafana · JavaScript · HTML5 · CSS3  
 **Analytics:** SQL · PostgreSQL · Python · pandas · CTEs · Window Functions · KPI Modelling · Cohort Analysis · CSV / JSON reporting
 
 ## QA automation case studies
@@ -184,6 +206,7 @@ For website creation, redesign and small-business projects, visit the **[freelan
 - Customer retention uses the attributed public UCI Online Retail dataset; other fixture datasets, logs, incident records and subscription analytics data are synthetic.
 - The API automation project targets a public demo service; simulated write operations are not represented as persistent production changes.
 - These repositories are independent portfolio projects, not claims of production access or commercial client delivery.
+- The delivery simulation pack is fictional. It demonstrates working methods, not actual participation in a client team or ownership of a real commercial budget.
 - Workflow badges and linked Actions runs show actual CI status; a configured workflow alone is not proof of a passing run.
 
 ---
