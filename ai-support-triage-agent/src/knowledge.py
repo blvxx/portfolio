@@ -59,7 +59,7 @@ class KnowledgeBase:
                 )
             )
             score = len(query_tokens & indexed)
-            if score:
+            if score >= 2:
                 scored.append((score, document.source_id, document))
         scored.sort(key=lambda item: (-item[0], item[1]))
         return [item[2] for item in scored[: max(1, min(limit, 8))]]
