@@ -125,7 +125,7 @@ Redis is used for conversation state and event isolation. Configure persistence/
 
 ## Routine monitoring and alert rules
 
-Prometheus metrics are available at /metrics:
+Prometheus metrics are available at /metrics, and the Compose stack evaluates alert rules in monitoring/alerts.yml:
 
 - telegram_outbox_delivery_total{result=...}
 - telegram_outbox_pending
