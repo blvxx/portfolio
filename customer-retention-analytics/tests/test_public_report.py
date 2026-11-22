@@ -23,6 +23,8 @@ def test_public_report_writes_aggregate_outputs_without_customer_ids(tmp_path):
     assert summary["net_sales_gbp"] == summary["gross_sales_gbp"] - summary["refunds_gbp"]
     assert summary["customers"] > 0
     assert summary["unique_countries"] > 0
+    assert summary["sql_gross_sales_gbp"] == summary["gross_sales_gbp"]
+    assert summary["sql_repeat_customer_rate_pct"] == summary["repeat_customer_rate_pct"]
 
     expected_files = {
         "summary.json",
@@ -48,6 +50,7 @@ def test_public_report_writes_aggregate_outputs_without_customer_ids(tmp_path):
     assert "CustomerID" not in (output / "monthly_sales.csv").read_text(encoding="utf-8")
     assert "customer_id" not in (output / "sql_rfm_segments.csv").read_text(encoding="utf-8")
     assert "customer_id" not in (output / "sql_cohort_retention.csv").read_text(encoding="utf-8")
+    assert "customer_id" not in (output / "sql_country_sales.csv").read_text(encoding="utf-8")
     assert "synthetic" not in (output / "findings.md").read_text(encoding="utf-8").lower()
 
 
