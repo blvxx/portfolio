@@ -186,7 +186,7 @@ class PostgresDatabase:
                             status, attempts, available_at, created_at
                         )
                         VALUES (
-                            'lead.created', $1, jsonb_build_object('chat_id', $2),
+                            'lead.created', $1, jsonb_build_object('chat_id', $2::BIGINT),
                             'pending', 0, $3, $3
                         )
                         """,
