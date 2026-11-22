@@ -1,6 +1,7 @@
 """SQLite persistence for incoming enquiries and the notification outbox."""
 
 import json
+import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -66,6 +67,7 @@ class Database:
                     attempts INTEGER NOT NULL DEFAULT 0,
                     available_at TEXT NOT NULL,
                     locked_at TEXT,
+                    lease_token TEXT,
                     last_error TEXT,
                     created_at TEXT NOT NULL,
                     delivered_at TEXT,
@@ -197,10 +199,11 @@ class Database:
                     UPDATE notification_outbox
                     SET status = 'processing',
                         locked_at = ?,
+                        lease_token = ?,
                         attempts = attempts + 1
                     WHERE id = ?
                     """,
-                    (now_text, event_id),
+                    (now_text, uuid.uuid4().hex, event_id),
                 )
                 cursor = await connection.execute(
                     """
@@ -209,6 +212,7 @@ class Database:
                         o.aggregate_id AS lead_id,
                         o.payload_json,
                         o.attempts,
+                        o.lease_token,
                         l.telegram_user_id,
                         l.username,
                         l.customer_name,
@@ -235,7 +239,9 @@ class Database:
                 await connection.rollback()
                 raise
 
-    async def mark_notification_delivered(self, notification_id: int) -> None:
+    async def mark_notification_delivered(
+        self, notification_id: int, *, lease_token: str
+    ) -> None:
         now = _timestamp(_utc_now())
         async with aiosqlite.connect(self.path) as connection:
             await self._configure(connection)
@@ -245,10 +251,11 @@ class Database:
                 SET status = 'delivered',
                     delivered_at = ?,
                     locked_at = NULL,
+                    lease_token = NULL,
                     last_error = NULL
-                WHERE id = ? AND status = 'processing'
+                WHERE id = ? AND status = 'processing' AND lease_token = ?
                 """,
-                (now, notification_id),
+                (now, notification_id, lease_token),
             )
             await connection.commit()
             if cursor.rowcount != 1:
@@ -259,6 +266,7 @@ class Database:
         notification_id: int,
         *,
         error_code: str,
+        lease_token: str,
         max_attempts: int = 5,
         base_delay_seconds: int = 5,
     ) -> str:
@@ -266,14 +274,14 @@ class Database:
         async with aiosqlite.connect(self.path) as connection:
             await self._configure(connection)
             cursor = await connection.execute(
-                "SELECT attempts, status FROM notification_outbox WHERE id = ?",
+                "SELECT attempts, status, lease_token FROM notification_outbox WHERE id = ?",
                 (notification_id,),
             )
             row = await cursor.fetchone()
             if row is None:
                 raise ValueError(f"Unknown notification event: {notification_id}")
-            if row[1] != "processing":
-                raise RuntimeError("Notification event is not currently leased")
+            if row[1] != "processing" or row[2] != lease_token:
+                raise RuntimeError("Notification lease is no longer owned by this worker")
 
             attempts = int(row[0])
             now = _utc_now()
@@ -291,10 +299,11 @@ class Database:
                 SET status = ?,
                     available_at = ?,
                     locked_at = NULL,
+                    lease_token = NULL,
                     last_error = ?
-                WHERE id = ? AND status = 'processing'
+                WHERE id = ? AND status = 'processing' AND lease_token = ?
                 """,
-                (status, available_at, error_code[:80], notification_id),
+                (status, available_at, error_code[:80], notification_id, lease_token),
             )
             await connection.commit()
             return status
