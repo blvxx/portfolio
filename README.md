@@ -18,7 +18,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | Direction | Case study | Evidence |
 |---|---|---|
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
-| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 23 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
+| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
 | **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
