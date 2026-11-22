@@ -8,6 +8,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
+from src.application.enquiries import EnquiryService
 from src.config import Settings
 from src.database import Database
 from src.handlers import router
@@ -21,6 +22,7 @@ async def main() -> None:
     settings = Settings.from_env()
     database = Database(settings.database_path)
     await database.initialize()
+    enquiry_service = EnquiryService(database)
 
     bot = Bot(
         token=settings.bot_token,
@@ -28,6 +30,7 @@ async def main() -> None:
     )
     dispatcher = Dispatcher(storage=MemoryStorage())
     dispatcher["db"] = database
+    dispatcher["enquiry_service"] = enquiry_service
     dispatcher["settings"] = settings
     dispatcher.include_router(router)
 
