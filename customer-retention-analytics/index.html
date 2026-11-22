@@ -22,7 +22,7 @@
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:21px}.card small{color:var(--accent);font-size:9px;letter-spacing:.14em;font-weight:850}.card h3{font-size:16px;margin:12px 0 7px}.card p{font-size:11px;color:var(--muted);margin:0}
     .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.metric-card{padding:20px;border:1px solid var(--line);background:linear-gradient(145deg,#1d3036,#17262c);border-radius:9px;min-width:0}.metric-card strong{display:block;font-size:clamp(21px,3vw,31px);letter-spacing:-.05em;color:var(--mint);line-height:1.2;overflow-wrap:anywhere}.metric-card span{display:block;margin-top:8px;color:var(--muted);font-size:10px}.results-meta{font-size:10px;color:var(--muted);margin:15px 0 0}.results-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}.results-panel{border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:20px;min-width:0}.results-panel h3{font-size:14px;margin:0 0 15px}.bar-list{display:grid;gap:11px}.bar-row{display:grid;grid-template-columns:78px 1fr auto;align-items:center;gap:10px;font-size:10px}.bar-label{color:var(--muted);overflow-wrap:anywhere}.bar-track{height:8px;background:#2a3b40;border-radius:10px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,#7cc6a1,#c7edce);border-radius:10px}.bar-value{font-variant-numeric:tabular-nums;color:#e5eee8}.segment-list{display:grid;gap:8px}.segment-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.segment-row span:first-child{color:var(--muted)}.segment-row b{color:var(--mint);font-variant-numeric:tabular-nums}.metric-grid[hidden],.results-grid[hidden]{display:none!important}
     .dataset{display:grid;grid-template-columns:1fr 1fr;gap:25px}.dataset-box{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:23px}.dataset-box h3{margin:0 0 10px;font-size:18px}.dataset-box p,.dataset-box li{font-size:12px;color:var(--muted)}.dataset-box ul{padding-left:18px;margin:12px 0}.dataset-box li{margin:6px 0}.source-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:17px;font-size:11px;font-weight:800;color:var(--accent)}
-    .method{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.method article{padding:17px 14px;border-top:2px solid #6b9e86;background:#17262c}.method span{color:var(--accent);font:italic 16px Georgia,serif}.method h3{font-size:12px;margin:10px 0 5px}.method p{font-size:10px;color:var(--muted);margin:0}
+    .method{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.method article{padding:17px 14px;border-top:2px solid #6b9e86;background:#17262c}.method span{color:var(--accent);font:italic 16px Georgia,serif}.method h3{font-size:12px;margin:10px 0 5px}.method p{font-size:10px;color:var(--muted);margin:0}
     .run-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.run-card{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--surface)}.run-card h3{font-size:16px;margin:0 0 10px}.run-card p{font-size:11px;color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0d161a;border:1px solid #2a3d42;padding:14px;border-radius:7px;color:#d6efdf;font-size:11px;line-height:1.7}
     .notice{border:1px solid #736b4d;background:#26271f;color:#d7d2ba;padding:17px 19px;border-radius:8px;font-size:11px;margin-top:19px}.notice strong{color:var(--sand)}
     footer{padding:25px 0 35px;color:#91a19b;font-size:10px}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
@@ -87,7 +87,7 @@
         <article class="dataset-box"><h3>UCI Online Retail</h3><p>A historical transaction dataset for a UK-based non-store retailer. The source describes 541,909 transaction rows over the period 1 December 2010 to 9 December 2011. Unit prices are denominated in sterling.</p><ul><li>541,909 published transaction rows</li><li>Historical period: Dec 2010 – Dec 2011</li><li>Source license: CC BY 4.0</li></ul><div class="source-links"><a href="https://archive.ics.uci.edu/dataset/352/online+retail" target="_blank" rel="noopener noreferrer">Official UCI dataset ↗</a><a href="https://doi.org/10.24432/C5BW33" target="_blank" rel="noopener noreferrer">Dataset DOI ↗</a></div></article>
         <article class="dataset-box"><h3>Data handling rules</h3><p>Sales and customer metrics use explicit treatment rules so the result can be interpreted and reproduced.</p><ul><li>Negative-quantity lines and cancellation invoices are separated as refunds/cancellations.</li><li>Sales without CustomerID remain in revenue KPIs but not customer-level calculations.</li><li>RFM scores are relative segments, not churn probabilities.</li><li>Historical observations do not establish marketing causality or current market trends.</li></ul></article>
       </div>
-      <div class="notice"><strong>Transparency:</strong> the included CSV preview is a small synthetic test fixture, not a subset of UCI records. The source workbook is not bundled. No numerical findings are presented on this page until the original dataset is downloaded and processed.</div>
+      <div class="notice"><strong>Source-backed results are now available.</strong> GitHub Actions downloaded and processed the original 541,909-row UCI workbook. This page loads the published aggregate KPI, monthly sales and RFM outputs from <a href="docs/generated/findings.md">the generated findings report</a>. The bundled CSV is only a synthetic fallback for offline preview; raw source data and customer-level identifiers are not committed.</div>
     </div></section>
 
     <section id="method"><div class="wrap">
@@ -97,17 +97,19 @@
         <article><span>02</span><h3>Validate</h3><p>Normalize types and isolate invalid rows, returns and cancellations.</p></article>
         <article><span>03</span><h3>Measure</h3><p>Calculate revenue, orders, repeat purchases and segment metrics.</p></article>
         <article><span>04</span><h3>Explore</h3><p>Compare customer cohorts and relative RFM groups.</p></article>
-        <article><span>05</span><h3>Explain</h3><p>Export tables, document definitions and state limitations.</p></article>
+        <article><span>05</span><h3>Query with SQL</h3><p>Use SQLite CTEs and window functions for monthly KPIs, repeat purchases, RFM quartiles and cohorts; reconcile SQL outputs with pandas.</p></article>
+        <article><span>06</span><h3>Explain</h3><p>Export aggregate tables, document definitions and state limitations.</p></article>
       </div>
     </div></section>
 
     <section id="run"><div class="wrap">
-      <div class="heading"><div><p class="kicker">04 / Reproducibility</p><h2>Run it locally.</h2></div><p>Python 3.10+ is required. The Streamlit dashboard can use a small synthetic preview fixture or the original workbook uploaded locally.</p></div>
+      <div class="heading"><div><p class="kicker">04 / Reproducibility</p><h2>Run it locally.</h2></div><p>Python 3.10+ is required. The Streamlit dashboard opens with the source-derived aggregate report; upload the original workbook to recalculate interactive country filters and customer metrics.</p></div>
       <div class="run-grid">
         <article class="run-card"><h3>Download and run the analysis</h3><pre>python -m venv .venv
 pip install -e ".[dev]"
 python scripts/download_data.py
 python scripts/run_analysis.py
+python scripts/build_public_report.py
 pytest</pre><p>The pipeline writes CSV tables, a JSON KPI summary and a generated findings report into outputs/.</p></article>
         <article class="run-card"><h3>Launch the dashboard</h3><pre>pip install -e ".[dashboard,dev]"
 streamlit run app.py</pre><p>Upload the official UCI workbook in the sidebar to switch from the synthetic preview to the source dataset.</p></article>
