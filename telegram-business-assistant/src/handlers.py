@@ -4,7 +4,6 @@ import html
 import logging
 
 from aiogram import F, Router
-from aiogram.enums import ParseMode
 from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -64,6 +63,7 @@ async def show_process(callback: CallbackQuery) -> None:
 @router.callback_query(F.data == "request:start")
 async def request_start(callback: CallbackQuery, state: FSMContext) -> None:
     await state.clear()
+    await state.set_state(RequestFlow.waiting_consent)
     await callback.answer()
     if callback.message:
         await callback.message.answer(
@@ -76,15 +76,21 @@ async def request_start(callback: CallbackQuery, state: FSMContext) -> None:
         )
 
 
-@router.callback_query(F.data == "consent:yes")
+@router.callback_query(F.data == "consent:yes", StateFilter(RequestFlow.waiting_consent))
 async def consent_yes(callback: CallbackQuery, state: FSMContext) -> None:
     await state.set_data({"consent": True})
+    await state.set_state(RequestFlow.waiting_service)
     await callback.answer()
     if callback.message:
         await callback.message.answer(
             "Выберите, с какой задачей нужна помощь:",
             reply_markup=service_menu(),
         )
+
+
+@router.callback_query(F.data == "consent:yes")
+async def stale_consent_yes(callback: CallbackQuery) -> None:
+    await callback.answer("Сначала начните оформление заявки.", show_alert=True)
 
 
 @router.callback_query(F.data == "flow:cancel")
@@ -98,19 +104,28 @@ async def cancel_flow(callback: CallbackQuery, state: FSMContext) -> None:
         )
 
 
-@router.callback_query(F.data == "consent:no")
+@router.callback_query(F.data == "consent:no", StateFilter(RequestFlow.waiting_consent))
 async def consent_no(callback: CallbackQuery, state: FSMContext) -> None:
     await state.clear()
     await callback.answer("Заявка не создавалась")
     if callback.message:
-        await callback.message.answer("Хорошо. Заявка не создавалась.", reply_markup=main_menu())
+        await callback.message.answer(
+            "Хорошо. Заявка не создавалась.", reply_markup=main_menu()
+        )
 
 
-@router.callback_query(F.data.startswith("service:"))
+@router.callback_query(F.data == "consent:no")
+async def stale_consent_no(callback: CallbackQuery) -> None:
+    await callback.answer("Сначала начните оформление заявки.", show_alert=True)
+
+
+@router.callback_query(F.data.startswith("service:"), StateFilter(RequestFlow.waiting_service))
 async def choose_service(callback: CallbackQuery, state: FSMContext) -> None:
     data = await state.get_data()
     if not data.get("consent"):
-        await callback.answer("Сначала подтвердите согласие на обработку заявки.", show_alert=True)
+        await callback.answer(
+            "Сначала подтвердите согласие на обработку заявки.", show_alert=True
+        )
         return
 
     slug = (callback.data or "").partition(":")[2]
