@@ -14,6 +14,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: retail-data-refresh-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
@@ -52,8 +56,33 @@ jobs:
           if-no-files-found: error
           retention-days: 90
 
-      - name: Commit generated aggregate outputs
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "data: refresh aggregate UCI retail analysis [skip ci]"
-          file_pattern: "customer-retention-analytics/docs/generated/"
+      - name: Commit aggregate outputs with rebase-safe push
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A customer-retention-analytics/docs/generated/
+
+          if git diff --cached --quiet; then
+            echo "No generated aggregate changes to commit."
+            exit 0
+          fi
+
+          git commit -m "data: refresh aggregate UCI retail analysis [skip ci]"
+
+          for attempt in 1 2 3; do
+            echo "Push attempt ${attempt}: rebasing generated report on latest main."
+            git fetch origin main
+            git rebase FETCH_HEAD
+
+            if git push origin HEAD:main; then
+              echo "Generated aggregate outputs published."
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          echo "Could not publish generated outputs after three rebase attempts." >&2
+          exit 1
