@@ -24,9 +24,12 @@ jobs:
         run: python -m pip install -r qa-cases/api-contract-negative/requirements.txt
       - name: Run API QA tests
         working-directory: qa-cases/api-contract-negative
-        run: pytest -v --junitxml=pytest-report.xml
+        run: pytest -v --cov=app --cov=store --cov-report=term-missing --cov-report=xml:coverage.xml --junitxml=pytest-report.xml
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: booking-api-qa-junit
-          path: qa-cases/api-contract-negative/pytest-report.xml
+          path: |
+            qa-cases/api-contract-negative/pytest-report.xml
+            qa-cases/api-contract-negative/coverage.xml
+          if-no-files-found: warn
