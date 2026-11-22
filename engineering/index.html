@@ -101,6 +101,14 @@
     <section id="projects"><div class="wrap">
       <div class="section-head"><div><p class="section-kicker">01 / Selected work</p><h2>Projects built around real workflows</h2></div><p class="section-intro">A focused selection of practical case studies. The scenarios and datasets are synthetic, but the investigation steps, test design and tooling are reproducible.</p></div>
       <div class="projects">
+        <article class="project"><div class="project-visual incident"><span>00 / Linux operations</span></div><div class="project-body">
+          <div class="project-meta"><span>Application Support L2</span><span class="status">Synthetic incident drills</span></div><h3>Linux Support Engineering Lab</h3>
+          <p>A hands-on troubleshooting lab for common Linux and web-service failures, from first symptom to recovery verification.</p>
+          <ul><li>10 playbooks: systemd, disk, Nginx, DNS, TLS, OOM and PostgreSQL</li><li>Python log triage CLI with severity, evidence lines and JSON output</li><li>Unit tests and GitHub Actions artifact generation</li></ul>
+          <div class="stack"><span>Linux</span><span>systemd</span><span>Nginx</span><span>Python</span><span>Log analysis</span></div>
+          <div class="project-links"><a href="https://github.com/blvxx/portfolio/tree/main/support-engineering-lab">Open lab and playbooks ↗</a><a href="https://github.com/blvxx/portfolio/blob/main/support-engineering-lab/scripts/log_triage.py">Log triage CLI ↗</a></div>
+        </div></article>
+
         <article class="project"><div class="project-visual incident"><span>01 / Incident response</span></div><div class="project-body">
           <div class="project-meta"><span>Application Support</span><span class="status">Simulated incident</span></div><h3>Payment Webhook Failure</h3>
           <p>A payment provider reports successful payments while some store orders remain pending. The case walks through triage, evidence collection, reconciliation and recovery.</p>
@@ -120,7 +128,7 @@
         <article class="project"><div class="project-visual api"><span>03 / API automation</span></div><div class="project-body">
           <div class="project-meta"><span>QA Automation</span><span class="status">Public demo API</span></div><h3>Python API Automation</h3>
           <p>A reusable HTTP client and pytest suite covering REST contracts, CRUD methods, negative paths and schema validation against a public demo API.</p>
-          <ul><li>GET, POST, PUT, PATCH and DELETE scenarios</li><li>JSON Schema checks and mocked client unit tests</li><li>Postman collection and GitHub Actions workflow</li></ul>
+          <ul><li>GET, POST, PUT, PATCH and DELETE scenarios</li><li>Safe retries, optional bearer token and bounded pagination</li><li>JSON Schema checks, mocked unit tests and Postman</li></ul>
           <div class="stack"><span>Python</span><span>pytest</span><span>requests</span><span>JSON Schema</span><span>Postman</span></div>
           <div class="project-links"><a href="../api-automation/">Open project ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/api-automation">Source files ↗</a></div>
         </div></article>
@@ -130,7 +138,7 @@
           <p>A reproducible analytics pipeline that turns a synthetic order dataset into business KPIs and segment-level reports.</p>
           <ul><li>PostgreSQL schema and SQL analysis queries</li><li>pandas pipeline with input validation and business rules</li><li>CSV / JSON exports and unit tests</li></ul>
           <div class="stack"><span>SQL</span><span>PostgreSQL</span><span>Python</span><span>pandas</span><span>pytest</span></div>
-          <div class="project-links"><a href="../data-analytics/">Open project ↗</a><a href="../data-analytics/docs/analysis_findings.md">View findings ↗</a></div>
+          <div class="project-links"><a href="../data-analytics/">Open project ↗</a><a href="../data-analytics/docs/analysis-findings.md">View findings ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/data-analytics/dashboard">Dashboard source ↗</a></div>
         </div></article>
 
         <article class="project"><div class="project-visual ui"><span>05 / Browser testing</span></div><div class="project-body">
