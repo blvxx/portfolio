@@ -45,6 +45,7 @@ async def test_health_readiness_and_metrics_endpoints() -> None:
         payload = await metrics.text()
         assert "telegram_outbox_pending 2.0" in payload
         assert "telegram_outbox_dead 0.0" in payload
+        assert "telegram_app_readiness 1.0" in payload
     finally:
         await client.close()
 
