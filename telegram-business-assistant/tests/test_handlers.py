@@ -51,16 +51,13 @@ async def test_receive_details_submits_enquiry_and_notifies_admin() -> None:
     assert command.contact == "demo@example.com"
     assert command.service == "Приём заявок"
     assert command.consent_given is True
+    assert command.admin_chat_id == 98765
 
     state.clear.assert_awaited_once()
     message.answer.assert_awaited_once()
     assert "Заявка №17 сохранена" in message.answer.await_args.args[0]
-
-    message.bot.send_message.assert_awaited_once()
-    chat_id, notification = message.bot.send_message.await_args.args
-    assert chat_id == 98765
-    assert "&lt;b&gt;Demo Customer&lt;/b&gt;" in notification
-    assert "&lt;b&gt;Please contact me&lt;/b&gt;" in notification
+    assert "очередь доставки" in message.answer.await_args.args[0]
+    message.bot.send_message.assert_not_awaited()
 
 
 @pytest.mark.asyncio
@@ -90,6 +87,9 @@ async def test_receive_details_skips_notification_when_admin_chat_is_not_configu
 
     state.clear.assert_awaited_once()
     message.answer.assert_awaited_once()
+    command = enquiry_service.submit.await_args.args[0]
+    assert command.admin_chat_id is None
+    assert "очередь доставки" not in message.answer.await_args.args[0]
     message.bot.send_message.assert_not_awaited()
 
 
