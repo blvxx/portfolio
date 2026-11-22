@@ -8,6 +8,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 [![Data Analytics](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml)
 [![Customer Retention Analytics](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml)
+[![Retail Dataset Refresh](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml)
 
 ## Start here
 
