@@ -70,7 +70,7 @@ pytest --cov=app --cov=store --cov-report=term-missing --cov-report=xml
 
 ## CI evidence
 
-GitHub Actions runs the suite on pushes and pull requests affecting this case, and can be started manually. The workflow publishes JUnit XML and coverage XML as downloadable artifacts. The badge above reflects the latest workflow state. The local 31-test run passed with 100% statement coverage for the two application modules; the CI badge remains the separate, repeatable repository check.
+GitHub Actions runs the suite on pushes and pull requests affecting this case, and can be started manually. The workflow enforces **100% statement coverage** for `app.py` and `store.py`, then publishes JUnit XML and coverage XML. The latest verified CI run completed with **31 passed**, both modules at **100%**, and the coverage gate satisfied: [GitHub Actions run #16](https://github.com/blvxx/portfolio/actions/runs/44993493650). [Download the JUnit + coverage artifact](https://github.com/blvxx/portfolio/actions/runs/44993493650/artifacts/14742741345).
 
 ## Test design notes
 
