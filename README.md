@@ -5,6 +5,8 @@ Practical engineering portfolio covering incident investigation, REST API testin
 **[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
 
 [![FinTech QA](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
+[![Checkout Playwright QA](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/qa-checkout-regression.yml)
+[![Booking API QA](https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/qa-booking-api.yml)
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 [![Data Analytics](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml)
 [![Customer Retention Analytics](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml)
@@ -16,9 +18,8 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | Direction | Case study | Evidence |
 |---|---|---|
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
-| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [REST API Negative Testing](./qa-cases/api-contract-negative/) | Payment/Ledger services, API and integration tests, Playwright E2E, PostgreSQL, Docker, Grafana and controlled outage/recovery drills |
-| **API Automation** | [Python + pytest API suite](./api-automation/) |
-| **API QA Case** | [Booking API contract & negative tests](./qa-cases/api-contract-negative/) | 15 executable pytest checks for validation, auth, conflicts, idempotency and cancellation | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
+| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 23 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
+| **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
 | **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
 | **BI / PostgreSQL Analytics** | [Subscription Revenue & Retention](./subscription-revenue-analytics/) | MRR / ARR, revenue bridge, GRR / NRR, lifecycle events, cohort retention and SQL data-quality checks |
@@ -141,6 +142,18 @@ A browser-based task tracker used as a target for manual and automated QA.
 **QA & automation:** Python · pytest · requests · Playwright · Postman · JSON Schema · Allure · Ruff  
 **Development & delivery:** FastAPI · JavaScript · HTML5 · CSS3 · Docker · GitHub Actions · Prometheus · Grafana  
 **Analytics:** SQL · PostgreSQL · Python · pandas · CTEs · Window Functions · KPI Modelling · Cohort Analysis · CSV / JSON reporting
+
+## QA automation case studies
+
+### Checkout & Cart — Web Regression
+A standalone responsive storefront plus **23 Playwright browser tests**. The suite covers cart and stock boundaries, promotion calculations, shipping transitions, checkout validation, duplicate submission and mobile layout. Each test runs in a fresh Chromium context; CI retains JUnit output, Playwright traces and screenshots for failures.
+
+[Open the application and test suite](./qa-cases/checkout-regression/) · [Test catalogue](./qa-cases/checkout-regression/test-cases.md)
+
+### Booking API — Contract & Negative Testing
+A self-contained FastAPI target and **31 pytest cases** covering response contracts, pagination boundaries, email and payload validation, booking conflicts, date intervals, user-level access control, idempotency replay and cancellation. The in-memory repository is isolated per test; the local test run achieved 100% statement coverage for `app.py` and `store.py`.
+
+[Open the API QA case](./qa-cases/api-contract-negative/) · [Requirements-to-tests traceability](./qa-cases/api-contract-negative/test-matrix.md)
 
 ## Separate freelance direction
 For website creation, redesign and small-business projects, visit the **[freelance web portfolio](https://blvxx.github.io/portfolio/)** or the [frontend source repository](https://github.com/blvxx/web-development-portfolio).
