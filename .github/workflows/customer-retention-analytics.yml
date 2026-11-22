@@ -31,5 +31,7 @@ jobs:
           cache-dependency-path: customer-retention-analytics/pyproject.toml
       - name: Install project and test dependencies
         run: python -m pip install -e ".[dev]"
+      - name: Compile application and modules
+        run: python -m compileall -q app.py scripts src
       - name: Run tests
         run: pytest
