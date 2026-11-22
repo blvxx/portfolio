@@ -16,6 +16,7 @@ The following 23 Playwright tests execute against the local Northstar Market QA 
 | PROMO-003 | P1 | Unknown promo rejected | `test_unknown_promo_is_rejected` |
 | PROMO-004 | P1 | Reapplying promo does not duplicate discount | `test_applying_same_promo_twice_does_not_duplicate_discount` |
 | PROMO-005 | P0 | Discount recalculates after quantity change | `test_discount_recalculates_after_cart_quantity_change` |
+| PROMO-006 | P0 | Discount recalculates after removing an eligible item | `test_discount_recalculates_after_removing_eligible_product` |
 | SHIP-001 | P1 | Delivery fee included in total | `test_delivery_fee_is_included_in_total` |
 | SHIP-002 | P1 | Pickup removes delivery fee | `test_switching_to_pickup_removes_delivery_fee` |
 | SHIP-003 | P1 | Switching fulfilment never accumulates fees | `test_switching_fulfilment_does_not_accumulate_shipping` |
