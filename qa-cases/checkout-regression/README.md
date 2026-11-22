@@ -15,7 +15,7 @@ A self-contained web application and browser regression suite focused on the rev
 | System under test | Responsive local storefront with cart and checkout |
 | Browser automation | Playwright + Chromium |
 | Test runner | pytest |
-| Automated coverage | 23 browser scenarios |
+| Automated coverage | 24 browser scenarios |
 | Test techniques | Positive, negative, boundary, state-transition, risk-based regression |
 | Evidence | JUnit XML, Playwright traces, failure screenshots via CI artifact |
 
@@ -49,7 +49,7 @@ The suite loads repository HTML, CSS and JavaScript into an isolated browser pag
 ## Repository map
 
 - `app/`: static responsive storefront and business rules.
-- `tests/test_checkout.py`: 23 Playwright scenarios.
+- `tests/test_checkout.py`: 24 Playwright scenarios.
 - `conftest.py`: browser lifecycle, fresh context per test, trace capture and failure screenshots.
 - `test-plan.md`: risks, scope, data and exit criteria.
 - `test-cases.md`: requirement-to-test traceability catalogue.
