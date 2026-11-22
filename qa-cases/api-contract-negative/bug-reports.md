@@ -1,39 +1,44 @@
-# Simulated API Defect Reports
+# Defect Report Examples — Booking API
 
-All defects below are hypothetical examples, not observed or verified against a real API.
+The following are **hypothetical defect examples** used to demonstrate report quality. They have not been observed in a production service.
 
-## API-BUG-01 — Overlapping reservation returns success
-- **Severity:** Critical (proposed), **Priority:** P0
-- **Endpoint:** POST /v1/bookings
-- **Steps:** Create booking for room-101; submit another booking with overlapping dates.
-- **Expected:** 409 Conflict; second booking not persisted.
-- **Hypothetical actual:** 201 Created; overlapping booking persisted.
-- **Risk:** Room double-booking.
-- **Evidence:** Not available; hypothetical.
+## API-BUG-01 — Concurrent overlapping reservations are both accepted
+- **Severity / priority:** Critical / P0
+- **Component:** Booking creation
+- **Preconditions:** Same room, overlapping date range, two independent clients.
+- **Steps:** Submit both requests concurrently with distinct idempotency keys.
+- **Expected:** At most one booking is confirmed; the other request receives 409.
+- **Hypothetical actual:** Both requests return 201 and persist.
+- **Evidence required:** Request timestamps, correlation IDs and persisted records.
+- **Likely area:** Transaction isolation / atomic availability check.
 
 ## API-BUG-02 — Booking details disclose another customer's data
-- **Severity:** Critical (proposed), **Priority:** P0
-- **Endpoint:** GET /v1/bookings/{id}
-- **Steps:** Authenticate as user B; request booking ID belonging to user A.
-- **Expected:** 403 or privacy-safe 404; no personal data returned.
+- **Severity / priority:** Critical / P0
+- **Component:** Booking retrieval
+- **Steps:** Authenticate as user B and request a booking owned by user A.
+- **Expected:** Privacy-safe 404 and no personal data.
 - **Hypothetical actual:** 200 response includes guest name/email.
-- **Risk:** Privacy breach.
-- **Evidence:** Not available; hypothetical.
+- **Evidence required:** Sanitized request/response pair.
+- **Likely area:** Object-level authorization.
 
-## API-BUG-03 — Invalid date range produces 500
-- **Severity:** Major (proposed), **Priority:** P1
-- **Endpoint:** GET /v1/availability
-- **Steps:** Send start_date later than end_date.
-- **Expected:** 400 with structured validation error.
-- **Hypothetical actual:** 500 Internal Server Error.
-- **Risk:** Client sees server failure for invalid input.
-- **Evidence:** Not available; hypothetical.
+## API-BUG-03 — Reusing an idempotency key changes the original booking
+- **Severity / priority:** Major / P1
+- **Component:** Booking creation / retry
+- **Steps:** Create a booking with a key; retry with a different payload and the same key.
+- **Expected:** 409; original booking remains unchanged.
+- **Hypothetical actual:** Existing record is overwritten or second booking is created.
+- **Evidence required:** Both payloads, response bodies and final stored state.
+- **Likely area:** Idempotency payload fingerprinting.
 
-## API-BUG-04 — Idempotency key is ignored
-- **Severity:** Major (proposed), **Priority:** P1
-- **Endpoint:** POST /v1/bookings
-- **Steps:** Submit identical booking twice using same idempotency key.
-- **Expected:** Same booking response or safe duplicate handling.
-- **Hypothetical actual:** Two booking records created.
-- **Risk:** Duplicate reservations and inconsistent billing.
-- **Evidence:** Not available; hypothetical.
+## API-BUG-04 — Cancelled reservation continues blocking availability
+- **Severity / priority:** Major / P1
+- **Component:** Availability / cancellation
+- **Steps:** Create a booking, cancel it, query availability for the same interval.
+- **Expected:** Interval becomes available.
+- **Hypothetical actual:** Availability still reports false.
+- **Evidence required:** Booking lifecycle responses and availability response.
+- **Likely area:** State filtering in availability query.
+
+## Reporting standard
+
+Every real defect report should include environment/build, exact request, actual response, expected response, reproducibility, impact, severity, priority and sanitized evidence. Do not report a defect until it is reproduced.
