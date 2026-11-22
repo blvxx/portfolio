@@ -7,6 +7,7 @@ from aiohttp import web
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 from src.metrics import (
+    APP_READINESS,
     OUTBOX_DEAD,
     OUTBOX_DELIVERED,
     OUTBOX_PENDING,
@@ -29,7 +30,9 @@ def create_observability_app(database: Any, redis_client: Any | None = None) -> 
             await database.ping()
             if redis_client is not None:
                 await redis_client.ping()
+            APP_READINESS.set(1)
         except Exception as exc:
+            APP_READINESS.set(0)
             logger.warning(
                 "Readiness probe failed",
                 extra={"error_type": type(exc).__name__},
@@ -38,6 +41,17 @@ def create_observability_app(database: Any, redis_client: Any | None = None) -> 
         return web.json_response({"status": "ready"})
 
     async def metrics(_request: web.Request) -> web.Response:
+        try:
+            await database.ping()
+            if redis_client is not None:
+                await redis_client.ping()
+            APP_READINESS.set(1)
+        except Exception as exc:
+            APP_READINESS.set(0)
+            logger.warning(
+                "Metrics readiness refresh failed",
+                extra={"error_type": type(exc).__name__},
+            )
         try:
             stats = await database.get_notification_stats()
             OUTBOX_PENDING.set(stats["pending"])
