@@ -6,6 +6,7 @@ on:
     paths:
       - "customer-retention-analytics/scripts/**"
       - "customer-retention-analytics/src/retail_analytics/**"
+      - "customer-retention-analytics/tests/**"
       - ".github/workflows/customer-retention-data-refresh.yml"
   workflow_dispatch:
 
