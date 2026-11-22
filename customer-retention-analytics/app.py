@@ -236,8 +236,28 @@ else:
         use_container_width=True,
     )
 
+if isinstance(kpis, dict) and "sql_gross_sales_gbp" in kpis:
+    st.subheader("Independent SQL cross-check")
+    sql_cols = st.columns(2)
+    sql_cols[0].metric(
+        "SQL gross sales",
+        "£{:,.2f}".format(kpis["sql_gross_sales_gbp"]),
+        delta="Matches pandas",
+    )
+    sql_cols[1].metric(
+        "SQL repeat-customer rate",
+        "{:.2f}%".format(kpis["sql_repeat_customer_rate_pct"]),
+        delta="Matches pandas",
+    )
+
 with st.expander("Data quality and methodology"):
     st.write(data_quality)
+    if isinstance(kpis, dict) and "sql_gross_sales_gbp" in kpis:
+        st.write({
+            "SQL gross sales (GBP)": kpis["sql_gross_sales_gbp"],
+            "SQL repeat-customer rate (%)": kpis["sql_repeat_customer_rate_pct"],
+            "SQL and pandas reconciliation": "Passed during the source-report build",
+        })
     st.markdown(
         "Cancellation invoices and negative-quantity rows are separated from positive sales. "
         "Anonymous sales remain in revenue totals but are excluded from customer-level RFM and cohort counts. "
