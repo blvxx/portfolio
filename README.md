@@ -16,8 +16,8 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) | Payment/Ledger services, API and integration tests, Playwright E2E, PostgreSQL, Docker and observability |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
-| **UI Automation** | [Todo Test](https://github.com/blvxx/todo-test) | 8 authored Playwright scenarios and 17 documented manual test cases |
-| **Web Development** | [Frontend Portfolio](https://github.com/blvxx/frontend-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
+| **UI Automation** | [Todo Test](https://github.com/blvxx/playwright-qa-lab) | 8 authored Playwright scenarios and 17 documented manual test cases |
+| **Web Development** | [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
 
 ## Featured engineering projects
 
@@ -99,7 +99,7 @@ A browser-based task tracker used as the target for manual and automated QA.
 - Test report and bug-report templates.
 - GitHub Actions workflow for Chromium-based tests.
 
-[Open repository](https://github.com/blvxx/todo-test) · [Test documentation](https://github.com/blvxx/todo-test/tree/main/docs)
+[Open repository](https://github.com/blvxx/playwright-qa-lab) · [Test documentation](https://github.com/blvxx/playwright-qa-lab/tree/main/docs)
 
 ## How to evaluate the work
 
@@ -120,7 +120,7 @@ A browser-based task tracker used as the target for manual and automated QA.
 
 ## Separate freelance direction
 
-For website creation, redesign and small-business projects, visit the **[freelance web portfolio](https://blvxx.github.io/portfolio/)** or the [frontend source repository](https://github.com/blvxx/frontend-portfolio).
+For website creation, redesign and small-business projects, visit the **[freelance web portfolio](https://blvxx.github.io/portfolio/)** or the [frontend source repository](https://github.com/blvxx/web-development-portfolio).
 
 ## Transparency
 
