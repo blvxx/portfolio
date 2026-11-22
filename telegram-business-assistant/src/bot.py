@@ -9,6 +9,11 @@ from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 
 from src.application.enquiries import EnquiryService
+from src.application.notifications import (
+    NotificationOutboxDispatcher,
+    run_outbox_worker,
+)
+from src.infrastructure.telegram_notifications import TelegramLeadNotificationSender
 from src.config import Settings
 from src.database import Database
 from src.handlers import router
@@ -29,14 +34,27 @@ async def main() -> None:
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     dispatcher = Dispatcher(storage=MemoryStorage())
+    notification_dispatcher = NotificationOutboxDispatcher(
+        database,
+        TelegramLeadNotificationSender(bot),
+    )
+    stop_worker = asyncio.Event()
+    worker_task = asyncio.create_task(
+        run_outbox_worker(notification_dispatcher, stop_worker)
+    )
     dispatcher["db"] = database
     dispatcher["enquiry_service"] = enquiry_service
     dispatcher["settings"] = settings
     dispatcher.include_router(router)
 
     try:
-        await dispatcher.start_polling(bot, allowed_updates=dispatcher.resolve_used_update_types())
+        await dispatcher.start_polling(
+            bot,
+            allowed_updates=dispatcher.resolve_used_update_types(),
+        )
     finally:
+        stop_worker.set()
+        await worker_task
         await bot.session.close()
 
 

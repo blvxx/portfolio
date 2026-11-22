@@ -21,6 +21,7 @@ class CreateEnquiry:
     service: str
     details: str
     consent_given: bool
+    admin_chat_id: int | None = None
 
 
 class EnquiryRepository(Protocol):
@@ -35,6 +36,7 @@ class EnquiryRepository(Protocol):
         contact: str,
         service: str,
         details: str,
+        admin_chat_id: int | None = None,
     ) -> int:
         """Persist one enquiry and return its generated identifier."""
         ...
@@ -86,4 +88,5 @@ class EnquiryService:
             contact=contact,
             service=service,
             details=details,
+            admin_chat_id=command.admin_chat_id,
         )

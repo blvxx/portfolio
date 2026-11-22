@@ -1,10 +1,8 @@
 """Telegram handlers for the business enquiry assistant."""
 
 import html
-import logging
 
 from aiogram import F, Router
-from aiogram.exceptions import TelegramAPIError
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
@@ -20,7 +18,6 @@ from src.application.enquiries import (
 )
 from src.validation import validate_contact
 
-logger = logging.getLogger(__name__)
 router = Router()
 
 
@@ -59,7 +56,7 @@ async def show_process(callback: CallbackQuery) -> None:
             "1. Клиент выбирает тип обращения.\n"
             "2. Оставляет контакт и описание задачи.\n"
             "3. Бот сохраняет заявку в SQLite.\n"
-            "4. При настройке ADMIN_CHAT_ID отправляет уведомление администратору.\n\n"
+            "4. При настройке ADMIN_CHAT_ID уведомление ставится в очередь доставки.\n\n"
             "В демонстрационной версии нет подключённой CRM или платёжной системы.",
             reply_markup=main_menu(),
         )
@@ -199,6 +196,7 @@ async def receive_details(
         service=data.get("service") or "",
         details=message.text or "",
         consent_given=bool(data.get("consent")),
+        admin_chat_id=settings.admin_chat_id,
     )
     try:
         lead_id = await enquiry_service.submit(command)
@@ -207,25 +205,10 @@ async def receive_details(
         return
 
     await state.clear()
-    await message.answer(
-        f"Спасибо! Заявка №{lead_id} сохранена. "
-        "Специалист сможет связаться с вами по указанному контакту.",
-        reply_markup=main_menu(),
-    )
-
+    confirmation = f"Спасибо! Заявка №{lead_id} сохранена."
     if settings.admin_chat_id is not None:
-        notification = (
-            f"<b>Новая заявка №{lead_id}</b>\n"
-            f"<b>Имя:</b> {html.escape(user.full_name)}\n"
-            f"<b>Контакт:</b> {html.escape(command.contact.strip())}\n"
-            f"<b>Услуга:</b> {html.escape(command.service.strip())}\n"
-            f"<b>Описание:</b> {html.escape(command.details.strip())}\n"
-            f"<b>Telegram ID:</b> <code>{user.id}</code>"
-        )
-        try:
-            await message.bot.send_message(settings.admin_chat_id, notification)
-        except TelegramAPIError:
-            logger.exception("Could not send lead notification to admin chat")
+        confirmation += " Уведомление поставлено в очередь доставки."
+    await message.answer(confirmation, reply_markup=main_menu())
 
 
 @router.message(Command("cancel"))
