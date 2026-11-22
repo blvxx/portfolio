@@ -41,9 +41,16 @@ def clean_transactions(raw: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     frame["Description"] = frame["Description"].astype("string").str.strip().fillna("Unknown product")
     frame["Quantity"] = pd.to_numeric(frame["Quantity"], errors="coerce")
     frame["UnitPrice"] = pd.to_numeric(frame["UnitPrice"], errors="coerce")
-    frame["InvoiceDate"] = pd.to_datetime(
-        frame["InvoiceDate"], errors="coerce", dayfirst=True
+    raw_dates = frame["InvoiceDate"].astype("string").str.strip()
+    iso_date_mask = raw_dates.str.match(r"^\\d{4}[-/]\\d{1,2}[-/]\\d{1,2}", na=False)
+    parsed_dates = pd.Series(pd.NaT, index=frame.index, dtype="datetime64[ns]")
+    parsed_dates.loc[iso_date_mask] = pd.to_datetime(
+        raw_dates.loc[iso_date_mask], errors="coerce", dayfirst=False
     )
+    parsed_dates.loc[~iso_date_mask] = pd.to_datetime(
+        raw_dates.loc[~iso_date_mask], errors="coerce", dayfirst=True
+    )
+    frame["InvoiceDate"] = parsed_dates
 
     invoice = frame["InvoiceNo"].str.upper()
     is_cancelled_invoice = invoice.str.startswith("C", na=False)
