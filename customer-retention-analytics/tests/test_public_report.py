@@ -33,6 +33,11 @@ def test_public_report_writes_aggregate_outputs_without_customer_ids(tmp_path):
         "rfm_segments.csv",
         "cohort_sizes.csv",
         "cohort_retention.csv",
+        "sql_monthly_sales.csv",
+        "sql_country_sales.csv",
+        "sql_repeat_customers.csv",
+        "sql_rfm_segments.csv",
+        "sql_cohort_retention.csv",
     }
     assert expected_files.issubset({path.name for path in output.iterdir()})
 
@@ -41,6 +46,8 @@ def test_public_report_writes_aggregate_outputs_without_customer_ids(tmp_path):
     assert "CustomerID" not in (output / "rfm_segments.csv").read_text(encoding="utf-8")
     assert "CustomerID" not in (output / "cohort_sizes.csv").read_text(encoding="utf-8")
     assert "CustomerID" not in (output / "monthly_sales.csv").read_text(encoding="utf-8")
+    assert "customer_id" not in (output / "sql_rfm_segments.csv").read_text(encoding="utf-8")
+    assert "customer_id" not in (output / "sql_cohort_retention.csv").read_text(encoding="utf-8")
     assert "synthetic" not in (output / "findings.md").read_text(encoding="utf-8").lower()
 
 
