@@ -119,4 +119,4 @@ For website creation, redesign and small-business projects, visit the **[freelan
 
 ---
 
-**Artem Kalinin** · [GitHub](https://github.com/blvxx) · [Telegram](https://t.me/blvlxx) · [Email](mailto:blvx8x@gmail.com)
+**Artem Kalinin** · [GitHub](https://github.com/blvxx) · [Telegram](https://t.me/blvlxx) · [Email](mailto:blvx8x@gmail.com) · [Profile README template](./github-profile-readme.md) · [Publishing guide](./docs/publish-github-profile-readme.md)
