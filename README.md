@@ -97,14 +97,15 @@ An end-to-end analysis of 360 synthetic e-commerce orders.
 
 An end-to-end business analytics case study using the public UCI Online Retail dataset.
 
-- Transaction cleaning with cancellation and refund handling.
-- Gross / net sales, monthly trends, country contribution and top products.
-- RFM segmentation and cohort retention analysis.
-- Streamlit + Plotly dashboard, reproducible pipeline and unit tests.
+- Processed all 541,909 source transaction rows covering December 2010–December 2011.
+- Calculated £10.67M gross sales, £896.8K refunds/cancellations and £9.77M net sales.
+- Identified 4,338 customers in positive sale lines; 2,845 placed multiple invoices (65.58%).
+- Built RFM segments, a 13-cohort retention matrix and a Streamlit + Plotly dashboard.
+- Published aggregate-only results and reproducible CI refresh; raw workbook and customer-level identifiers are not committed.
 
-**Stack:** Python · pandas · Streamlit · Plotly · pytest.
+**Stack:** Python · pandas · Streamlit · Plotly · pytest · GitHub Actions.
 
-[Open the analytics case](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
+[Live case study](https://blvxx.github.io/portfolio/customer-retention-analytics/) · [Generated findings](./customer-retention-analytics/docs/generated/findings.md) · [Source code](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
 
 ### 7. Todo Test — Playwright UI Automation
 
