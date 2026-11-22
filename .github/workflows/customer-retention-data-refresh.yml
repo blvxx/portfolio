@@ -1,0 +1,61 @@
+name: Retail Dataset Analysis
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "customer-retention-analytics/scripts/build_public_report.py"
+      - "customer-retention-analytics/scripts/download_data.py"
+      - "customer-retention-analytics/src/retail_analytics/**"
+      - ".github/workflows/customer-retention-data-refresh.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: customer-retention-analytics
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: customer-retention-analytics/pyproject.toml
+
+      - name: Install analytics dependencies
+        run: python -m pip install -e ".[dev]"
+
+      - name: Download official UCI workbook
+        run: python scripts/download_data.py
+
+      - name: Build aggregate-only public report
+        run: python scripts/build_public_report.py
+
+      - name: Run analysis unit tests
+        run: pytest
+
+      - name: Upload aggregate report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uci-online-retail-public-analysis
+          path: |
+            customer-retention-analytics/docs/generated/
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Commit generated aggregate outputs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "data: refresh aggregate UCI retail analysis [skip ci]"
+          file_pattern: |
+            customer-retention-analytics/docs/generated/*.json
+            customer-retention-analytics/docs/generated/*.csv
+            customer-retention-analytics/docs/generated/*.md
