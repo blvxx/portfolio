@@ -43,7 +43,20 @@ pytest
 
 The local exploratory pipeline writes detailed working outputs under outputs/. The public-report pipeline writes a privacy-conscious aggregate summary, monthly trends, leading countries/products, RFM segment counts and cohort retention under docs/generated/. Customer-level identifiers are never included in the public report.
 
-## Generated report and data refresh\n\n- [Aggregate findings](docs/generated/findings.md)\n- [Summary metrics (JSON)](docs/generated/summary.json)\n- [Generated monthly sales](docs/generated/monthly_sales.csv)\n- [Top countries](docs/generated/country_sales_top10.csv)\n- [RFM segment summary](docs/generated/rfm_segments.csv)\n- [Cohort retention matrix](docs/generated/cohort_retention.csv)\n\nThe [Retail Dataset Analysis workflow](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml) retrieves the original workbook in GitHub Actions, runs the public-report generator and tests, uploads an artifact and commits only aggregate outputs. The raw workbook stays outside Git.\n\n## Interactive dashboard
+## Generated report and data refresh
+
+- [Aggregate findings](docs/generated/findings.md)
+- [Summary metrics (JSON)](docs/generated/summary.json)
+- [Generated monthly sales](docs/generated/monthly_sales.csv)
+- [Top countries](docs/generated/country_sales_top10.csv)
+- [Top products](docs/generated/top_products.csv)
+- [RFM segment summary](docs/generated/rfm_segments.csv)
+- [Cohort sizes](docs/generated/cohort_sizes.csv)
+- [Cohort retention matrix](docs/generated/cohort_retention.csv)
+
+The [Retail Dataset Analysis workflow](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml) downloads the original workbook in GitHub Actions, generates the public report, runs unit tests, uploads an artifact and commits only aggregate outputs. The raw workbook and customer-level records stay outside Git.
+
+## Interactive dashboard
 
 Install the optional dashboard dependencies:
 
