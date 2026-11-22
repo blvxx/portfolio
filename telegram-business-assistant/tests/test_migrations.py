@@ -64,12 +64,14 @@ async def test_existing_version_one_database_upgrades_to_latest(tmp_path) -> Non
 
     assert await schema_version(path) == LATEST_SCHEMA_VERSION
     async with aiosqlite.connect(path) as connection:
-        lead = await connection.execute_fetchone(
+        cursor = await connection.execute(
             "SELECT customer_name FROM leads WHERE telegram_user_id = 123"
         )
-        outbox_tables = await connection.execute_fetchall(
+        lead = await cursor.fetchone()
+        cursor = await connection.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='notification_outbox'"
         )
+        outbox_tables = await cursor.fetchall()
 
     assert lead == ("Legacy",)
     assert outbox_tables == [("notification_outbox",)]
