@@ -12,13 +12,16 @@ class NotificationOutbox(Protocol):
         self, *, lease_seconds: int = 60
     ) -> dict[str, Any] | None: ...
 
-    async def mark_notification_delivered(self, notification_id: int) -> None: ...
+    async def mark_notification_delivered(
+        self, notification_id: int, *, lease_token: str
+    ) -> None: ...
 
     async def reschedule_notification(
         self,
         notification_id: int,
         *,
         error_code: str,
+        lease_token: str,
         max_attempts: int = 5,
         base_delay_seconds: int = 5,
     ) -> str: ...
@@ -83,6 +86,7 @@ class NotificationOutboxDispatcher:
             status = await self._outbox.reschedule_notification(
                 notification_id,
                 error_code=error_code,
+                lease_token=str(event["lease_token"]),
                 max_attempts=self._max_attempts,
                 base_delay_seconds=self._base_delay_seconds,
             )
@@ -97,7 +101,9 @@ class NotificationOutboxDispatcher:
             )
             return True
 
-        await self._outbox.mark_notification_delivered(notification_id)
+        await self._outbox.mark_notification_delivered(
+            notification_id, lease_token=str(event["lease_token"])
+        )
         logger.info(
             "Lead notification delivered",
             extra={
