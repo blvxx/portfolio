@@ -58,7 +58,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 
 The multi-replica deployment profile uses PostgreSQL for shared lead/outbox data and Redis for persistent FSM state plus per-user event isolation. Webhook mode is required for horizontal scaling; Telegram long polling must remain a single active poller. Every replica can run an outbox worker because PostgreSQL row locks with SKIP LOCKED prevent two workers from claiming the same event. SQLite and MemoryStorage remain optional local-development fallbacks only and are not a multi-replica deployment option.
 
-PostgreSQL schema migrations are serialized with a database advisory lock. Lead creation and outbox enqueue are one transaction, repeated Telegram message IDs are replay-safe, and delivery remains at-least-once (a remote send followed by a process crash can still produce a duplicate). The process exposes /healthz, /readyz and /metrics on WEB_SERVER_PORT. The backup and restore scripts verify the dump archive before use; CI restores a dump into a separate disposable database and checks restored data. This is a tested procedure in CI, not proof of a production backup schedule or a Dada Cloud storage guarantee.
+PostgreSQL schema migrations are serialized with a database advisory lock. Lead creation and outbox enqueue are one transaction, repeated Telegram message IDs are replay-safe, and delivery remains at-least-once (a remote send followed by a process crash can still produce a duplicate). The process exposes /healthz, /readyz and /metrics on WEB_SERVER_PORT. The backup and restore scripts verify the dump archive before use; CI restores a dump into a separate disposable database and checks restored data. This is a tested procedure in CI, not proof of a production backup schedule, host-level persistence or a host-level restore.
 
 ## Run locally
 
@@ -168,7 +168,7 @@ The engineering notes distinguish the current implementation from future design 
 - [Operations runbook: deploy, backup and restore](./docs/engineering/operations/runbook.md)
 - [Evidence-based engineering roadmap](./docs/engineering/roadmap.md)
 
-The PostgreSQL backup/restore scripts are exercised by CI on a disposable database. A production backup schedule, off-host retention, restore drill on the Dada Cloud host and its persistent storage guarantee still require deployment access and verification. The roadmap distinguishes code/CI evidence from host-level evidence.
+The PostgreSQL backup/restore scripts are exercised by CI on a disposable database. A production backup schedule, off-host retention, a host-level restore drill and a persistent-storage guarantee still require deployment access and verification. The roadmap distinguishes code/CI evidence from host-level evidence.
 
 ## Security and data handling
 
