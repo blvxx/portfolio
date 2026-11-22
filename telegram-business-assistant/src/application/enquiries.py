@@ -22,6 +22,7 @@ class CreateEnquiry:
     details: str
     consent_given: bool
     admin_chat_id: int | None = None
+    idempotency_key: str | None = None
 
 
 class EnquiryRepository(Protocol):
@@ -37,6 +38,7 @@ class EnquiryRepository(Protocol):
         service: str,
         details: str,
         admin_chat_id: int | None = None,
+        idempotency_key: str | None = None,
     ) -> int:
         """Persist one enquiry and return its generated identifier."""
         ...
@@ -81,6 +83,12 @@ class EnquiryService:
         if username is not None and len(username) > 64:
             raise EnquiryPolicyError("Некорректное имя пользователя Telegram.")
 
+        idempotency_key = command.idempotency_key
+        if idempotency_key is not None:
+            idempotency_key = idempotency_key.strip()
+            if not idempotency_key or len(idempotency_key) > 200:
+                raise EnquiryPolicyError("Некорректный ключ повторной обработки заявки.")
+
         return await self._repository.add_lead(
             telegram_user_id=command.telegram_user_id,
             username=username,
@@ -89,4 +97,5 @@ class EnquiryService:
             service=service,
             details=details,
             admin_chat_id=command.admin_chat_id,
+            idempotency_key=idempotency_key,
         )
