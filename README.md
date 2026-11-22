@@ -169,6 +169,10 @@ A browser-based task tracker used as a target for manual and automated QA.
 
 [Repository](https://github.com/blvxx/playwright-qa-lab) · [Test documentation](https://github.com/blvxx/playwright-qa-lab/tree/main/docs)
 
+## Delivery process and business constraints
+
+A separate [delivery simulation pack](./docs/delivery-simulation/) demonstrates product-brief decomposition, prioritised backlog, acceptance criteria, a scope-change decision, simulated review comments, UAT, handover and an incident retrospective. It is explicitly fictional practice material, not a claim of client delivery or actual team employment. The GitHub PR/CI history shows independent implementation and engineering follow-through; real cross-functional ownership and commercial accountability still need to be demonstrated in paid work.
+
 ## How to evaluate the work
 1. Start with the [Engineering Showcase](https://blvxx.github.io/portfolio/engineering/) for a concise visual overview.
 2. Read the [Incident Investigation Lab](./incident-lab/) for a complete support-style investigation.
@@ -202,6 +206,7 @@ For website creation, redesign and small-business projects, visit the **[freelan
 - Customer retention uses the attributed public UCI Online Retail dataset; other fixture datasets, logs, incident records and subscription analytics data are synthetic.
 - The API automation project targets a public demo service; simulated write operations are not represented as persistent production changes.
 - These repositories are independent portfolio projects, not claims of production access or commercial client delivery.
+- The delivery simulation pack is fictional. It demonstrates working methods, not actual participation in a client team or ownership of a real commercial budget.
 - Workflow badges and linked Actions runs show actual CI status; a configured workflow alone is not proof of a passing run.
 
 ---
