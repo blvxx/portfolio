@@ -44,7 +44,7 @@ SQLite is intentional for a compact, easy-to-run MVP. A production deployment wi
           +---- SQLite lead store
           +---- Optional admin notification
 
-The bot keeps conversational state in aiogram MemoryStorage. Lead records are persisted in SQLite and survive process restarts. For a multi-instance production deployment, replace MemoryStorage with Redis or another shared FSM backend.
+The bot keeps conversational state in aiogram MemoryStorage. Lead records are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. For a multi-instance production deployment, replace MemoryStorage with Redis or another shared FSM backend.
 
 ## Run locally
 
@@ -66,6 +66,23 @@ The bot keeps conversational state in aiogram MemoryStorage. Lead records are pe
        python -m src.bot
 
 To receive private notifications, the administrator must open the bot and send /start first. Use the numeric Telegram chat ID for ADMIN_CHAT_ID and the numeric Telegram user ID for ADMIN_USER_ID. Keep both IDs and the bot token out of source control.
+
+## Dada Cloud deployment (long-polling worker)
+
+The bot uses aiogram long polling and does not need an inbound HTTP port. When creating a Dada Cloud app, use the **background worker / Worker** mode.
+
+1. Connect the GitHub repository and choose the branch to deploy.
+2. Set the working directory to `telegram-business-assistant` if the platform supports a monorepo subdirectory setting. If it does not, use the Docker deployment below or deploy the bot from an archive containing only this folder.
+3. Select background worker mode (not a web service).
+4. Configure environment variables in the platform's secret/environment settings:
+   - `BOT_TOKEN` (required; never put in Git)
+   - `DATABASE_PATH` (set to the path on a verified persistent disk, e.g. `/app/data/leads.sqlite3`, only if the platform supports mounting persistent storage)
+   - `ADMIN_CHAT_ID` (optional)
+   - `ADMIN_USER_ID` (optional)
+5. Use the start command `python -m src.bot`.
+6. Check the build and runtime logs for successful startup. Then test /start, request consent, service selection, contact, details, database saving, and admin notification.
+
+**Storage warning:** Do not collect real customer requests until the SQLite file is confirmed to be on persistent storage and backups are understood. A container's local filesystem may be replaced during redeploy/rebuild. The free tier may not include backups. This README does not claim a live deployment or verified hosting behavior.
 
 ## Docker deployment
 
