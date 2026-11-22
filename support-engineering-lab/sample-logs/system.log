@@ -1,0 +1,12 @@
+Nov 22 08:41:02 app01 systemd[1]: Started nginx.service - A high performance web server.
+Nov 22 08:43:11 app01 api[1842]: INFO request_id=7e1a route=/health status=200 duration_ms=12
+Nov 22 08:44:09 app01 api[1842]: ERROR request_id=7e1b database pool timeout while waiting for connection
+Nov 22 08:44:11 app01 postgres[920]: FATAL: remaining connection slots are reserved for non-replication superuser connections
+Nov 22 08:47:31 app01 kernel: Out of memory: Killed process 1842 (api-worker) total-vm:1820000kB, anon-rss:642000kB
+Nov 22 08:47:32 app01 systemd[1]: api.service: Main process exited, code=killed, status=9/KILL
+Nov 22 08:47:33 app01 systemd[1]: api.service: Failed with result 'signal'.
+Nov 22 08:50:04 app01 api[2011]: ERROR cannot write /var/log/api/app.log: No space left on device
+Nov 22 08:53:44 app01 api[2011]: ERROR getaddrinfo: Temporary failure in name resolution for payments.internal
+Nov 22 08:56:17 app01 api[2011]: ERROR open /srv/app/config/runtime.yml: Permission denied
+Nov 22 09:01:51 app01 api[2011]: ERROR TLS handshake failed: certificate has expired
+Nov 22 09:05:03 app01 api[2011]: INFO request_id=7e2c route=/health status=200 duration_ms=15
