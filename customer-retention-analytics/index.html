@@ -20,13 +20,14 @@
     .hero-panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(155deg,#20353a,#17262c);padding:22px;box-shadow:0 24px 65px #0003}.panel-head{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.13em}.panel-title{font-size:17px;font-weight:800;margin:20px 0 6px}.panel-copy{color:var(--muted);font-size:11px;margin:0 0 20px}.pipeline{display:grid;grid-template-columns:1fr 24px 1fr;gap:9px;align-items:center}.pipe-node{border:1px solid #46605c;background:#20363a;border-radius:7px;padding:12px 10px;min-height:70px}.pipe-node strong{display:block;font-size:11px}.pipe-node small{display:block;color:#aabbb2;font-size:9px;margin-top:4px}.pipe-arrow{text-align:center;color:var(--accent);font-size:17px}.pipe-node:last-child{grid-column:1/-1}.source-note{margin-top:15px;color:#96aaa3;font-size:9px}
     section{border-top:1px solid var(--line);padding:65px 0}.heading{display:flex;justify-content:space-between;gap:28px;align-items:end;margin-bottom:27px}.heading h2{font-size:clamp(27px,4vw,40px);letter-spacing:-.055em;line-height:1.1;margin:7px 0 0}.heading p{max-width:440px;color:var(--muted);font-size:12px;margin:0}
     .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.card{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:21px}.card small{color:var(--accent);font-size:9px;letter-spacing:.14em;font-weight:850}.card h3{font-size:16px;margin:12px 0 7px}.card p{font-size:11px;color:var(--muted);margin:0}
+    .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}.metric-card{padding:20px;border:1px solid var(--line);background:linear-gradient(145deg,#1d3036,#17262c);border-radius:9px;min-width:0}.metric-card strong{display:block;font-size:clamp(21px,3vw,31px);letter-spacing:-.05em;color:var(--mint);line-height:1.2;overflow-wrap:anywhere}.metric-card span{display:block;margin-top:8px;color:var(--muted);font-size:10px}.results-meta{font-size:10px;color:var(--muted);margin:15px 0 0}.results-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}.results-panel{border:1px solid var(--line);border-radius:9px;background:var(--surface);padding:20px;min-width:0}.results-panel h3{font-size:14px;margin:0 0 15px}.bar-list{display:grid;gap:11px}.bar-row{display:grid;grid-template-columns:78px 1fr auto;align-items:center;gap:10px;font-size:10px}.bar-label{color:var(--muted);overflow-wrap:anywhere}.bar-track{height:8px;background:#2a3b40;border-radius:10px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,#7cc6a1,#c7edce);border-radius:10px}.bar-value{font-variant-numeric:tabular-nums;color:#e5eee8}.segment-list{display:grid;gap:8px}.segment-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding:8px 0;font-size:10px}.segment-row span:first-child{color:var(--muted)}.segment-row b{color:var(--mint);font-variant-numeric:tabular-nums}.metric-grid[hidden],.results-grid[hidden]{display:none!important}
     .dataset{display:grid;grid-template-columns:1fr 1fr;gap:25px}.dataset-box{border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:23px}.dataset-box h3{margin:0 0 10px;font-size:18px}.dataset-box p,.dataset-box li{font-size:12px;color:var(--muted)}.dataset-box ul{padding-left:18px;margin:12px 0}.dataset-box li{margin:6px 0}.source-links{display:flex;flex-wrap:wrap;gap:16px;margin-top:17px;font-size:11px;font-weight:800;color:var(--accent)}
     .method{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.method article{padding:17px 14px;border-top:2px solid #6b9e86;background:#17262c}.method span{color:var(--accent);font:italic 16px Georgia,serif}.method h3{font-size:12px;margin:10px 0 5px}.method p{font-size:10px;color:var(--muted);margin:0}
     .run-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.run-card{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--surface)}.run-card h3{font-size:16px;margin:0 0 10px}.run-card p{font-size:11px;color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#0d161a;border:1px solid #2a3d42;padding:14px;border-radius:7px;color:#d6efdf;font-size:11px;line-height:1.7}
     .notice{border:1px solid #736b4d;background:#26271f;color:#d7d2ba;padding:17px 19px;border-radius:8px;font-size:11px;margin-top:19px}.notice strong{color:var(--sand)}
     footer{padding:25px 0 35px;color:#91a19b;font-size:10px}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
-    @media(max-width:800px){.hero{grid-template-columns:1fr;gap:30px;padding-top:60px}.cards{grid-template-columns:1fr 1fr}.method{grid-template-columns:1fr 1fr}.method article:last-child{grid-column:1/-1}.heading{display:block}.heading p{margin-top:13px}}
-    @media(max-width:560px){.wrap{width:calc(100% - 32px)}.top{height:auto;min-height:65px;padding:14px 0;align-items:flex-start}.top nav{gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:10px}.hero{padding-top:48px}.hero-panel{padding:16px}.cards,.dataset,.run-grid,.method{grid-template-columns:1fr}.method article:last-child{grid-column:auto}.pipeline{grid-template-columns:1fr 18px 1fr}.pipe-node{padding:10px 7px}.foot{flex-direction:column}}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;gap:30px;padding-top:60px}.cards{grid-template-columns:1fr 1fr}.metric-grid{grid-template-columns:repeat(2,1fr)}.results-grid{grid-template-columns:1fr}.method{grid-template-columns:1fr 1fr}.method article:last-child{grid-column:1/-1}.heading{display:block}.heading p{margin-top:13px}}
+    @media(max-width:560px){.wrap{width:calc(100% - 32px)}.top{height:auto;min-height:65px;padding:14px 0;align-items:flex-start}.top nav{gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:10px}.hero{padding-top:48px}.hero-panel{padding:16px}.cards,.dataset,.run-grid,.method{grid-template-columns:1fr}.metric-grid{grid-template-columns:1fr 1fr}.metric-card{padding:15px}.bar-row{grid-template-columns:64px 1fr auto;gap:7px;font-size:9px}.method article:last-child{grid-column:auto}.pipeline{grid-template-columns:1fr 18px 1fr}.pipe-node{padding:10px 7px}.foot{flex-direction:column}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
   </style>
 </head>
@@ -65,6 +66,21 @@
       </div>
     </div></section>
 
+    <section id="results"><div class="wrap">
+      <div class="heading"><div><p class="kicker">02 / Source-derived results</p><h2>What the transactions<br>actually show.</h2></div><p>Metrics below are loaded from the latest GitHub Actions report generated from the original UCI workbook. The public output contains aggregates only, not customer-level identifiers.</p></div>
+      <p class="results-meta" id="results-status" aria-live="polite">Loading the latest source-derived report…</p>
+      <div class="metric-grid" id="result-metrics" hidden>
+        <div class="metric-card"><strong id="metric-rows">—</strong><span>Source transaction rows</span></div>
+        <div class="metric-card"><strong id="metric-net">—</strong><span>Net sales · GBP</span></div>
+        <div class="metric-card"><strong id="metric-customers">—</strong><span>Identified customers with positive sales</span></div>
+        <div class="metric-card"><strong id="metric-repeat">—</strong><span>Repeat customer rate</span></div>
+      </div>
+      <div class="results-grid" id="results-details" hidden>
+        <article class="results-panel"><h3>Monthly gross sales</h3><div class="bar-list" id="monthly-bars"></div></article>
+        <article class="results-panel"><h3>RFM segment distribution</h3><div class="segment-list" id="rfm-segments"></div><p class="results-meta" id="result-context"></p></article>
+      </div>
+    </div></section>
+
     <section id="source"><div class="wrap">
       <div class="heading"><div><p class="kicker">02 / Data provenance</p><h2>Open data, clear<br>attribution.</h2></div><p>The project uses the original published UCI workbook. The raw file is downloaded on demand rather than copied into this repository.</p></div>
       <div class="dataset">
@@ -100,5 +116,54 @@ streamlit run app.py</pre><p>Upload the official UCI workbook in the sidebar to 
     </div></section>
   </main>
   <footer><div class="wrap foot"><span>© 2026 Artem Kalinin · Customer Retention & Sales Analytics</span><span>Public dataset · Reproducible code · Transparent limitations</span><a href="https://github.com/blvxx">GitHub profile ↗</a></div></footer>
+<script>
+(async function loadSourceResults(){
+  const status = document.getElementById('results-status');
+  const metrics = document.getElementById('result-metrics');
+  const details = document.getElementById('results-details');
+  const formatNumber = value => new Intl.NumberFormat('en-GB').format(value);
+  const formatGBP = value => new Intl.NumberFormat('en-GB',{style:'currency',currency:'GBP',maximumFractionDigits:0}).format(value);
+  function addBar(container,label,value,max,display){
+    const row=document.createElement('div');row.className='bar-row';
+    const name=document.createElement('span');name.className='bar-label';name.textContent=label;
+    const track=document.createElement('div');track.className='bar-track';
+    const fill=document.createElement('div');fill.className='bar-fill';fill.style.width=(max>0?Math.max(2,Math.min(100,value/max*100)):0)+'%';track.appendChild(fill);
+    const amount=document.createElement('b');amount.className='bar-value';amount.textContent=display;
+    row.append(name,track,amount);container.appendChild(row);
+  }
+  try{
+    const response=await fetch('docs/generated/summary.json',{cache:'no-store'});
+    if(!response.ok) throw new Error('Generated report is not published yet.');
+    const data=await response.json();
+    document.getElementById('metric-rows').textContent=formatNumber(data.source_rows);
+    document.getElementById('metric-net').textContent=formatGBP(data.net_sales_gbp);
+    document.getElementById('metric-customers').textContent=formatNumber(data.customers);
+    document.getElementById('metric-repeat').textContent=data.repeat_customer_rate_pct.toFixed(2)+'%';
+    metrics.hidden=false;
+    status.textContent='Source report updated from '+data.date_start+' to '+data.date_end+' · '+formatNumber(data.valid_sales_lines)+' valid positive sales lines · refunds '+data.refunds_as_pct_of_gross_sales.toFixed(2)+'% of gross sales.';
+    const monthlyResponse=await fetch('docs/generated/monthly_sales.csv',{cache:'no-store'});
+    const monthlyText=await monthlyResponse.text();
+    const monthRows=monthlyText.trim().split(/\r?\n/).slice(1).filter(Boolean).map(line=>line.split(','));
+    const values=monthRows.map(row=>({month:row[0],revenue:Number(row[1])})).filter(row=>Number.isFinite(row.revenue));
+    const monthMax=Math.max(...values.map(row=>row.revenue),1);
+    const monthlyBars=document.getElementById('monthly-bars');
+    values.forEach(row=>addBar(monthlyBars,row.month,row.revenue,monthMax,formatGBP(row.revenue)));
+    const rfmResponse=await fetch('docs/generated/rfm_segments.csv',{cache:'no-store'});
+    const rfmText=await rfmResponse.text();
+    const rfmRows=rfmText.trim().split(/\r?\n/).slice(1).filter(Boolean).map(line=>line.split(','));
+    const segments=document.getElementById('rfm-segments');
+    rfmRows.forEach(row=>{
+      const line=document.createElement('div');line.className='segment-row';
+      const name=document.createElement('span');name.textContent=row[0];
+      const count=document.createElement('b');count.textContent=formatNumber(Number(row[1]))+' customers';
+      line.append(name,count);segments.appendChild(line);
+    });
+    document.getElementById('result-context').textContent='Peak gross-sales month: '+data.peak_month+'. Largest country: '+data.top_country+' ('+data.top_country_revenue_share_pct.toFixed(2)+'% of gross sales). Weighted month-1 cohort retention: '+(data.weighted_month_1_retention_pct===null?'n/a':data.weighted_month_1_retention_pct.toFixed(2)+'%')+'.';
+    details.hidden=false;
+  }catch(error){
+    status.textContent='The source-derived report is not available yet. GitHub Actions downloads and processes the official UCI workbook; the raw workbook is not stored in this repository.';
+  }
+})();
+</script>
 </body>
 </html>
