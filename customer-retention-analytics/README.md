@@ -4,7 +4,7 @@
 
 # Customer Retention & Sales Analytics
 
-An end-to-end retail analytics case study built around the public **UCI Online Retail** transaction dataset. The project covers data validation, cancellation/refund handling, SQL-style business metrics in pandas, RFM segmentation, cohort retention and an interactive dashboard.
+An end-to-end retail analytics case study built around the public **UCI Online Retail** transaction dataset. The project covers data validation, cancellation/refund handling, refund-aware KPIs in pandas and executable SQLite queries, RFM segmentation, cohort retention and an interactive dashboard.
 
 > **Data provenance:** the primary workbook is published by the UCI Machine Learning Repository under CC BY 4.0. This repository does not redistribute the 22.6 MB source workbook. The included CSV is a small synthetic fixture for offline tests and dashboard preview; it is not a subset of the UCI records.
 
@@ -83,7 +83,8 @@ customer-retention-analytics/
 │   ├── README.md
 │   └── sample_transactions.csv
 ├── docs/
-│   └── analysis-brief.md
+│   ├── analysis-brief.md
+│   └── generated/ (aggregate-only source-derived reports)
 ├── scripts/
 │   ├── download_data.py
 │   ├── run_analysis.py
@@ -101,7 +102,8 @@ customer-retention-analytics/
 │   ├── analysis.py
 │   └── etl.py
 ├── tests/
-│   └── test_analytics.py
+│   ├── test_analytics.py
+│   └── test_public_report.py
 ├── pyproject.toml
 └── requirements-dashboard.txt
 ```
