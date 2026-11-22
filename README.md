@@ -102,6 +102,7 @@ An end-to-end business analytics case study using the public UCI Online Retail d
 - Calculated £10.67M gross sales, £896.8K refunds/cancellations and £9.77M net sales.
 - Identified 4,338 customers in positive sale lines; 2,845 placed multiple invoices (65.58%).
 - Built RFM segments, a 13-cohort retention matrix and a Streamlit + Plotly dashboard.
+- Added SQLite CTEs and window functions for repeat-purchase, RFM and cohort queries, reconciled against pandas outputs.
 - Published aggregate-only results and reproducible CI refresh; raw workbook and customer-level identifiers are not committed.
 
 **Stack:** Python · pandas · Streamlit · Plotly · pytest · GitHub Actions.
