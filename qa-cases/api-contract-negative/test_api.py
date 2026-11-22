@@ -19,7 +19,7 @@ def booking_payload(**overrides: object) -> dict:
         "start_date": "2027-03-12",
         "end_date": "2027-03-15",
         "guests": 2,
-        "guest": {"name": "Test Guest", "email": "qa@example.test"},
+        "guest": {"name": "Test Guest", "email": "qa@example.com"},
     }
     body.update(overrides)
     return body
@@ -106,9 +106,9 @@ def test_unknown_token_is_rejected(client: TestClient) -> None:
         {"start_date": "2027-03-16"},
         {"guests": 0},
         {"guests": -1},
-        {"guest": {"name": "", "email": "qa@example.test"}},
+        {"guest": {"name": "", "email": "qa@example.com"}},
         {"guest": {"name": "Guest", "email": "not-an-email"}},
-        {"guest": {"name": "Guest", "email": "qa@example.test", "admin": True}},
+        {"guest": {"name": "Guest", "email": "qa@example.com", "admin": True}},
     ],
 )
 def test_invalid_booking_payload_is_rejected(client: TestClient, payload: dict) -> None:
