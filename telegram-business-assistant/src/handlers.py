@@ -205,11 +205,10 @@ async def receive_details(
         return
 
     await state.clear()
-    await message.answer(
-        f"Спасибо! Заявка №{lead_id} сохранена. "
-        "Уведомление ответственному специалисту будет отправлено отдельно.",
-        reply_markup=main_menu(),
-    )
+    confirmation = f"Спасибо! Заявка №{lead_id} сохранена."
+    if settings.admin_chat_id is not None:
+        confirmation += " Уведомление поставлено в очередь доставки."
+    await message.answer(confirmation, reply_markup=main_menu())
 
 
 @router.message(Command("cancel"))
