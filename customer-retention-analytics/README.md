@@ -14,8 +14,9 @@ An end-to-end retail analytics case study built around the public **UCI Online R
 - Automated CI refresh that computes aggregate-only public results from the official source and publishes generated findings and CSV outputs without customer-level identifiers.
 - Data cleaning with explicit treatment of cancellations, returns, invalid rows and missing customer identifiers.
 - Gross sales, refunds, net sales, invoices, customer and repeat-purchase KPIs.
-- Monthly sales, country contribution and top-product analysis.
-- RFM customer segmentation and cohort retention matrix.
+- Monthly sales, country contribution and top-product analysis through both pandas and executable SQLite queries.
+- SQL CTEs and window functions for repeat-customer rates, RFM quartiles and cohort retention.
+- Cross-checks that reconcile SQL gross sales and repeat-customer rates with the pandas pipeline.
 - Streamlit + Plotly dashboard with country filters and methodology notes.
 - Unit tests for data cleaning, metrics, RFM and cohort calculations.
 - GitHub Actions test workflow.
@@ -95,7 +96,7 @@ customer-retention-analytics/
 - Cancellation invoices and negative-quantity lines are separated from positive sales.
 - Sales rows without CustomerID remain in revenue totals, but are excluded from RFM and cohort calculations.
 - Net sales subtract the observed refund/cancellation line values; the output should be interpreted using the documented row-level rules.
-- RFM scores are relative quartiles within the observed time window, not model probabilities.
+- RFM scores are relative quartiles within the observed time window, not model probabilities. The SQL version uses NTILE(4), which can split ties differently from the pandas rank-based implementation.
 - The dataset is historical and observational. It does not support current-market claims or causal conclusions about marketing activity.
 - Public findings are generated only by the CI refresh from the original UCI workbook. The small bundled CSV remains a synthetic offline fixture and is never used to populate the published headline metrics.
 
