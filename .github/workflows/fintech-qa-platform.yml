@@ -102,8 +102,27 @@ jobs:
           python -c 'import sys; assert "http_requests_total" in sys.stdin.read()' <<< "$payment_metrics"
           python -c 'import sys; assert "http_requests_total" in sys.stdin.read()' <<< "$ledger_metrics"
 
+          sleep 12
           targets=$(curl --silent --show-error --fail http://localhost:9090/api/v1/targets)
-          python -c 'import json,sys; data=json.load(sys.stdin); jobs={item.get("labels", {}).get("job") for item in data.get("data", {}).get("activeTargets", [])}; assert {"payment-service", "ledger-service"}.issubset(jobs), jobs' <<< "$targets"
+          config=$(curl --silent --show-error --fail http://localhost:9090/api/v1/status/config)
+          python -c '
+          import json, sys
+          targets = json.loads(sys.argv[1]).get("data", {})
+          target_items = targets.get("activeTargets", [])
+          jobs = set()
+          endpoints = set()
+          for item in target_items:
+              for key in ("labels", "discoveredLabels"):
+                  jobs.add((item.get(key) or {}).get("job"))
+              endpoints.add(item.get("scrapeUrl", ""))
+              endpoints.add(item.get("globalUrl", ""))
+          config_yaml = json.loads(sys.argv[2]).get("data", {}).get("yaml", "")
+          has_payment = "payment-service" in jobs or any("payment:8000" in endpoint for endpoint in endpoints)
+          has_ledger = "ledger-service" in jobs or any("ledger:8001" in endpoint for endpoint in endpoints)
+          assert has_payment and has_ledger, {"jobs": sorted(str(job) for job in jobs), "endpoints": sorted(endpoints), "targets": targets}
+          assert "payment-service" in config_yaml and "ledger-service" in config_yaml
+          print("Prometheus scrape targets verified:", sorted(str(job) for job in jobs))
+          ' "$targets" "$config"
           echo "Prometheus and Grafana observability smoke checks passed."
 
       - name: Run controlled Ledger outage and recovery drill
