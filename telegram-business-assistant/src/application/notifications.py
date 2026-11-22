@@ -4,6 +4,8 @@ import asyncio
 import logging
 from typing import Any, Protocol
 
+from src.metrics import OUTBOX_DELIVERIES
+
 logger = logging.getLogger(__name__)
 
 
@@ -90,6 +92,7 @@ class NotificationOutboxDispatcher:
                 max_attempts=self._max_attempts,
                 base_delay_seconds=self._base_delay_seconds,
             )
+            OUTBOX_DELIVERIES.labels(result=status).inc()
             logger.warning(
                 "Lead notification delivery failed",
                 extra={
@@ -104,6 +107,7 @@ class NotificationOutboxDispatcher:
         await self._outbox.mark_notification_delivered(
             notification_id, lease_token=str(event["lease_token"])
         )
+        OUTBOX_DELIVERIES.labels(result="delivered").inc()
         logger.info(
             "Lead notification delivered",
             extra={
