@@ -11,7 +11,7 @@ on:
       - ".github/workflows/fintech-qa-platform.yml"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   quality:
@@ -125,8 +125,6 @@ jobs:
           ' "$targets" "$config"
           echo "Prometheus and Grafana observability smoke checks passed."
 
-      - name: Run controlled Ledger outage and recovery drill
-        run: |
           set -o pipefail
           mkdir -p fintech-qa-platform/reports
           python fintech-qa-platform/scripts/incident_drill.py --execute-local-drill --timeout-seconds 90 | tee fintech-qa-platform/reports/incident-drill.json
@@ -229,12 +227,6 @@ jobs:
             fintech-qa-platform/allure-results
             fintech-qa-platform/docs/screenshots
           if-no-files-found: ignore
-      - name: Publish generated screenshots to repository
-        if: github.event_name == 'push' && success()
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "docs: add generated QA screenshots [skip ci]"
-          file_pattern: "fintech-qa-platform/docs/screenshots/*.png"
       - name: Collect service logs
         if: failure()
         run: docker compose logs
