@@ -127,6 +127,7 @@ jobs:
 
       - name: Run controlled Ledger outage and recovery drill
         run: |
+          set -o pipefail
           mkdir -p fintech-qa-platform/reports
           python fintech-qa-platform/scripts/incident_drill.py --execute-local-drill --timeout-seconds 90 | tee fintech-qa-platform/reports/incident-drill.json
 
