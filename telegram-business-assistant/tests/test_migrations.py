@@ -72,9 +72,17 @@ async def test_existing_version_one_database_upgrades_to_latest(tmp_path) -> Non
             "SELECT name FROM sqlite_master WHERE type='table' AND name='notification_outbox'"
         )
         outbox_tables = await cursor.fetchall()
+        cursor = await connection.execute("PRAGMA table_info(leads)")
+        lead_columns = {row[1] for row in await cursor.fetchall()}
+        cursor = await connection.execute(
+            "SELECT name FROM sqlite_master WHERE type='index' AND name='idx_leads_idempotency_key'"
+        )
+        idempotency_indexes = await cursor.fetchall()
 
     assert lead == ("Legacy",)
     assert outbox_tables == [("notification_outbox",)]
+    assert "idempotency_key" in lead_columns
+    assert idempotency_indexes == [("idx_leads_idempotency_key",)]
 
 
 @pytest.mark.asyncio
