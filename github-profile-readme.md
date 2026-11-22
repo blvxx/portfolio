@@ -72,7 +72,7 @@ A reproducible analytics case study based on 360 synthetic e-commerce orders.
 
 ### 6. Customer Retention & Sales Analytics
 
-An end-to-end business analytics case study using the public UCI Online Retail dataset.
+An end-to-end business analytics case study using all 541,909 rows of UCI Online Retail: £10.67M gross sales, £896.8K refunds, £9.77M net sales, 65.58% repeat customers among 4,338 identified buyers, RFM segments and cohort retention. Public outputs are aggregate-only.
 
 - Transaction cleaning with cancellation and refund handling.
 - Gross / net sales, monthly trends, country contribution and top products.
