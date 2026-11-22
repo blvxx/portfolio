@@ -1,9 +1,12 @@
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
 
-from scripts.build_public_report import build_public_report
+SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
+sys.path.insert(0, str(SCRIPTS_DIR))
+from build_public_report import build_public_report  # noqa: E402
 
 
 def test_public_report_writes_aggregate_outputs_without_customer_ids(tmp_path):
