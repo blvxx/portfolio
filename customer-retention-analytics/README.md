@@ -38,6 +38,7 @@ python -m venv .venv
 pip install -e ".[dev]"
 python scripts/download_data.py
 python scripts/run_analysis.py
+python scripts/build_public_report.py
 pytest
 ```
 
@@ -61,7 +62,7 @@ The [Retail Dataset Analysis workflow](https://github.com/blvxx/portfolio/action
 Install the optional dashboard dependencies:
 
 ```bash
-pip install -r requirements-dashboard.txt
+pip install -e ".[dashboard,dev]"
 streamlit run app.py
 ```
 
