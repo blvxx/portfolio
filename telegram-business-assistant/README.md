@@ -141,6 +141,18 @@ Tests cover lead persistence, newest-first ordering, result limits and validatio
 | ADMIN_CHAT_ID | No | Chat that receives new enquiry notifications |
 | ADMIN_USER_ID | No | User ID allowed to run /leads |
 
+## Engineering documentation
+
+The engineering notes distinguish the current implementation from future design proposals:
+
+- [Current-state architecture and target design](./docs/engineering/architecture.md)
+- [ADR-0001: storage and conversation state](./docs/engineering/decisions/0001-storage-and-state.md)
+- [Security threat model and control gaps](./docs/engineering/security/threat-model.md)
+- [Operations runbook: deploy, backup and restore](./docs/engineering/operations/runbook.md)
+- [Evidence-based engineering roadmap](./docs/engineering/roadmap.md)
+
+The runbook is documentation, not proof that backup/restore has been exercised in production. The roadmap lists planned work separately from implemented capabilities.
+
 ## Security and data handling
 
 - The bot asks for consent before collecting contact information.
