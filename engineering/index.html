@@ -48,7 +48,7 @@
     .project-visual.fintech{padding:0;background:#111d28}
     .project-visual.fintech img{width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.84}
     .project-visual.api{background:linear-gradient(130deg,#263957,#162431 65%,#273a4b)}
-    .project-visual.analytics{background:linear-gradient(130deg,#3a3c36,#192b32 72%,#263b3c)}
+    .project-visual.analytics{background:linear-gradient(130deg,#3a3c36,#192b32 72%,#263b3c)}\n    .project-visual.bi{background:linear-gradient(130deg,#17464d,#142936 70%,#31535b)}
     .project-visual.ui{background:linear-gradient(130deg,#333047,#1a2834 72%,#233b45)}
     .project-body{padding:22px;display:flex;flex-direction:column;flex:1}
     .project-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--accent);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:800}
@@ -149,7 +149,15 @@
           <div class="project-links"><a href="../customer-retention-analytics/">Open case study ↗</a><a href="../customer-retention-analytics/docs/analysis-brief.md">Analysis brief ↗</a><a href="https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml">Test CI ↗</a><a href="https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml">Data refresh CI ↗</a></div>
         </div></article>
 
-        <article class="project"><div class="project-visual ui"><span>06 / Browser testing</span></div><div class="project-body">
+        <article class="project"><div class="project-visual bi"><span>06 / PostgreSQL BI</span></div><div class="project-body">
+          <div class="project-meta"><span>Data / BI Analytics</span><span class="status">Synthetic subscription fixture</span></div><h3>Subscription Revenue & Retention Analytics</h3>
+          <p>A PostgreSQL-first reporting model that reconstructs subscription state from lifecycle events and explains month-to-month recurring-revenue changes.</p>
+          <ul><li>Monthly MRR / ARR bridge with new, expansion, contraction and churn movements</li><li>GRR / NRR, month-end snapshots, customer cohorts and channel / region reporting</li><li>CTEs, ROW_NUMBER(), LAG(), SQL quality assertions and one-cent MRR reconciliation</li></ul>
+          <div class="stack"><span>PostgreSQL 16</span><span>SQL</span><span>Docker</span><span>Window functions</span><span>GitHub Actions</span></div>
+          <div class="project-links"><a href="../subscription-revenue-analytics/">Live BI case study ↗</a><a href="https://github.com/blvxx/portfolio/tree/main/subscription-revenue-analytics/sql">SQL source ↗</a><a href="https://github.com/blvxx/portfolio/actions/runs/44984869877">Passing PostgreSQL CI ↗</a></div>
+        </div></article>
+
+        <article class="project"><div class="project-visual ui"><span>07 / Browser testing</span></div><div class="project-body">
           <div class="project-meta"><span>UI Automation</span><span class="status">Independent practice</span></div><h3>Todo Test — Playwright</h3>
           <p>A small browser application used to demonstrate test design, manual QA documentation and end-to-end browser automation.</p>
           <ul><li>8 authored Playwright E2E scenarios</li><li>17 documented manual test cases</li><li>GitHub Actions workflow for Chromium</li></ul>
@@ -179,7 +187,7 @@
     </div></section>
 
     <section class="contact" id="contact"><div class="wrap contact-inner">
-      <div><p class="section-kicker">04 / Contact</p><h2>Let's talk about technical problems worth solving.</h2><p>Open to remote opportunities in Application Support, Technical Support, Support Engineering and QA Automation.</p></div>
+      <div><p class="section-kicker">04 / Contact</p><h2>Let's talk about technical problems worth solving.</h2><p>Open to remote opportunities in Application Support, Technical Support, Support Engineering, QA Automation and Data / BI Analytics.</p></div>
       <div class="contact-actions"><a class="button" href="mailto:blvx8x@gmail.com?subject=Portfolio%20contact">Email Artem ↗</a><a href="https://t.me/blvlxx">Telegram ↗</a><a href="https://github.com/blvxx">GitHub profile ↗</a></div>
     </div></section>
   </main>
