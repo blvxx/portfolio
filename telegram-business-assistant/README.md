@@ -4,7 +4,7 @@ A live Telegram bot MVP for small businesses to collect structured enquiries and
 
 **Live demo:** [@blvlxxbot](https://t.me/blvlxxbot)
 
-This portfolio project demonstrates a complete lead-capture workflow: consent, service selection, contact validation, request description, SQLite persistence and optional administrator notifications.
+This portfolio project demonstrates a lead-capture workflow with consent, validation, SQLite persistence and an optional durable administrator-notification outbox.
 
 ## What it does
 
@@ -14,7 +14,8 @@ This portfolio project demonstrates a complete lead-capture workflow: consent, s
 - Accepts a phone number, email address or Telegram shared contact.
 - Validates the contact and request description.
 - Stores each enquiry in SQLite with a UTC timestamp.
-- Optionally notifies an administrator through ADMIN_CHAT_ID.
+- When ADMIN_CHAT_ID is configured, inserts a notification event in the same database transaction as the enquiry.
+- Runs a background worker that claims notification events, sends them through Telegram and records delivery/retry state.
 - Provides /my_id to display the numeric IDs needed for administrator setup.
 - Provides a restricted /leads command for an administrator configured with ADMIN_USER_ID.
 - Includes /cancel to stop an unfinished request.
@@ -34,17 +35,22 @@ This portfolio project demonstrates a complete lead-capture workflow: consent, s
           v
     aiogram Router
           |
-          +---- Consent and service selection
-          |
-          +---- Contact and request validation
+          v
+    Enquiry Application Service
           |
           v
-    Lead Service / Database
-          |
-          +---- SQLite lead store
-          +---- Optional admin notification
+    SQLite transaction
+      |             |
+      v             v
+    leads       notification_outbox
+                      |
+                      v
+              Background worker
+                      |
+                      v
+              Telegram notification
 
-The bot keeps conversational state in aiogram MemoryStorage. Lead records are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. For a multi-instance production deployment, replace MemoryStorage with Redis or another shared FSM backend.
+The bot keeps conversational state in aiogram MemoryStorage. Lead records and notification events are persisted in SQLite and survive process restarts only when the database file is placed on persistent storage. The outbox uses atomic event creation, exclusive claims, per-claim lease tokens, bounded exponential retry and a dead state after five failed attempts. Delivery is at-least-once, not exactly-once: a crash after Telegram accepts a message but before the local delivered marker commits can cause a duplicate. For a multi-instance production deployment, replace MemoryStorage with Redis and evaluate a shared database such as PostgreSQL.
 
 ## Run locally
 
@@ -130,7 +136,7 @@ For a single-instance MVP this setup is sufficient. MemoryStorage keeps unfinish
 
        pytest -q
 
-Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy (consent, identity, contact, service and request details), and Telegram handler orchestration (success, policy rejection, optional admin notification and missing sender). They do not require a live Telegram token or network access.
+Tests cover lead persistence, newest-first ordering, result limits, validation boundaries, application-service policy, Telegram handler orchestration, outbox transaction atomicity, concurrent claims, lease fencing, retry/dead-letter transitions and dispatcher delivery. They do not require a live Telegram token or network access.
 
 ## Configuration
 
@@ -147,6 +153,7 @@ The engineering notes distinguish the current implementation from future design 
 
 - [Current-state architecture and target design](./docs/engineering/architecture.md)
 - [ADR-0001: storage and conversation state](./docs/engineering/decisions/0001-storage-and-state.md)
+- [ADR-0002: transactional notification outbox](./docs/engineering/decisions/0002-transactional-notification-outbox.md)
 - [Security threat model and control gaps](./docs/engineering/security/threat-model.md)
 - [Operations runbook: deploy, backup and restore](./docs/engineering/operations/runbook.md)
 - [Evidence-based engineering roadmap](./docs/engineering/roadmap.md)
@@ -160,6 +167,8 @@ The runbook is documentation, not proof that backup/restore has been exercised i
 - SQL statements use parameters rather than string interpolation.
 - User-provided content is HTML-escaped before it is included in administrator messages.
 - The /leads command is restricted to ADMIN_USER_ID.
+- Outbox events store the destination chat ID and lead reference rather than duplicating contact and request fields in the event payload.
+- Outbox error metadata stores exception type names, not arbitrary exception text.
 - Tokens belong in environment variables or deployment secrets, never in commits.
 - Define a retention period and publish a business-specific privacy notice before using this template with real customers.
 
