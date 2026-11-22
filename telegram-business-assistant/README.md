@@ -13,7 +13,8 @@ The project demonstrates a complete lead-capture workflow: consent, service sele
 - Validates the contact and request description.
 - Stores each enquiry in SQLite with a UTC timestamp.
 - Optionally notifies an administrator through ADMIN_CHAT_ID.
-- Provides /my_id to display the numeric IDs needed for administrator setup.\n- Provides a restricted /leads command for an administrator configured with ADMIN_USER_ID.
+- Provides /my_id to display the numeric IDs needed for administrator setup.
+- Provides a restricted /leads command for an administrator configured with ADMIN_USER_ID.
 - Includes /cancel to stop an unfinished request.
 
 ## Stack
@@ -41,7 +42,6 @@ SQLite is intentional for a compact, easy-to-run MVP. A production deployment wi
     Lead Service / Database
           |
           +---- SQLite lead store
-          |
           +---- Optional admin notification
 
 The bot keeps conversational state in aiogram MemoryStorage. Lead records are persisted in SQLite and survive process restarts. For a multi-instance production deployment, replace MemoryStorage with Redis or another shared FSM backend.
@@ -53,7 +53,7 @@ The bot keeps conversational state in aiogram MemoryStorage. Lead records are pe
 
        python -m venv .venv
        # Windows:
-       .venv\Scripts\activate
+       .venv\\Scripts\\activate
        # macOS / Linux:
        source .venv/bin/activate
        pip install -r requirements-dev.txt
