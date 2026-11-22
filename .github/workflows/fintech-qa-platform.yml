@@ -103,6 +103,9 @@ jobs:
           curl --silent --fail http://localhost:9090/api/v1/targets | grep -q 'ledger-service'
           echo "Prometheus and Grafana observability smoke checks passed."
 
+      - name: Run controlled Ledger outage and recovery drill
+        run: python fintech-qa-platform/scripts/incident_drill.py --execute-local-drill --timeout-seconds 90
+
   ui-e2e:
     runs-on: ubuntu-24.04
     defaults:
