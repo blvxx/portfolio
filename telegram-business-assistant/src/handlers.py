@@ -202,6 +202,23 @@ async def cancel(message: Message, state: FSMContext) -> None:
     await message.answer("Текущий сценарий отменён.", reply_markup=main_menu())
 
 
+@router.message(Command("my_id"))
+async def show_ids(message: Message) -> None:
+    """Show the numeric IDs needed for private administrator configuration."""
+    user = message.from_user
+    if user is None:
+        await message.answer("Не удалось определить Telegram ID.")
+        return
+
+    await message.answer(
+        "<b>Данные этого чата</b>\n"
+        f"User ID: <code>{user.id}</code>\n"
+        f"Chat ID: <code>{message.chat.id}</code>\n\n"
+        "Используйте эти значения в ADMIN_USER_ID и ADMIN_CHAT_ID. "
+        "Не публикуйте их вместе с персональными данными заявок."
+    )
+
+
 @router.message(Command("leads"))
 async def list_leads(message: Message, db: Database, settings: Settings) -> None:
     user = message.from_user
