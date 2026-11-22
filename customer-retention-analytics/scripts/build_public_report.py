@@ -31,7 +31,14 @@ def build_public_report(input_path: Path, output_dir: Path) -> dict:
             f"Workbook not found: {input_path}. Run python scripts/download_data.py first."
         )
 
-    raw = pd.read_excel(input_path)
+    suffix = input_path.suffix.lower()
+    if suffix == ".csv":
+        raw = pd.read_csv(input_path)
+    elif suffix in {".xlsx", ".xlsm"}:
+        raw = pd.read_excel(input_path)
+    else:
+        raise ValueError("Input must be a CSV fixture or an Excel workbook (.xlsx / .xlsm).")
+
     sales, refunds = clean_transactions(raw)
     if sales.empty:
         raise ValueError("The source workbook produced no valid positive sales rows.")
