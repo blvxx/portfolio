@@ -1,6 +1,6 @@
 """Integration tests for Redis-backed FSM persistence across instances."""
 
-import asyncio
+import asyncio  # noqa: I001
 import os
 import uuid
 
