@@ -17,7 +17,8 @@ Practical engineering portfolio covering incident investigation, REST API testin
 |---|---|---|
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [REST API Negative Testing](./qa-cases/api-contract-negative/) | Payment/Ledger services, API and integration tests, Playwright E2E, PostgreSQL, Docker, Grafana and controlled outage/recovery drills |
-| **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
+| **API Automation** | [Python + pytest API suite](./api-automation/) |
+| **API QA Case** | [Booking API contract & negative tests](./qa-cases/api-contract-negative/) | 15 executable pytest checks for validation, auth, conflicts, idempotency and cancellation | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
 | **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
 | **BI / PostgreSQL Analytics** | [Subscription Revenue & Retention](./subscription-revenue-analytics/) | MRR / ARR, revenue bridge, GRR / NRR, lifecycle events, cohort retention and SQL data-quality checks |
