@@ -32,7 +32,7 @@ The current application does not use an LLM. AI-specific threats are listed as f
 - The bot warns users not to submit passwords, authentication codes or payment details.
 - SQL queries use parameters.
 - User-provided strings included in HTML-formatted Telegram messages are escaped.
-- The leads command checks the configured administrator user ID.
+- The leads command checks the configured administrator user ID and requires a private chat.
 - Lead creation and optional notification enqueue occur in one SQLite transaction.
 - Outbox updates use per-claim lease tokens so an expired worker cannot overwrite a newer claim.
 - Arbitrary exception text is not stored; the outbox records exception type names only.
@@ -47,7 +47,7 @@ These controls reduce specific risks but do not establish that the live hosted d
 | Threat | Current mitigation | Gap / next action |
 |---|---|---|
 | Bot token disclosure | Environment variable; env file ignored by Git | Verify host secret handling and rotate if exposure is suspected |
-| Unauthorized enquiry access | leads command checks admin user ID | Add handler tests and audit access paths |
+| Unauthorized enquiry access | leads command checks admin user ID and private chat context | Continue reviewing other admin routes as they are added |
 | Malicious message content | HTML escaping and input length limits | Add abuse controls, rate limiting and broader boundary tests |
 | Data loss | Docker named volume in Compose setup | Verify actual host persistence and test backup/restore |
 | Excessive data retention | No retention workflow implemented | Define retention policy and deletion workflow |
