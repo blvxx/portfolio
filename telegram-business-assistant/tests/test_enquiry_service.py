@@ -46,6 +46,7 @@ async def test_submit_valid_enquiry_normalizes_fields_and_persists() -> None:
         "service": "Приём заявок",
         "details": "Нужна автоматизация обработки обращений.",
         "admin_chat_id": None,
+        "idempotency_key": None,
     }
 
 
@@ -101,3 +102,30 @@ async def test_submit_normalizes_empty_username_to_none() -> None:
 
     assert repository.saved is not None
     assert repository.saved["username"] is None
+
+
+
+@pytest.mark.asyncio
+async def test_submit_normalizes_and_passes_idempotency_key() -> None:
+    repository = FakeEnquiryRepository()
+
+    await EnquiryService(repository).submit(
+        valid_command(idempotency_key="  telegram:123:456  ")
+    )
+
+    assert repository.saved is not None
+    assert repository.saved["idempotency_key"] == "telegram:123:456"
+
+
+@pytest.mark.asyncio
+async def test_submit_rejects_blank_or_oversized_idempotency_key() -> None:
+    repository = FakeEnquiryRepository()
+    service = EnquiryService(repository)
+
+    with pytest.raises(EnquiryPolicyError, match="ключ повторной обработки"):
+        await service.submit(valid_command(idempotency_key="  "))
+
+    with pytest.raises(EnquiryPolicyError, match="ключ повторной обработки"):
+        await service.submit(valid_command(idempotency_key="x" * 201))
+
+    assert repository.saved is None
