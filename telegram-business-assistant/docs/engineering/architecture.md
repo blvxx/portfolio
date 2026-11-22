@@ -64,7 +64,7 @@ The current SQLite table stores:
 - request description;
 - UTC creation timestamp.
 
-The schema is created during startup. The current repository does not include a versioned database migration framework.
+The database schema is managed by forward-only migrations tracked with SQLite PRAGMA user_version. Fresh databases and existing version-1 databases are upgraded during startup. Downgrades are not automated; operators should take and verify a backup before deployment.
 
 ## Runtime and deployment assumptions
 
