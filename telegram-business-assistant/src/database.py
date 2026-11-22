@@ -52,6 +52,7 @@ class Database:
         service: str,
         details: str,
         admin_chat_id: int | None = None,
+        idempotency_key: str | None = None,
     ) -> int:
         """Persist a lead and, when configured, its notification event atomically."""
         now = _timestamp(_utc_now())
@@ -59,13 +60,23 @@ class Database:
             await self._configure(connection)
             await connection.execute("BEGIN IMMEDIATE")
             try:
+                if idempotency_key is not None:
+                    cursor = await connection.execute(
+                        "SELECT id FROM leads WHERE idempotency_key = ?",
+                        (idempotency_key,),
+                    )
+                    existing = await cursor.fetchone()
+                    if existing is not None:
+                        await connection.commit()
+                        return int(existing[0])
+
                 cursor = await connection.execute(
                     """
                     INSERT INTO leads (
                         telegram_user_id, username, customer_name, contact,
-                        service, details, created_at
+                        service, details, created_at, idempotency_key
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         telegram_user_id,
@@ -75,6 +86,7 @@ class Database:
                         service,
                         details,
                         now,
+                        idempotency_key,
                     ),
                 )
                 lead_id = int(cursor.lastrowid)
