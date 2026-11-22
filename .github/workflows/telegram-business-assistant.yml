@@ -56,5 +56,30 @@ jobs:
         run: ruff check src tests
       - name: Run unit and service integration tests
         run: pytest -q
+      - name: Verify PostgreSQL backup/restore scripts
+        working-directory: telegram-business-assistant
+        env:
+          PGPASSWORD: assistant
+          DATABASE_URL: postgresql://assistant:assistant@localhost:5432/assistant
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "
+            CREATE TABLE IF NOT EXISTS backup_verification (
+              id INTEGER PRIMARY KEY,
+              value TEXT NOT NULL
+            );
+            INSERT INTO backup_verification(id, value)
+            VALUES (1, 'backup-ok')
+            ON CONFLICT (id) DO UPDATE SET value = EXCLUDED.value;
+          "
+          sh scripts/backup_postgres.sh /tmp/assistant-backup.dump
+          createdb -h localhost -U assistant restore_test
+          RESTORE_TARGET_DATABASE_URL=postgresql://assistant:assistant@localhost:5432/restore_test \
+            RESTORE_CONFIRM=I_UNDERSTAND_THIS_REPLACES_DATA \
+            sh scripts/restore_postgres.sh /tmp/assistant-backup.dump
+          restored=$(psql postgresql://assistant:assistant@localhost:5432/restore_test -Atc \
+            "SELECT value FROM backup_verification WHERE id = 1")
+          test "$restored" = "backup-ok"
       - name: Build Docker image
         run: docker build -t telegram-business-assistant:test .
