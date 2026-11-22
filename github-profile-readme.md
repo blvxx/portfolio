@@ -10,6 +10,7 @@ I investigate technical issues, validate API and user workflows, work with SQL d
 [![FinTech QA](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/fintech-qa-platform.yml)
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 [![Data Analytics](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml)
+[![Customer Retention Analytics](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml)
 
 ---
 
@@ -40,7 +41,7 @@ A simulated payment incident investigated from first symptoms to recovery.
 **Demonstrates:** incident investigation, troubleshooting, evidence-based analysis and operational documentation.
 
 ### 3. [FinTech QA Engineering Platform](https://github.com/blvxx/portfolio/tree/main/fintech-qa-platform)
-A multi-service payment sandbox designed for API, integration and browser-level testing.
+A multi-service payment sandbox with API, integration and browser-level testing, Prometheus/Grafana observability and a guarded local dependency-outage/recovery drill.
 
 - Payment and Ledger services with PostgreSQL persistence.
 - pytest API/integration coverage and Playwright E2E flows.
