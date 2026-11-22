@@ -29,7 +29,7 @@ I build and investigate software workflows with an emphasis on clear boundaries,
 
 ### 1. [Telegram Business Assistant](https://github.com/blvxx/portfolio/tree/main/telegram-business-assistant)
 
-An independently developed and deployed Python Telegram bot MVP for collecting structured business enquiries.
+An independently developed Python Telegram bot MVP for collecting structured business enquiries.
 
 - aiogram 3, asynchronous handlers, finite-state workflow and input validation.
 - Two runtime profiles: single-instance SQLite + polling fallback, and a shared PostgreSQL + Redis + HTTPS webhook profile for multi-replica deployment.
@@ -39,9 +39,7 @@ An independently developed and deployed Python Telegram bot MVP for collecting s
 - Ruff + 53 tests, real PostgreSQL 17 / Redis 7.4 CI integration, disposable PostgreSQL backup/restore drill, Prometheus rule validation and Docker image build.
 - Architecture decision records, threat model, operations runbook and evidence-based engineering roadmap.
 
-**Live demo:** [@blvlxxbot](https://t.me/blvlxxbot)
-
-**Project status:** the PostgreSQL/Redis/webhook multi-replica profile passes CI integration tests, but it has not yet been deployed to the Dada Cloud demo. The existing hosted bot was tested previously as a single long-polling worker. Host-level persistent storage, external backups and restore remain unverified; this is not represented as a production client system.
+**Demo status:** the former Dada Cloud single-worker demo is retired and is not presented as a live service. The current PostgreSQL/Redis/webhook profile passes CI integration tests but has not been deployed to a public host. Host-level persistent storage, scheduled off-host backups, alert delivery and restore remain unverified; this is not represented as a production client system.
 
 ### 2. [AI Support Triage Agent](https://github.com/blvxx/portfolio/tree/main/ai-support-triage-agent)
 
@@ -119,7 +117,7 @@ The Telegram Business Assistant now has two runtime profiles, a shared PostgreSQ
 
 A separate AI Support Triage Agent integrates the OpenAI Responses API with a runbook retrieval layer, structured output validation, evidence allow-listing and read-only safety guardrails. Six offline tests pass; live model evaluation remains opt-in and requires an API key.
 
-The remaining operational work is to deploy the shared-runtime profile to a suitable host, verify persistent managed storage, set up scheduled off-host backups and alert notification delivery, and complete a real host-level restore drill.
+The remaining operational work is to deploy the shared-runtime profile to a maintained host, verify persistent managed storage, set up scheduled off-host backups and alert notification delivery, and complete a real host-level restore drill.
 
 The current project status and planned work are documented separately:
 - [Architecture and current-state analysis](https://github.com/blvxx/portfolio/blob/main/telegram-business-assistant/docs/engineering/architecture.md)

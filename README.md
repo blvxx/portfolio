@@ -34,7 +34,7 @@ Practical engineering portfolio covering Python application development, API int
 
 ### Telegram Business Assistant
 
-An independently developed and deployed Telegram application for structured business enquiries.
+An independently developed Telegram application for structured business enquiries.
 
 - Framework-independent enquiry submission service with typed command and repository boundary.
 - Two runtime profiles: single-instance SQLite/long polling for local development, and PostgreSQL + Redis + HTTPS webhook for multi-replica deployment.
@@ -45,11 +45,9 @@ An independently developed and deployed Telegram application for structured busi
 - Versioned migrations and replay-safe creation keyed by Telegram chat/message identity; admin enquiry listing remains restricted to a configured private-chat user.
 - CI uses real PostgreSQL and Redis services for integration checks and exercises a PostgreSQL backup/restore into a disposable database.
 
-**Live demo:** [@blvlxxbot](https://t.me/blvlxxbot) · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
+**Demo status:** the former Dada Cloud single-worker demo is retired and is not presented as a live service. The current PostgreSQL/Redis/webhook profile is validated in CI but has not been deployed to a public host. · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
 
-**Deployment validation:** the previously hosted Dada Cloud bot was verified as a single long-polling worker before these shared-runtime changes. The PostgreSQL/Redis/webhook profile is not yet deployed on that host; it must pass live smoke, restart and restore checks before the hosted demo can be described as multi-replica or production-ready.
-
-**Scope:** independently developed portfolio MVP, not a commercial client project. CI tests the multi-replica adapters and backup/restore mechanism on disposable services; the Dada Cloud host's persistent storage, external backup schedule and host-level restore remain unverified. Do not collect real customer data until those host-level checks are complete.
+**Scope:** independently developed portfolio MVP, not a commercial client project. CI tests the shared-runtime adapters and backup/restore mechanism on disposable services; no current host's persistent storage, external backup schedule or host-level restore has been verified. Do not collect real customer data until those host-level checks are complete.
 
 ## AI Automation case
 
