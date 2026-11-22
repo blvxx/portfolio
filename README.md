@@ -1,6 +1,6 @@
-# Artem Kalinin | Application Support · Technical Support · QA Automation
+# Artem Kalinin | Application Support · Technical Support · QA Automation · Data Analytics
 
-Practical engineering portfolio covering incident investigation, REST API testing, automation, SQL analysis and frontend work.
+Practical engineering portfolio covering incident investigation, REST API testing, automation, SQL / PostgreSQL analytics and frontend work.
 
 **[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
 
@@ -8,6 +8,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 [![API Automation](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/api-automation.yml)
 [![Data Analytics](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/data-analytics.yml)
 [![Customer Retention Analytics](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-analytics.yml)
+[![Subscription Revenue Analytics](https://github.com/blvxx/portfolio/actions/workflows/subscription-revenue-analytics.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/subscription-revenue-analytics.yml)
 [![Retail Dataset Refresh](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml/badge.svg)](https://github.com/blvxx/portfolio/actions/workflows/customer-retention-data-refresh.yml)
 
 ## Start here
@@ -19,6 +20,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
 | **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
+| **BI / PostgreSQL Analytics** | [Subscription Revenue & Retention](./subscription-revenue-analytics/) | MRR / ARR, revenue bridge, GRR / NRR, lifecycle events, cohort retention and SQL data-quality checks |
 | **UI Automation** | [Todo Test](https://github.com/blvxx/playwright-qa-lab) | 8 authored Playwright scenarios and 17 documented manual test cases |
 | **Web Development** | [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
 
@@ -93,7 +95,6 @@ An end-to-end analysis of 360 synthetic e-commerce orders.
 
 [Open project and findings](./data-analytics/) · [Interactive dashboard](./data-analytics/dashboard/README.md)
 
-
 ### 6. Customer Retention & Sales Analytics
 
 An end-to-end business analytics case study using the public UCI Online Retail dataset.
@@ -109,7 +110,21 @@ An end-to-end business analytics case study using the public UCI Online Retail d
 
 [Live case study](https://blvxx.github.io/portfolio/customer-retention-analytics/) · [Generated findings](./customer-retention-analytics/docs/generated/findings.md) · [Source code](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
 
-### 7. Todo Test — Playwright UI Automation
+### 7. Subscription Revenue & Retention Analytics
+
+A PostgreSQL-first BI case study for a fictional subscription business. It reconstructs subscription state from lifecycle events and builds a reusable reporting layer.
+
+- PostgreSQL 16 schema with primary / foreign keys, constraints, indexes and a deterministic fixture.
+- Monthly MRR / ARR, new MRR, expansion, contraction and churn movement bridge.
+- GRR / NRR, month-end subscription snapshots, customer cohorts and channel / region reporting.
+- CTEs, ROW_NUMBER(), LAG(), generate_series(), window aggregates and reusable analytical views.
+- Fail-fast SQL data-quality assertions, reconciliation controls and aggregate CSV exports in GitHub Actions.
+
+**Stack:** PostgreSQL · SQL · Docker Compose · GitHub Actions · BI data modelling.
+
+[Visual case study](https://blvxx.github.io/portfolio/subscription-revenue-analytics/) · [SQL source and setup](./subscription-revenue-analytics/) · [CI workflow](https://github.com/blvxx/portfolio/actions/workflows/subscription-revenue-analytics.yml)
+
+### 8. Todo Test — Playwright UI Automation
 
 A browser-based task tracker used as the target for manual and automated QA.
 
@@ -126,6 +141,7 @@ A browser-based task tracker used as the target for manual and automated QA.
 2. Read the [Incident Investigation Lab](./incident-lab/) to see a complete support-style investigation.
 3. Open the [FinTech QA Platform](./fintech-qa-platform/) to inspect the architecture, test strategy and screenshots.
 4. Review [API Automation](./api-automation/) and [Data Analytics](./data-analytics/) for reproducible commands and test evidence.
+5. Open the [PostgreSQL Subscription Analytics case](https://blvxx.github.io/portfolio/subscription-revenue-analytics/) to review BI modelling, metric definitions and reconciliation.
 
 ## Technologies
 
@@ -135,7 +151,7 @@ A browser-based task tracker used as the target for manual and automated QA.
 
 **Development & delivery:** FastAPI · JavaScript · HTML5 · CSS3 · Docker · GitHub Actions · Prometheus · Grafana
 
-**Analytics:** SQL · Python · pandas · CSV / JSON reporting · KPI analysis
+**Analytics:** SQL · PostgreSQL · Python · pandas · CTEs · Window Functions · KPI Modelling · Cohort Analysis · CSV / JSON reporting
 
 ## Separate freelance direction
 
@@ -144,7 +160,7 @@ For website creation, redesign and small-business projects, visit the **[freelan
 ## Transparency
 
 - Payment systems and incidents are simulated.
-- The original e-commerce analysis uses the attributed public UCI Online Retail dataset; the earlier E-commerce Sales Analytics fixture, logs and incident records are synthetic.
+- The original e-commerce analysis uses the attributed public UCI Online Retail dataset; the earlier E-commerce Sales Analytics fixture, logs, incident records and subscription analytics fixture are synthetic.
 - The API automation project targets a public demo service; simulated write operations are not represented as persistent production changes.
 - These repositories are independent portfolio projects, not claims of production access or commercial client delivery.
 - Workflow badges and linked Actions runs show the actual CI status; a configured workflow alone is not proof of a passing run.
