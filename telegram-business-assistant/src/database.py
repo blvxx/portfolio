@@ -163,7 +163,7 @@ class Database:
             return [dict(row) for row in rows]
 
     async def claim_notification(
-        self, *, lease_seconds: int = 60
+        self, *, lease_seconds: int = 120
     ) -> dict[str, Any] | None:
         """Atomically claim one due event, reclaiming expired worker leases."""
         now = _utc_now()
@@ -273,40 +273,63 @@ class Database:
         """Schedule exponential retry or move an exhausted event to the dead state."""
         async with aiosqlite.connect(self.path) as connection:
             await self._configure(connection)
-            cursor = await connection.execute(
-                "SELECT attempts, status, lease_token FROM notification_outbox WHERE id = ?",
-                (notification_id,),
-            )
-            row = await cursor.fetchone()
-            if row is None:
-                raise ValueError(f"Unknown notification event: {notification_id}")
-            if row[1] != "processing" or row[2] != lease_token:
-                raise RuntimeError("Notification lease is no longer owned by this worker")
+            await connection.execute("BEGIN IMMEDIATE")
+            try:
+                cursor = await connection.execute(
+                    """
+                    SELECT attempts, status, lease_token
+                    FROM notification_outbox
+                    WHERE id = ?
+                    """,
+                    (notification_id,),
+                )
+                row = await cursor.fetchone()
+                if row is None:
+                    raise ValueError(f"Unknown notification event: {notification_id}")
+                if row[1] != "processing" or row[2] != lease_token:
+                    raise RuntimeError(
+                        "Notification lease is no longer owned by this worker"
+                    )
 
-            attempts = int(row[0])
-            now = _utc_now()
-            if attempts >= max(1, max_attempts):
-                status = "dead"
-                available_at = _timestamp(now)
-            else:
-                status = "pending"
-                delay = min(3600, max(0, base_delay_seconds) * (2 ** (attempts - 1)))
-                available_at = _timestamp(now + timedelta(seconds=delay))
+                attempts = int(row[0])
+                now = _utc_now()
+                if attempts >= max(1, max_attempts):
+                    status = "dead"
+                    available_at = _timestamp(now)
+                else:
+                    status = "pending"
+                    delay = min(
+                        3600, max(0, base_delay_seconds) * (2 ** (attempts - 1))
+                    )
+                    available_at = _timestamp(now + timedelta(seconds=delay))
 
-            await connection.execute(
-                """
-                UPDATE notification_outbox
-                SET status = ?,
-                    available_at = ?,
-                    locked_at = NULL,
-                    lease_token = NULL,
-                    last_error = ?
-                WHERE id = ? AND status = 'processing' AND lease_token = ?
-                """,
-                (status, available_at, error_code[:80], notification_id, lease_token),
-            )
-            await connection.commit()
-            return status
+                cursor = await connection.execute(
+                    """
+                    UPDATE notification_outbox
+                    SET status = ?,
+                        available_at = ?,
+                        locked_at = NULL,
+                        lease_token = NULL,
+                        last_error = ?
+                    WHERE id = ? AND status = 'processing' AND lease_token = ?
+                    """,
+                    (
+                        status,
+                        available_at,
+                        error_code[:80],
+                        notification_id,
+                        lease_token,
+                    ),
+                )
+                if cursor.rowcount != 1:
+                    raise RuntimeError(
+                        "Notification lease changed before retry state was saved"
+                    )
+                await connection.commit()
+                return status
+            except Exception:
+                await connection.rollback()
+                raise
 
     async def get_notification_event(
         self, notification_id: int
