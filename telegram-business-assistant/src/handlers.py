@@ -1,5 +1,7 @@
 """Telegram handlers for the business enquiry assistant."""
 
+import html
+
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
@@ -54,7 +56,7 @@ async def show_process(callback: CallbackQuery) -> None:
             "1. Клиент выбирает тип обращения.\n"
             "2. Оставляет контакт и описание задачи.\n"
             "3. Бот сохраняет заявку в SQLite.\n"
-            "4. При настройке ADMIN_CHAT_ID отправляет уведомление администратору.\n\n"
+            "4. При настройке ADMIN_CHAT_ID уведомление ставится в очередь доставки.\n\n"
             "В демонстрационной версии нет подключённой CRM или платёжной системы.",
             reply_markup=main_menu(),
         )
