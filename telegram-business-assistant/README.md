@@ -4,7 +4,7 @@ A live Telegram bot MVP for small businesses to collect structured enquiries and
 
 **Live demo:** [@blvlxxbot](https://t.me/blvlxxbot)
 
-**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox and migration refactor. The current source in `main` passes CI, but the hosted instance has not yet been smoke-tested against these latest changes.
+**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox, migration and idempotency refactors. The current source in `main` passes CI, but the hosted instance has not yet been smoke-tested against these latest changes.
 
 This portfolio project demonstrates a lead-capture workflow with consent, validation, SQLite persistence and an optional durable administrator-notification outbox.
 
