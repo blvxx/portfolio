@@ -16,6 +16,7 @@ Practical engineering portfolio covering incident investigation, REST API testin
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) | Payment/Ledger services, API and integration tests, Playwright E2E, PostgreSQL, Docker and observability |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
 | **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
+| **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
 | **UI Automation** | [Todo Test](https://github.com/blvxx/playwright-qa-lab) | 8 authored Playwright scenarios and 17 documented manual test cases |
 | **Web Development** | [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
 
@@ -90,7 +91,21 @@ An end-to-end analysis of 360 synthetic e-commerce orders.
 
 [Open project and findings](./data-analytics/) · [Interactive dashboard](./data-analytics/dashboard/README.md)
 
-### 6. Todo Test — Playwright UI Automation
+
+### 6. Customer Retention & Sales Analytics
+
+An end-to-end business analytics case study using the public UCI Online Retail dataset.
+
+- Transaction cleaning with cancellation and refund handling.
+- Gross / net sales, monthly trends, country contribution and top products.
+- RFM segmentation and cohort retention analysis.
+- Streamlit + Plotly dashboard, reproducible pipeline and unit tests.
+
+**Stack:** Python · pandas · Streamlit · Plotly · pytest.
+
+[Open the analytics case](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
+
+### 7. Todo Test — Playwright UI Automation
 
 A browser-based task tracker used as the target for manual and automated QA.
 
@@ -125,7 +140,7 @@ For website creation, redesign and small-business projects, visit the **[freelan
 ## Transparency
 
 - Payment systems and incidents are simulated.
-- Datasets, logs, orders and payment records are synthetic.
+- The original e-commerce analysis uses the attributed public UCI Online Retail dataset; the earlier E-commerce Sales Analytics fixture, logs and incident records are synthetic.
 - The API automation project targets a public demo service; simulated write operations are not represented as persistent production changes.
 - These repositories are independent portfolio projects, not claims of production access or commercial client delivery.
 - Workflow badges and linked Actions runs show the actual CI status; a configured workflow alone is not proof of a passing run.
