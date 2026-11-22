@@ -336,6 +336,39 @@
     }
   },
   {
+    "id": 14,
+    "category": "analytics",
+    "kicker": "CUSTOMER ANALYTICS / UCI ONLINE RETAIL",
+    "title": "Customer Retention & Sales Analytics",
+    "description": "Аналитический кейс на открытом датасете UCI Online Retail: очистка транзакций, возвраты, продажи по странам и месяцам, RFM-сегментация и когортное удержание.",
+    "highlights": [
+      "Проверка качества данных и разделение продаж / возвратов",
+      "Gross / net sales, repeat customer rate, monthly and country trends",
+      "RFM, cohort retention, Streamlit dashboard and unit tests"
+    ],
+    "tech": [
+      "Python",
+      "pandas",
+      "Streamlit",
+      "Plotly",
+      "pytest"
+    ],
+    "status": "Публичный набор данных · CC BY 4.0",
+    "url": "https://github.com/blvxx/portfolio/tree/main/customer-retention-analytics",
+    "link": "Открыть кейс",
+    "preview": {
+      "type": "artifact",
+      "label": "CUSTOMER ANALYTICS",
+      "headline": "RFM · Cohort retention",
+      "lines": [
+        "UCI Online Retail · 541,909 rows",
+        "Refund-aware sales KPI pipeline",
+        "Customer segments · repeat purchase"
+      ],
+      "footer": "Python · pandas · Streamlit"
+    }
+  },
+  {
     "id": 11,
     "category": "prototype",
     "kicker": "PERSONAL WEB APP",
