@@ -18,7 +18,7 @@ Practical engineering portfolio covering Python application development, API int
 
 | Direction | Case study | Evidence |
 |---|---|---|
-| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram application, application service boundary, SQLite transactions, durable notification outbox, lease fencing, retry/dead-letter handling, migrations and operational documentation |
+| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram application, application service boundary, SQLite transactions, replay-safe lead creation, durable notification outbox, lease fencing, retry/dead-letter handling, versioned migrations and operational documentation |
 | **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
 | **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
@@ -38,13 +38,13 @@ An independently developed and deployed Telegram application for structured busi
 - Framework-independent enquiry submission service with typed command and repository boundary.
 - SQLite lead creation and notification enqueue committed atomically.
 - Background outbox worker with exclusive claims, lease-token fencing, bounded exponential retry and dead-letter state.
-- Forward-only, versioned schema migrations.
+- Forward-only, versioned schema migrations and replay-safe creation keyed by Telegram chat/message identity.
 - Admin enquiry listing restricted to the configured user in private chats.
 - Automated tests, Ruff lint, Docker image build and architecture/security/operations documentation.
 
 **Live demo:** [@blvlxxbot](https://t.me/blvlxxbot) · [Source](./telegram-business-assistant/) · [Architecture](./telegram-business-assistant/docs/engineering/architecture.md)
 
-**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox/migration refactor. Current source changes pass CI, but the hosted instance has not yet been smoke-tested after those changes.
+**Deployment validation:** the hosted bot's main enquiry flow was confirmed before the recent outbox, migration and idempotency refactors. Current source changes pass CI, but the hosted instance has not yet been smoke-tested after those changes.
 
 **Scope:** deployed portfolio MVP, not a commercial client project. The live host's persistent-storage guarantee remains unverified, and the application must not collect real customer data until storage and backup/restore are verified.
 
