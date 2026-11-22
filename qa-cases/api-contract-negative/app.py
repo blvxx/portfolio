@@ -2,7 +2,7 @@
 from datetime import date
 from typing import Optional
 from fastapi import FastAPI, Header, HTTPException
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, Field
 
 app = FastAPI(title="Booking QA Sandbox", version="0.1.0")
 rooms = {"room-101": {"capacity": 2}, "room-202": {"capacity": 4}}
