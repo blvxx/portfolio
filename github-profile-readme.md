@@ -68,7 +68,21 @@ A reproducible analytics case study based on 360 synthetic e-commerce orders.
 
 [Interactive dashboard](https://github.com/blvxx/portfolio/tree/main/data-analytics/dashboard)
 
-### 6. [Todo Test — Playwright UI Automation](https://github.com/blvxx/playwright-qa-lab)
+
+### 6. Customer Retention & Sales Analytics
+
+An end-to-end business analytics case study using the public UCI Online Retail dataset.
+
+- Transaction cleaning with cancellation and refund handling.
+- Gross / net sales, monthly trends, country contribution and top products.
+- RFM segmentation and cohort retention analysis.
+- Streamlit + Plotly dashboard, reproducible pipeline and unit tests.
+
+**Stack:** Python · pandas · Streamlit · Plotly · pytest.
+
+[Open the analytics case](./customer-retention-analytics/) · [Dataset provenance](./customer-retention-analytics/data/README.md)
+
+### 7. [Todo Test — Playwright UI Automation](https://github.com/blvxx/playwright-qa-lab)
 A browser app with 8 authored Playwright scenarios and 17 documented manual test cases.
 
 **Demonstrates:** UI test design, browser automation and QA documentation.
@@ -91,4 +105,4 @@ Python · pytest · requests · Playwright · Postman · SQL · PostgreSQL · pa
 - **Telegram:** [@blvlxx](https://t.me/blvlxx)
 - **Website projects:** [Web development portfolio](https://blvxx.github.io/portfolio/)
 
-> **Project transparency:** payment systems, incident records and analytics datasets in these repositories are synthetic demonstrations. They do not represent real customer data, production incidents or commercial client deliveries.
+> **Project transparency:** payment systems and incident records are simulated; the original customer analytics case uses the attributed public UCI Online Retail dataset, while the separate E-commerce Sales Analysis uses synthetic data. These projects are not presented as production incidents or commercial client deliveries.
