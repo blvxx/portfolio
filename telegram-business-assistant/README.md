@@ -13,7 +13,7 @@ The project demonstrates a complete lead-capture workflow: consent, service sele
 - Validates the contact and request description.
 - Stores each enquiry in SQLite with a UTC timestamp.
 - Optionally notifies an administrator through ADMIN_CHAT_ID.
-- Provides a restricted /leads command for an administrator configured with ADMIN_USER_ID.
+- Provides /my_id to display the numeric IDs needed for administrator setup.\n- Provides a restricted /leads command for an administrator configured with ADMIN_USER_ID.
 - Includes /cancel to stop an unfinished request.
 
 ## Stack
@@ -66,6 +66,46 @@ The bot keeps conversational state in aiogram MemoryStorage. Lead records are pe
        python -m src.bot
 
 To receive private notifications, the administrator must open the bot and send /start first. Use the numeric Telegram chat ID for ADMIN_CHAT_ID and the numeric Telegram user ID for ADMIN_USER_ID. Keep both IDs and the bot token out of source control.
+
+## Docker deployment
+
+The repository includes a Dockerfile and Docker Compose configuration for a single-instance VPS deployment. The bot uses Telegram long polling and does not expose an inbound HTTP port.
+
+1. Install Docker Engine and the Docker Compose V2 plugin on a Linux server.
+2. Clone the repository and enter the project directory:
+
+       git clone https://github.com/blvxx/portfolio.git
+       cd portfolio/telegram-business-assistant
+
+3. Create the private environment file and restrict its permissions:
+
+       cp .env.example .env
+       chmod 600 .env
+
+4. Edit .env and set BOT_TOKEN. Start with optional ADMIN_CHAT_ID and ADMIN_USER_ID blank.
+5. Build and start the container:
+
+       docker compose up -d --build
+
+6. Follow startup logs:
+
+       docker compose logs -f --tail=100 bot
+
+7. Open the bot in Telegram and send /start, then /my_id. Copy the displayed IDs into ADMIN_CHAT_ID and ADMIN_USER_ID in .env and restart:
+
+       docker compose up -d
+
+The Compose file stores SQLite data in a named persistent volume. It runs as a non-root user, uses a read-only container filesystem, drops Linux capabilities and restarts the process after a failure. Keep the VPS firewall closed to inbound ports other than the SSH access you administer. Do not commit .env or share the bot token.
+
+To stop the service without deleting lead data:
+
+       docker compose down
+
+To remove the service and its stored data permanently (destructive):
+
+       docker compose down -v
+
+For a single-instance MVP this setup is sufficient. MemoryStorage keeps unfinished chat steps in process memory, so users may need to restart an unfinished request after a redeploy; saved leads remain in the persistent volume. Use Redis for shared FSM state and PostgreSQL for a multi-instance deployment.
 
 ## Tests
 
