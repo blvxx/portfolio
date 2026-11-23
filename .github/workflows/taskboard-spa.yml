@@ -33,7 +33,12 @@ jobs:
 
       - name: Install dependencies
         working-directory: taskboard-spa-src
-        run: npm install --no-audit --no-fund
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
 
       - name: Type-check application and build configuration
         working-directory: taskboard-spa-src
@@ -64,7 +69,7 @@ jobs:
           touch taskboard-spa/.nojekyll
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add taskboard-spa
+          git add taskboard-spa taskboard-spa-src/package-lock.json
           if git diff --cached --quiet; then
             echo "Published bundle is already up to date."
           else
