@@ -371,6 +371,18 @@ export default function App() {
     [tasks, query, projectFilter, priorityFilter],
   );
   const summary = useMemo(() => summarizeTasks(tasks), [tasks]);
+  const currentDate = new Date();
+  const greeting =
+    currentDate.getHours() < 12
+      ? "Good morning"
+      : currentDate.getHours() < 18
+        ? "Good afternoon"
+        : "Good evening";
+  const dateLabel = new Intl.DateTimeFormat("en", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  }).format(currentDate).toUpperCase();
 
   const rememberFocus = () => {
     previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -515,8 +527,8 @@ export default function App() {
         <div className="content-wrap">
           <section className="page-heading">
             <div>
-              <div className="eyebrow">MONDAY · PROJECT OVERVIEW</div>
-              <h1>Good morning, Alex <span>✦</span></h1>
+              <div className="eyebrow">{dateLabel} · PROJECT OVERVIEW</div>
+              <h1>{greeting}, Alex <span>✦</span></h1>
               <p>Here’s what’s happening across your projects today.</p>
             </div>
             <div className="heading-actions">
@@ -564,7 +576,7 @@ export default function App() {
               <label className="search-box">
                 <span aria-hidden="true">⌕</span>
                 <input ref={searchInputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tasks, people or tags..." aria-label="Search tasks, people or tags" />
-                <kbd>⌘ K</kbd>
+                <kbd>Ctrl K</kbd>
               </label>
               <label className="filter-select">
                 <span className="sr-only">Filter by priority</span>
@@ -585,6 +597,7 @@ export default function App() {
                       <div className="column-heading">
                         <div><span className={`column-indicator ${status.color}`} /><h3 id={`column-${status.id}`}>{status.label}</h3><span className="column-count">{columnTasks.length}</span></div>
                         <button className="column-menu" type="button" aria-label={`Create a task in ${status.label}`} onClick={() => {
+                          rememberFocus();
                           setEditingTask(null);
                           setDraft({ ...emptyDraft(), status: status.id, project: projectFilter === "all" ? "Product" : projectFilter });
                           setIsModalOpen(true);
