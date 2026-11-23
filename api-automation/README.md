@@ -146,6 +146,12 @@ GitHub Actions runs static checks, isolated unit tests and the complete suite on
 
 Check the Actions tab for the actual result of each run; workflow configuration alone does not prove that a run passed.
 
+### Latest verified CI evidence
+
+The latest reviewed run on **20 November 2026** completed successfully on both supported Python versions: **3.10 and 3.12**. Each matrix job ran Ruff, isolated unit tests and the complete API suite, then uploaded JUnit and Allure results.
+
+[Open the successful CI run](https://github.com/blvxx/portfolio/actions/runs/44836282088) · [Python 3.10 report bundle](https://github.com/blvxx/portfolio/actions/runs/44836282088/artifacts/14678936366) · [Python 3.12 report bundle](https://github.com/blvxx/portfolio/actions/runs/44836282088/artifacts/14678466975)
+
 ## Project structure
 
 ```text
