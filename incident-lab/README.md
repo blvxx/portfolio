@@ -3,47 +3,83 @@
 > **Portfolio case | Simulated incident | Application Support / Technical Support / Integration Support**
 
 ## Incident summary
-A fictional payment provider reports successful payments, but some storefront orders remain in \`pending_payment\`.
 
-- **Severity:** SEV-2 (simulation)
-- **Component:** Webhook handler
-- **Impact:** Paid orders may not be confirmed in the storefront
-- **Root cause:** Webhook signature configuration points to an outdated secret
-- **Recovery:** Correct configuration, validate a test event, replay verified events safely, reconcile state
+A fictional payment provider reports successful payments, but some storefront orders remain in `pending_payment`.
 
-## Investigation workflow
-1. [Incident ticket](docs/incident-ticket.md)
-2. [Evidence logs](evidence/application.log) — includes signature errors, timeouts, downstream 5xx, duplicates, and delayed events
-3. [Diagnostic SQL](sql/diagnostics.sql) — reconciliation, duplicate detection, and state mismatch checks
-4. [API examples](api/webhook-examples.md)
-5. [RCA](docs/rca.md)
-6. [Incident recovery runbook](docs/recovery-runbook.md)
-7. [Reconciliation runbook](docs/reconciliation-runbook.md)
-8. [SQL reconciliation report](docs/sql-reconciliation-report.md) — sample findings from synthetic data
-9. [Investigation findings](docs/investigation-findings.md)
-10. [Python log analyzer](scripts/analyze_incident.py) — classify patterns and recommend triage checks
-11. [Automated reconciliation](scripts/reconcile_payments.py) — compare order/payment exports and produce CSV + HTML findings
-12. [Reconciliation utility documentation](docs/automated-reconciliation.md)
-13. [Incident summary generator](scripts/incident_summary.py) — combines log analysis and payment findings into JSON + HTML
-14. [Incident summary documentation](docs/incident-summary-generator.md)
-15. [Unified operations CLI](scripts/incident_ops.py) — run all diagnostics from one command
-16. [Operations toolkit guide](docs/incident-operations-toolkit.md)
+| Field | Detail |
+|---|---|
+| Severity | SEV-2 (simulation) |
+| Component | Webhook handler / payment-order state synchronization |
+| Impact | Paid orders may remain unconfirmed in the storefront |
+| Root cause | Webhook signature configuration references an outdated secret |
+| Recovery | Correct configuration, validate a test event, safely replay verified events and reconcile state |
+
+All logs, timestamps, payments and orders in this lab are fictional. No production system or real customer/payment data is represented.
+
+## Investigation path
+
+This case follows a support investigation from initial report through diagnosis and recovery:
+
+1. **[Incident ticket](docs/incident-ticket.md)** — initial report, scope and symptoms.
+2. **[Evidence logs](evidence/application.log)** — signature failures, timeouts, downstream 5xx, duplicate and delayed events.
+3. **[API examples](api/webhook-examples.md)** — webhook request/response behavior.
+4. **[Diagnostic SQL](sql/diagnostics.sql)** — reconciliation, duplicate detection and state mismatch checks.
+5. **[Investigation findings](docs/investigation-findings.md)** — evidence and timeline.
+6. **[RCA](docs/rca.md)** — root cause, contributing factors and prevention.
+7. **[Recovery runbook](docs/recovery-runbook.md)** — safe restoration steps.
+8. **[Reconciliation runbook](docs/reconciliation-runbook.md)** — verification of payment/order consistency.
+9. **[SQL reconciliation report](docs/sql-reconciliation-report.md)** — sample findings from synthetic data.
+
+## Operations toolkit
+
+The unified CLI combines the lab's diagnostics into a reproducible workflow.
+
+Run from the repository root:
+
+```bash
+python incident-lab/scripts/incident_ops.py all
+```
+
+Individual commands:
+
+```bash
+python incident-lab/scripts/incident_ops.py analyze-logs
+python incident-lab/scripts/incident_ops.py reconcile
+python incident-lab/scripts/incident_ops.py summary
+```
+
+The toolkit includes:
+- **Log analysis** — classify signatures, timeout, downstream failures, duplicates and delayed webhook patterns.
+- **Payment reconciliation** — compare synthetic payment/order records and export CSV + HTML findings.
+- **Incident summary** — combine diagnostics into machine-readable JSON and an HTML report.
+
+See the [operations toolkit guide](docs/incident-operations-toolkit.md) for output paths and the severity heuristic.
+
+## Additional utilities
+
+- [Python log analyzer](scripts/analyze_incident.py) — pattern classification and suggested triage checks.
+- [Automated reconciliation](scripts/reconcile_payments.py) — CSV and HTML findings.
+- [Incident summary generator](scripts/incident_summary.py) — combined JSON and HTML.
+- [Incident report template](docs/incident-report-template.md) — reusable incident documentation.
 
 ## Sample dataset
-CSV files in \`data/\` contain fictional order/payment records with deliberately injected state mismatches and a repeated provider payment ID. These are used for SQL investigation examples, not real customer or financial data.
+
+CSV files in `data/` contain fictional order/payment records with deliberately injected state mismatches and a repeated provider payment ID. These are used for SQL investigation and reconciliation examples—not real customer or financial data.
 
 ## Run and test
-From the repository root:
 
-\`\`\`bash
+Python 3.10+; standard library only.
+
+```bash
 python incident-lab/scripts/analyze_incident.py
-python incident-lab/scripts/reconcile_payments.py  # CSV + HTML reports
+python incident-lab/scripts/reconcile_payments.py
 python -m unittest discover -s incident-lab/scripts -v
-\`\`\`
+```
 
-Python 3.10+, standard library only. The analyzer classifies signature/authentication failures, webhook timeouts, downstream HTTP 5xx, duplicate deliveries, and delayed events. CI is configured; the run status has not been independently verified here.
+The analyzer classifies signature/authentication failures, webhook timeouts, downstream HTTP 5xx, duplicate deliveries and delayed events. CI is configured; verify the latest Actions run for actual pass/fail evidence.
 
 ## Skills demonstrated
+
 - Incident triage and impact assessment
 - HTTP/API and webhook troubleshooting
 - Log analysis and pattern classification
@@ -51,5 +87,3 @@ Python 3.10+, standard library only. The analyzer classifies signature/authentic
 - Integration diagnostics and idempotency
 - Root Cause Analysis and recovery verification
 - Runbook writing and operational communication
-
-All records, timestamps, and incident details are fictional.
