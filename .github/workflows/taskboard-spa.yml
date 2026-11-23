@@ -33,12 +33,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: taskboard-spa-src
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci --no-audit --no-fund
-          else
-            npm install --no-audit --no-fund
-          fi
+        run: npm install --no-audit --no-fund
 
       - name: Type-check application and build configuration
         working-directory: taskboard-spa-src
@@ -51,6 +46,23 @@ jobs:
       - name: Build production bundle
         working-directory: taskboard-spa-src
         run: npm run build
+
+      - name: Install Chromium for browser regression
+        working-directory: taskboard-spa-src
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Workboard browser regression
+        working-directory: taskboard-spa-src
+        run: npm run test:e2e
+
+      - name: Upload browser traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: workboard-playwright-results
+          path: taskboard-spa-src/test-results/
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Upload production bundle
         uses: actions/upload-artifact@v4
