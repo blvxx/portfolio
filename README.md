@@ -15,7 +15,7 @@ Evidence-led engineering projects focused on troubleshooting, incident investiga
 | **Games Support** | [Games Support Casebook](./games-support-casebook/) | Fictional player-support cases, prioritisation, response templates and escalation decisions |
 | **Junior QA / API Testing** | [FinTech QA Platform](./fintech-qa-platform/) · [API Automation](./api-automation/) | pytest, API contracts, negative cases, integration tests, PostgreSQL and Playwright |
 | **Python application development** | [Telegram Business Assistant](./telegram-business-assistant/) · [AI Support Triage Agent](./ai-support-triage-agent/) | Async Python, aiogram, PostgreSQL, Redis, idempotency and guarded AI workflows |
-| **Frontend / Web Development** | [Frontend portfolio](https://blvxx.github.io/web-development-portfolio/) | Responsive interfaces and interactive HTML/CSS/JavaScript concepts |
+| **Frontend / Web Development** | [Workboard React SPA](./taskboard-spa-src/) · [Frontend portfolio](https://blvxx.github.io/web-development-portfolio/) | React, TypeScript, task CRUD, filtering, responsive UI, browser storage and HTML/CSS/JavaScript concepts |
 
 ## Featured case studies
 
@@ -61,8 +61,8 @@ A reusable HTTP client and pytest suite for REST CRUD contracts, response schema
 ### 5. Playwright UI Automation
 A browser-based task tracker and QA case study.
 
-- Eight automated Playwright end-to-end scenarios.
-- 17 designed manual scenarios with a separate execution report.
+- Eleven automated Playwright end-to-end scenarios, including accessible-name, semantic-label and malformed-storage checks.
+- Twenty documented manual test cases plus a recorded execution report and two resolved accessibility bug examples.
 - Functional checks for task creation, validation, completion, deletion and persistence.
 
 [Open the application](https://blvxx.github.io/playwright-qa-lab/) · [Source repository](https://github.com/blvxx/playwright-qa-lab)
@@ -72,6 +72,7 @@ A browser-based task tracker and QA case study.
 | Project | Scope |
 |---|---|
 | [Games Support Casebook](./games-support-casebook/) | Synthetic player-support scenarios, response quality, severity, escalation and handover |
+| [Workboard — React + TypeScript SPA](./taskboard-spa-src/) | Internal project/task workspace prototype with Board/List views, CRUD, filters, local persistence, Vitest and CI publication |
 | [Telegram Business Assistant](./telegram-business-assistant/) | Async Telegram enquiry workflow, PostgreSQL, Redis FSM, transactional outbox, idempotency, health checks and Docker |
 | [AI Support Triage Agent](./ai-support-triage-agent/) | Runbook retrieval, structured L2 triage, citation validation and human-approval safeguards |
 | [Booking API QA](./qa-cases/api-contract-negative/) | 31 pytest cases for API contracts, pagination, validation, conflicts, idempotency and access control |
@@ -80,7 +81,7 @@ A browser-based task tracker and QA case study.
 | [SQL + Python Data Analytics](./data-analytics/) | PostgreSQL and pandas pipeline with validation and CSV/JSON reports |
 | [Customer Retention Analytics](./customer-retention-analytics/) | Public UCI dataset, RFM segmentation, cohorts and dashboard |
 | [Subscription Revenue & Retention](./subscription-revenue-analytics/) | PostgreSQL BI model for MRR/ARR, GRR/NRR and recurring-revenue movement |
-| [Playwright UI Automation Lab](https://github.com/blvxx/playwright-qa-lab) | Eight automated scenarios and manual QA artefacts |
+| [Playwright UI Automation Lab](https://github.com/blvxx/playwright-qa-lab) | Eleven automated scenarios, twenty manual cases, execution report and accessibility bug examples |
 
 ## Technical toolkit
 
