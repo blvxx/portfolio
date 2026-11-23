@@ -1,6 +1,6 @@
-# Artem Kalinin | Python Automation & Application Engineering
+# Artem Kalinin | IT Support · Application Support · QA · Python
 
-Practical engineering portfolio covering Python application development, API integrations, workflow automation, QA engineering, systems troubleshooting and SQL / PostgreSQL analytics.
+Portfolio of hands-on engineering projects focused on technical troubleshooting, Linux, application support, incident investigation, API testing and Python automation. Each case includes implementation details, reproducible checks or documented evidence.
 
 **[Engineering showcase](https://blvxx.github.io/portfolio/engineering/)** · **[Freelance web portfolio](https://blvxx.github.io/web-development-portfolio/)** · **[All repositories](https://github.com/blvxx?tab=repositories)**
 
@@ -18,16 +18,14 @@ Practical engineering portfolio covering Python application development, API int
 
 | Direction | Case study | Evidence |
 |---|---|---|
-| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async aiogram app with single-instance SQLite fallback and multi-replica PostgreSQL + Redis webhook profile, replay-safe transactions, SKIP LOCKED outbox workers, Redis FSM/event isolation, health/readiness endpoints, Prometheus metrics and tested backup/restore scripts |
-| **AI Automation** | [AI Support Triage Agent](./ai-support-triage-agent/) | OpenAI Responses API, Pydantic Structured Outputs, runbook retrieval, evidence allow-listing, prompt-injection handling, safe read-only diagnostics, escalation guardrails and live regression evaluator |
-| **Application / Technical Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux triage, systemd, Nginx, DNS, TLS, log analysis, webhook diagnostics, SQL reconciliation, RCA and recovery runbooks |
-| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | Payment/Ledger integration and E2E tests; 24 Playwright checkout scenarios; 31 pytest API cases, auth, conflicts, idempotency and ownership checks |
-| **API Automation** | [Python + pytest API suite](./api-automation/) | Reusable HTTP client, CRUD contracts, JSON Schema, negative cases, mocks and Postman |
-| **Data Analysis** | [E-commerce SQL + Python](./data-analytics/) | KPI calculations, PostgreSQL reporting, pandas validation and reproducible exports |
-| **Customer Analytics** | [Customer Retention & Sales Analytics](./customer-retention-analytics/) | UCI Online Retail, refunds, RFM segmentation, cohort retention and an interactive dashboard |
-| **BI / PostgreSQL Analytics** | [Subscription Revenue & Retention](./subscription-revenue-analytics/) | MRR / ARR, revenue bridge, GRR / NRR, lifecycle events, cohort retention and SQL data-quality checks |
-| **Support Analytics** | [Support Operations Analytics — SQL case](./support-operations-analytics/) | SLA, ticket backlog, priority mix, agent workload, percentiles and SQL data-quality checks |
+| **Technical / Application Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux troubleshooting, systemd, Nginx, DNS, TLS, log analysis, HTTP/webhooks, SQL diagnostics, RCA and recovery runbooks |
+| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | API/integration and E2E testing; 24 Playwright checkout scenarios; 31 pytest API cases covering validation, conflicts, idempotency and ownership |
+| **API Automation** | [Python + pytest API suite](./api-automation/) | REST CRUD contracts, JSON Schema, negative cases, mocks, Postman and CI |
+| **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async app with SQLite/PostgreSQL profiles, Redis, replay-safe transactions, outbox workers, health endpoints, metrics and backup/restore checks |
+| **AI Support Automation** | [AI Support Triage Agent](./ai-support-triage-agent/) | Runbook retrieval, structured triage, evidence validation, read-only diagnostics and escalation guardrails |
 | **UI Automation** | [Todo Test](https://github.com/blvxx/playwright-qa-lab) | 8 authored Playwright scenarios and 17 documented manual test cases |
+| **Data / SQL** | [E-commerce SQL + Python](./data-analytics/) · [Support Operations Analytics](./support-operations-analytics/) | KPI reporting, PostgreSQL, SLA/backlog analysis, pandas validation and reproducible exports |
+| **Customer / BI Analytics** | [Customer Retention](./customer-retention-analytics/) · [Subscription Revenue](./subscription-revenue-analytics/) | RFM, cohort retention, MRR/ARR, GRR/NRR, lifecycle reporting and data-quality checks |
 | **Web Development** | [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio) | Responsive website concepts and interactive business-oriented interfaces |
 
 ## Featured application engineering project
