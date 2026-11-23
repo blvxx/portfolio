@@ -128,7 +128,7 @@ const emptyDraft = (): TaskDraft => ({
 
 function loadTasks(): Task[] {
   try {
-    return parseTasks(localStorage.getItem(STORAGE_KEY));
+    return parseTasks(localStorage.getItem(STORAGE_KEY), seedTasks);
   } catch {
     return seedTasks;
   }
@@ -334,7 +334,7 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>(loadTasks);
   const [query, setQuery] = useState("");
   const [projectFilter, setProjectFilter] = useState("all");
-  const [priorityFilter, setPriorityFilter] = useState("all");
+  const [priorityFilter, setPriorityFilter] = useState<TaskPriority | "all">("all");
   const [view, setView] = useState<"board" | "list">("board");
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
