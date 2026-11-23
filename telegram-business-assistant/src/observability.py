@@ -68,7 +68,7 @@ def create_observability_app(database: Any, redis_client: Any | None = None) -> 
                 "Readiness probe failed",
                 extra={
                     "error_type": type(exc).__name__,
-                    "request_id": _request_id(_request),
+                    "request_id": _request["request_id"],
                 },
             )
             return web.json_response({"status": "not_ready"}, status=503)
@@ -84,7 +84,10 @@ def create_observability_app(database: Any, redis_client: Any | None = None) -> 
             APP_READINESS.set(0)
             logger.warning(
                 "Metrics readiness refresh failed",
-                extra={"error_type": type(exc).__name__},
+                extra={
+                    "error_type": type(exc).__name__,
+                    "request_id": _request["request_id"],
+                },
             )
         try:
             stats = await database.get_notification_stats()
