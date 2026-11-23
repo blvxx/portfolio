@@ -151,9 +151,9 @@ Check the Actions tab for the actual result of each run; workflow configuration 
 
 ### Latest verified CI evidence
 
-The latest reviewed run on **23 November 2026** completed successfully on both supported Python versions: **3.10 and 3.12**. Each matrix job passed Ruff, **25 isolated unit tests**, and the complete **60-test API suite**. Both versions uploaded JUnit and Allure results.
+The latest reviewed run on **23 November 2026** completed successfully on both supported Python versions: **3.10 and 3.12**. Each matrix job passed Ruff, **26 isolated unit tests**, and the complete **62-test API suite**. This includes the loopback HTTP transport fault-injection check. Both versions uploaded JUnit and Allure results.
 
-[Open the successful CI run](https://github.com/blvxx/portfolio/actions/runs/45100731156) · [Python 3.10 report bundle](https://github.com/blvxx/portfolio/actions/runs/45100731156/artifacts/14785397039) · [Python 3.12 report bundle](https://github.com/blvxx/portfolio/actions/runs/45100731156/artifacts/14785700787)
+[Open the successful CI run](https://github.com/blvxx/portfolio/actions/runs/45102695248) · [Python 3.10 report bundle](https://github.com/blvxx/portfolio/actions/runs/45102695248/artifacts/14786485505) · [Python 3.12 report bundle](https://github.com/blvxx/portfolio/actions/runs/45102695248/artifacts/14785513694)
 
 ## Project structure
 
