@@ -101,7 +101,8 @@ Selected workflows were reviewed on **23 November 2026**:
 - [API Automation](https://github.com/blvxx/portfolio/actions/runs/45102695248) — Python 3.10 and 3.12 matrix jobs passed.
 - [Telegram Business Assistant](https://github.com/blvxx/portfolio/actions/runs/45102741553) — unit/service integration tests, PostgreSQL backup/restore drill, Prometheus validation and Docker image build passed.
 - [Frontend Portfolio](https://github.com/blvxx/web-development-portfolio/actions/runs/45103113568) — content/link checks and Chromium browser regression passed.
-- [Playwright QA Lab](https://github.com/blvxx/playwright-qa-lab/actions/runs/45100286227) — eight E2E tests passed.
+- [Workboard React + TypeScript SPA](https://github.com/blvxx/portfolio/actions/runs/45155137454) — strict typecheck, **12 Vitest tests**, production build and static bundle publication passed; [GitHub Pages deployment](https://github.com/blvxx/portfolio/actions/runs/45155183196) succeeded.
+- [Playwright QA Lab](https://github.com/blvxx/playwright-qa-lab/actions/runs/45155393340) — **11 E2E tests passed** after the accessibility and storage-resilience updates.
 
 CI evidence verifies the recorded workflow run; it does not imply a public production deployment. For example, the current Telegram Business Assistant PostgreSQL/Redis/Webhook profile is validated in CI but has not yet been deployed to a public host.
 
