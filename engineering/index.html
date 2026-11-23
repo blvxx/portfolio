@@ -130,7 +130,7 @@
           <p>A hands-on troubleshooting lab for common Linux and web-service failures, from first symptom to recovery verification.</p>
           <ul><li>10 playbooks: systemd, disk, Nginx, DNS, TLS, OOM and PostgreSQL</li><li>Python log triage CLI with severity, evidence lines and JSON output</li><li>Unit tests and GitHub Actions artifact generation</li></ul>
           <div class="stack"><span>Linux</span><span>systemd</span><span>Nginx</span><span>Python</span><span>Log analysis</span></div>
-          <div class="project-links"><a href="https://github.com/blvxx/portfolio/tree/main/support-engineering-lab">Open lab and playbooks ↗</a><a href="https://github.com/blvxx/portfolio/blob/main/support-engineering-lab/scripts/log_triage.py">Log triage CLI ↗</a></div>
+          <div class="project-links"><a href="../support-engineering-lab/overview.html">Visual walkthrough ↗</a><a href="https://github.com/blvxx/portfolio/blob/main/support-engineering-lab/scripts/log_triage.py">Log triage CLI ↗</a></div>
         </div></article>
 
         <article class="project"><div class="project-visual incident"><span>01 / Incident response</span></div><div class="project-body">
@@ -184,9 +184,9 @@
         <article class="project"><div class="project-visual ui"><span>07 / Browser testing</span></div><div class="project-body">
           <div class="project-meta"><span>UI Automation</span><span class="status">Independent practice</span></div><h3>Todo Test — Playwright</h3>
           <p>A small browser application used to demonstrate test design, manual QA documentation and end-to-end browser automation.</p>
-          <ul><li>8 authored Playwright E2E scenarios</li><li>17 documented manual test cases</li><li>GitHub Actions workflow for Chromium</li></ul>
+          <ul><li>11 authored Playwright E2E scenarios, including accessibility and storage recovery</li><li>20 manual test cases with an execution report and 2 resolved bug examples</li><li>GitHub Actions workflow for Chromium</li></ul>
           <div class="stack"><span>Playwright</span><span>JavaScript</span><span>HTML / CSS</span><span>GitHub Actions</span></div>
-          <div class="project-links"><a href="https://github.com/blvxx/playwright-qa-lab">Open repository ↗</a><a href="https://github.com/blvxx/playwright-qa-lab/actions">CI workflow ↗</a></div>
+          <div class="project-links"><a href="https://github.com/blvxx/playwright-qa-lab">Open repository ↗</a><a href="https://github.com/blvxx/playwright-qa-lab/blob/main/docs/test-execution-report.md">Manual test report ↗</a><a href="https://github.com/blvxx/playwright-qa-lab/actions">CI workflow ↗</a></div>
         </div></article>
 
         <article class="project"><div class="project-visual ui"><span>08 / Web regression</span></div><div class="project-body">
@@ -226,6 +226,21 @@
           <ul><li>Product brief, prioritised backlog and acceptance criteria</li><li>Scope-change decision, simulated review comments and UAT checklist</li><li>Handover note and incident retrospective; all stakeholders and events are fictional</li></ul>
           <div class="stack"><span>Requirements</span><span>Backlog</span><span>Acceptance criteria</span><span>UAT</span><span>Handover</span></div>
           <div class="project-links"><a href="https://github.com/blvxx/portfolio/tree/main/docs/delivery-simulation">Open simulation pack ↗</a><a href="https://github.com/blvxx/portfolio/blob/main/docs/delivery-simulation/change-request.md">Scope-change example ↗</a></div>
+        </div></article>
+        <article class="project"><div class="project-visual incident"><span>13 / Games support</span></div><div class="project-body">
+          <div class="project-meta"><span>Player Support</span><span class="status">Fictional casebook</span></div><h3>Games Support Casebook</h3>
+          <p>A practical casebook for player-facing game support: missing purchases, account-security reports, login issues, latency, appeals and moderation escalations.</p>
+          <ul><li>Six fictional player tickets with English first-response examples</li><li>Safe evidence collection, priority rationale and escalation boundaries</li><li>Internal ticket notes, handover patterns and communication guide</li></ul>
+          <div class="stack"><span>Player Support</span><span>Ticket Triage</span><span>English</span><span>Escalation</span></div>
+          <div class="project-links"><a href="../games-support-casebook/">Open casebook ↗</a><a href="../games-support-casebook/cases.md">Read six cases ↗</a></div>
+        </div></article>
+
+        <article class="project"><div class="project-visual api"><span>14 / Product prototype</span></div><div class="project-body">
+          <div class="project-meta"><span>Web Product / QA</span><span class="status">Static prototype · local data only</span></div><h3>SiteProof — WordPress Form Diagnostics</h3>
+          <p>A manual-first product concept for checking one authorised Contact Form 7 enquiry path, separating form acceptance, message generation and confirmed mailbox receipt.</p>
+          <ul><li>Interactive synthetic dashboard and service landing page</li><li>Local diagnostic workspace with JSON/CSV export and printable report</li><li>No external form submissions, email sending, server storage or background monitoring</li></ul>
+          <div class="stack"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Product Thinking</span><span>QA Workflow</span></div>
+          <div class="project-links"><a href="../siteproof-demo/">Open service page ↗</a><a href="../siteproof-demo/demo.html">View dashboard demo ↗</a><a href="../siteproof-demo/workspace.html">Open local workspace ↗</a></div>
         </div></article>
       </div>
       <div class="transparency"><strong>Scope and transparency.</strong> Payment environments, synthetic incidents and sample datasets are clearly labelled. The former Dada Cloud single-worker demo is retired; the current shared Telegram runtime passes CI but has not been deployed to a public host. The AI live-model evaluator has not been run. The delivery pack is fictional practice material, not real team or client work.</div>
@@ -276,11 +291,11 @@
           "#projects .section-kicker": "01 / Избранные проекты",
           "#projects h2": "Практические задачи и рабочие сценарии",
           "#projects .section-intro": "Подборка практических кейсов. Сценарии и часть наборов данных синтетические, при этом ход расследования, проектирование тестов и используемые инструменты можно воспроизвести.",
-          ".project-visual span": ["00 / Linux и эксплуатация","01 / Реагирование на инцидент","02 / FinTech QA","03 / Автоматизация API","04 / Анализ данных","05 / Аналитика клиентов","06 / PostgreSQL BI","07 / Браузерное тестирование","08 / Регрессионное тестирование","09 / Тестирование API-контрактов","10 / Shared Python runtime","11 / AI-автоматизация поддержки","12 / Практика поставки продукта"],
-          ".project-meta > span:first-child": ["Application Support L2","Application Support","QA Engineering","QA Automation","Аналитика данных","Аналитика клиентов и продаж","Data / BI Analytics","UI Automation","QA Automation","API Quality Engineering","Python Application Engineering","AI Automation","Delivery & Product Practice"],
-          ".project-meta .status": ["Учебные сценарии инцидентов","Смоделированный инцидент","Демонстрационная среда","Публичное демо-API","Синтетические данные","Открытый датасет UCI","Синтетические данные подписок","Самостоятельная практика","Локальная браузерная среда","Локальная среда API","CI проверен · перенос на хост ожидает","Исходный код и offline CI проверены","Учебная симуляция · не клиентский проект"],
-          ".project h3": ["Лаборатория Linux Support Engineering","Сбой платёжного вебхука","Платформа FinTech QA Engineering","Автоматизация API на Python","Анализ продаж интернет-магазина","Аналитика удержания клиентов и продаж","Аналитика выручки и удержания подписок","Todo Test — Playwright","Корзина и оформление заказа — Playwright","Booking API — контрактное и негативное тестирование","Telegram Business Assistant — Shared Runtime","AI Support Triage Agent","Delivery Simulation Pack"],
-          ".project p": ["Практическая лаборатория по диагностике типовых сбоев Linux и веб-сервисов: от первого симптома до проверки восстановления.","Платёжный провайдер сообщает об успешной оплате, но часть заказов магазина остаётся в статусе ожидания. Кейс показывает диагностику, сбор доказательств, сверку данных и восстановление.","Микросервисная платёжная песочница для проверки API-контрактов, взаимодействия сервисов, инвариантов ledger и пользовательских платёжных сценариев в браузере.","Переиспользуемый HTTP-клиент и набор pytest-тестов для REST-контрактов, CRUD-методов, негативных сценариев и проверки схем публичного демо-API.","Воспроизводимый аналитический конвейер: преобразование синтетических заказов в бизнес-показатели и отчёты по сегментам.","Аналитический кейс на основе 541 909 транзакций UCI Online Retail. Отчёт по исходным данным рассчитывает валовые продажи £10,67 млн, возвраты £896,8 тыс., чистые продажи £9,77 млн и долю повторных покупателей 65,58% среди идентифицированных клиентов.","Модель отчётности на PostgreSQL, которая восстанавливает состояние подписок по событиям жизненного цикла и объясняет помесячные изменения регулярной выручки.","Небольшое браузерное приложение для демонстрации проектирования тестов, ручной QA-документации и сквозной автоматизации.","Адаптивный интернет-магазин и исполняемый набор браузерных тестов для проверки покупки, расчёта цен и оформления заказа.","Сервис FastAPI и набор pytest-тестов для проверки целостности бронирований, границ доступа и безопасных повторных запросов.","Асинхронный Telegram-сценарий приёма заявок с двумя профилями: одноэкземплярный fallback и общий PostgreSQL + Redis + HTTPS webhook для нескольких реплик.","LLM-процесс первичной классификации инцидента с поиском по runbook, проверкой источников и обязательной передачей человеку неподтверждённых случаев.","Прозрачный набор учебных артефактов: требования, backlog, критерии приёмки, изменение scope, имитация code review, UAT и ретроспектива. Все участники и события вымышлены."],
+          ".project-visual span": ["00 / Linux и эксплуатация","01 / Реагирование на инцидент","02 / FinTech QA","03 / Автоматизация API","04 / Анализ данных","05 / Аналитика клиентов","06 / PostgreSQL BI","07 / Браузерное тестирование","08 / Регрессионное тестирование","09 / Тестирование API-контрактов","10 / Shared Python runtime","11 / AI-автоматизация поддержки","12 / Практика поставки продукта","13 / Поддержка игр","14 / Продуктовый прототип"],
+          ".project-meta > span:first-child": ["Application Support L2","Application Support","QA Engineering","QA Automation","Аналитика данных","Аналитика клиентов и продаж","Data / BI Analytics","UI Automation","QA Automation","API Quality Engineering","Python Application Engineering","AI Automation","Delivery & Product Practice","Поддержка игроков","Web Product / QA"],
+          ".project-meta .status": ["Учебные сценарии инцидентов","Смоделированный инцидент","Демонстрационная среда","Публичное демо-API","Синтетические данные","Открытый датасет UCI","Синтетические данные подписок","Самостоятельная практика","Локальная браузерная среда","Локальная среда API","CI проверен · перенос на хост ожидает","Исходный код и offline CI проверены","Учебная симуляция · не клиентский проект","Вымышленные кейсы","Статический прототип · только локальные данные"],
+          ".project h3": ["Лаборатория Linux Support Engineering","Сбой платёжного вебхука","Платформа FinTech QA Engineering","Автоматизация API на Python","Анализ продаж интернет-магазина","Аналитика удержания клиентов и продаж","Аналитика выручки и удержания подписок","Todo Test — Playwright","Корзина и оформление заказа — Playwright","Booking API — контрактное и негативное тестирование","Telegram Business Assistant — Shared Runtime","AI Support Triage Agent","Delivery Simulation Pack","Games Support Casebook","SiteProof — диагностика форм WordPress"],
+          ".project p": ["Практическая лаборатория по диагностике типовых сбоев Linux и веб-сервисов: от первого симптома до проверки восстановления.","Платёжный провайдер сообщает об успешной оплате, но часть заказов магазина остаётся в статусе ожидания. Кейс показывает диагностику, сбор доказательств, сверку данных и восстановление.","Микросервисная платёжная песочница для проверки API-контрактов, взаимодействия сервисов, инвариантов ledger и пользовательских платёжных сценариев в браузере.","Переиспользуемый HTTP-клиент и набор pytest-тестов для REST-контрактов, CRUD-методов, негативных сценариев и проверки схем публичного демо-API.","Воспроизводимый аналитический конвейер: преобразование синтетических заказов в бизнес-показатели и отчёты по сегментам.","Аналитический кейс на основе 541 909 транзакций UCI Online Retail. Отчёт по исходным данным рассчитывает валовые продажи £10,67 млн, возвраты £896,8 тыс., чистые продажи £9,77 млн и долю повторных покупателей 65,58% среди идентифицированных клиентов.","Модель отчётности на PostgreSQL, которая восстанавливает состояние подписок по событиям жизненного цикла и объясняет помесячные изменения регулярной выручки.","Небольшое браузерное приложение для демонстрации проектирования тестов, ручной QA-документации и сквозной автоматизации.","Адаптивный интернет-магазин и исполняемый набор браузерных тестов для проверки покупки, расчёта цен и оформления заказа.","Сервис FastAPI и набор pytest-тестов для проверки целостности бронирований, границ доступа и безопасных повторных запросов.","Асинхронный Telegram-сценарий приёма заявок с двумя профилями: одноэкземплярный fallback и общий PostgreSQL + Redis + HTTPS webhook для нескольких реплик.","LLM-процесс первичной классификации инцидента с поиском по runbook, проверкой источников и обязательной передачей человеку неподтверждённых случаев.","Прозрачный набор учебных артефактов: требования, backlog, критерии приёмки, изменение scope, имитация code review, UAT и ретроспектива. Все участники и события вымышлены.","Практический сборник сценариев поддержки игроков: пропавшие покупки, безопасность аккаунта, ошибки входа, задержки, апелляции и эскалация модерации.","Концепт ручной диагностики одного согласованного WordPress Contact Form 7: отдельно проверяются отправка формы, генерация письма и подтверждение его получения в тестовом ящике."],
           ".project ul": [
             "<li>10 инструкций: systemd, диски, Nginx, DNS, TLS, OOM и PostgreSQL</li><li>Python CLI для анализа логов: уровень критичности, строки-доказательства и JSON-вывод</li><li>Модульные тесты и формирование артефактов в GitHub Actions</li>",
             "<li>Анализатор логов и единый CLI для операционных проверок</li><li>SQL-проверки дублей и расхождений между платежами и заказами</li><li>RCA, временная шкала инцидента и инструкции восстановления</li>",
@@ -289,12 +304,12 @@
             "<li>Схема PostgreSQL и SQL-запросы для анализа</li><li>Конвейер pandas с проверкой входных данных и бизнес-правилами</li><li>Экспорт CSV / JSON и модульные тесты</li>",
             "<li>Валовые и чистые продажи, помесячная динамика и вклад стран</li><li>RFM-сегментация, 13 когорт и взвешенное удержание первого месяца 22,50%</li><li>SQLite CTE и оконные функции, дашборд Streamlit и сверка SQL с pandas</li>",
             "<li>Помесячная динамика MRR / ARR: новые подписки, расширение, сокращение и отток</li><li>GRR / NRR, снимки на конец месяца, когорты и отчёты по каналам и регионам</li><li>CTE, ROW_NUMBER(), LAG(), SQL-проверки качества и сверка MRR с точностью до цента</li>",
-            "<li>8 собственных сквозных сценариев Playwright</li><li>17 задокументированных ручных тест-кейсов</li><li>GitHub Actions workflow для Chromium</li>",
+            "<li>11 собственных сквозных сценариев Playwright, включая accessibility и обработку повреждённого storage</li><li>20 ручных тест-кейсов, отчёт выполнения и 2 примера исправленных багов</li><li>GitHub Actions workflow для Chromium</li>",
             "<li>24 сценария Playwright для корзины, остатков, скидок, доставки и оформления заказа</li><li>Каталог рисков P0–P2 с трассировкой требований к тестам</li><li>Отдельный контекст браузера на тест, сохранение trace и скриншотов ошибок в CI-артефактах</li>",
             "<li>31 автотест: контракт ответа, валидация, пересечение дат, авторизация и отмена</li><li>Изоляция хранилища для каждого теста и атомарные операции бронирования в памяти</li><li>Локальный запуск: 31 passed, покрытие app.py и store.py операторами — 100%</li>",
             "<li>PostgreSQL: атомарные транзакции, идемпотентность и SKIP LOCKED для workers</li><li>Redis FSM с TTL и межрепличной изоляцией диалогов</li><li>53 теста, backup/restore drill, Prometheus rules и Docker CI</li>",
             "<li>OpenAI Responses API и строгий Pydantic-формат результата</li><li>Поиск по runbook, allow-list источников и обработка недоверенного текста</li><li>Удаление state-changing рекомендаций, 6 offline-тестов и отдельный live evaluator</li>",
-            "<li>Product brief, приоритизированный backlog и критерии приёмки</li><li>Решение по изменению scope, учебные review-комментарии и UAT</li><li>Handover и ретроспектива; никакие реальные клиенты или коллеги не заявляются</li>"
+            "<li>Product brief, приоритизированный backlog и критерии приёмки</li><li>Решение по изменению scope, учебные review-комментарии и UAT</li><li>Handover и ретроспектива; никакие реальные клиенты или коллеги не заявляются</li>","<li>Шесть вымышленных обращений игроков с примерами ответов на английском</li><li>Безопасный сбор доказательств, обоснование приоритета и границы эскалации</li><li>Внутренние заметки, передача кейса и правила коммуникации</li>","<li>Интерактивный demo-dashboard и страница услуги</li><li>Локальная рабочая панель с JSON/CSV экспортом и печатным отчётом</li><li>Нет отправки форм/писем, серверного хранения или фонового мониторинга</li>"
           ],
           ".project-links a": [
             "Открыть лабораторию и инструкции ↗", "CLI для анализа логов ↗",
@@ -304,7 +319,7 @@
             "Открыть проект ↗", "Посмотреть выводы ↗", "Исходный код дашборда ↗",
             "Открыть кейс ↗", "Описание анализа ↗", "CI-тесты ↗", "CI обновления данных ↗",
             "Открыть BI-кейс ↗", "SQL-код ↗", "Успешный PostgreSQL CI ↗",
-            "Открыть репозиторий ↗", "CI workflow ↗",
+            "Открыть репозиторий ↗", "Отчёт ручного тестирования ↗", "CI workflow ↗",
             "Кейс, приложение и тест-план ↗", "Исходный код браузерных тестов ↗", "CI workflow ↗",
             "Кейс и стратегия тестирования ↗", "Исходный код API ↗", "CI workflow ↗",
             "Технический кейс ↗",
@@ -313,7 +328,9 @@
             "Исходники и запуск ↗",
             "Набор evaluation cases ↗",
             "Открыть симуляцию ↗",
-            "Пример изменения scope ↗"
+            "Пример изменения scope ↗",
+            "Открыть сборник кейсов ↗", "Шесть сценариев поддержки ↗",
+            "Открыть страницу услуги ↗", "Посмотреть демо-дашборд ↗", "Открыть локальную рабочую панель ↗"
           ],
           ".transparency": "<strong>Границы и прозрачность.</strong> Платёжные среды, данные и инциденты синтетические либо публичные с указанным источником. Прежний Dada Cloud demo с одним worker выведен из эксплуатации; текущая Telegram multi-replica архитектура проходит CI, но ещё не развёрнута на публичном хосте. Live-evaluation AI-agent не запускался. Набор delivery simulation полностью вымышленный и не выдаётся за реальное командное участие или клиентскую поставку.",
           "#approach .section-kicker": "02 / Метод работы",
@@ -329,7 +346,7 @@
           "#web .panel a": ["Открыть портфолио сайтов ↗", "Открыть репозиторий на GitHub ↗"],
           "#contact .section-kicker": "04 / Контакты",
           "#contact h2": "Обсудим технические задачи, которые стоит решить.",
-          "#contact .contact-inner > div:first-child > p:last-child": "Рассматриваю удалённые вакансии в Python Automation / Application Engineering, Application Support, Support Engineering и QA Automation.",
+          "#contact .contact-inner > div:first-child > p:last-child": "Рассматриваю удалённые вакансии в Application Support, Technical Support, Games Support, Support Engineering, QA Automation и Python-разработке.",
           "#contact .contact-actions a": ["Написать Артёму ↗", "Telegram ↗", "Профиль GitHub ↗"],
           "footer .footer-inner span": ["© 2026 Артём Калинин · Инженерное портфолио", "Самостоятельные проекты · Воспроизводимые примеры · Чёткие границы работ"]
         }
