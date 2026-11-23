@@ -72,7 +72,7 @@ export function moveTaskForward(tasks: Task[], id: string): Task[] {
   const current = tasks.find((task) => task.id === id);
   if (!current) return tasks;
   const currentIndex = TASK_STATUSES.indexOf(current.status);
-  const nextStatus = TASK_STATUSES[Math.min(currentIndex + 1, TASK_STATUSES.length - 1)];
+  const nextStatus = TASK_STATUSES[Math.min(currentIndex + 1, TASK_STATUSES.length - 1)] ?? current.status;
   return nextStatus === current.status ? tasks : moveTask(tasks, id, nextStatus);
 }
 
