@@ -1,5 +1,7 @@
 # Linux Support Engineering Lab
 
+**[Visual walkthrough — incident map, diagnostic commands and triage output](./overview.html)**
+
 A reproducible troubleshooting lab for **Technical Support, Application Support L2 and Support Engineering**. The workflow is evidence-first: establish impact, inspect the relevant layer, isolate the fault, apply a safe recovery and verify the result.
 
 > **Scope:** all incidents and log entries are generated examples. This is a practice lab—not a real production incident or client engagement.
