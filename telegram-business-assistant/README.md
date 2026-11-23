@@ -139,6 +139,12 @@ With REDIS_URL configured, unfinished FSM conversations survive a bot process re
 
 Tests cover lead persistence, application policy, handler/FSM orchestration, outbox transaction atomicity, lease fencing, retries/dead-letter behaviour, migrations, idempotent replay and request-ID validation/propagation. CI additionally runs service-backed integration tests against PostgreSQL and Redis: concurrent replay, SKIP LOCKED work distribution, shared FSM persistence after reconnect and cross-instance per-user event isolation. CI exercises a PostgreSQL dump/restore to a disposable database. No live Telegram token is required for these tests.
 
+## Latest CI evidence
+
+The reviewed **23 November 2026** GitHub Actions run completed successfully. It passed Python linting, unit and PostgreSQL/Redis service-integration tests, a disposable PostgreSQL backup/restore verification, Prometheus scrape/alert validation and Docker image build.
+
+[Open the successful workflow run](https://github.com/blvxx/portfolio/actions/runs/45102741553).
+
 ## Configuration
 
 | Variable | Required | Purpose |
