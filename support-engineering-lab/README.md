@@ -1,24 +1,33 @@
 # Linux Support Engineering Lab
 
-A reproducible Linux operations lab for Application Support L2, Technical Support and Support Engineering. It demonstrates a disciplined workflow: observe symptoms, collect evidence, isolate the failing layer, apply a safe recovery step and verify service health.
+A reproducible troubleshooting lab for **Technical Support, Application Support L2 and Support Engineering**. The workflow is evidence-first: establish impact, inspect the relevant layer, isolate the fault, apply a safe recovery and verify the result.
 
-> **Lab scope:** all logs and incidents are generated examples. No real infrastructure, customer data or production outage is represented.
+> **Scope:** all incidents and log entries are generated examples. This is a practice lab—not a real production incident or client engagement.
 
-## What this lab demonstrates
+## Incident coverage
 
-- Linux service inspection with `systemctl` and `journalctl`.
-- Process, memory, disk and filesystem troubleshooting.
-- Network and DNS diagnosis with `ss`, `ip`, `curl`, `dig` and `getent`.
-- Nginx reverse-proxy and HTTP 502/504 investigation.
-- TLS certificate checks and permission troubleshooting.
-- PostgreSQL connection exhaustion and application dependency analysis.
-- Evidence-based incident notes, recovery checks and escalation.
+| Scenario | Initial signal | First checks |
+|---|---|---|
+| systemd service failure | Service inactive / restart loop | `systemctl status`, `journalctl -u`, unit config |
+| Disk or inode pressure | Writes fail / disk full | `df -h`, `df -i`, `du`, deleted-open files |
+| Nginx 502 | Bad Gateway | upstream status, listener, direct health check |
+| Nginx 504 | Gateway timeout | upstream latency, saturation, DB/dependency wait |
+| DNS failure | Hostname cannot resolve | `getent`, `dig`, resolver config |
+| TLS certificate | Certificate expired / handshake failure | dates, SNI, chain, renewal logs |
+| OOM / memory pressure | Process killed / instability | kernel journal, memory, cgroup limits |
+| PostgreSQL pool exhaustion | Connection timeout | active sessions, pool size, long transactions |
+| Permission denied | Access failure | `namei`, ownership, ACL, service account |
+| Port conflict | Bind failure / refused connection | `ss -lntp`, process, bind address |
 
-## Quick start
+Detailed command sequences and recovery/verification notes: **[10 incident playbooks](docs/incident-playbooks.md)**.
 
-Requirements: Python 3.10+. The analyzer uses only the Python standard library.
+## Log triage CLI
 
-From the repository root:
+A standard-library Python utility scans sample logs, returns severity-ranked findings, preserves source and line number, and suggests the next diagnostic check. It is a heuristic aid—not a root-cause oracle.
+
+### Run it
+
+Python 3.10+; no third-party packages required. Run from the repository root:
 
 ```bash
 python support-engineering-lab/scripts/log_triage.py \
@@ -26,40 +35,50 @@ python support-engineering-lab/scripts/log_triage.py \
   support-engineering-lab/sample-logs/nginx-error.log
 ```
 
-Generate JSON and run the unit tests:
+JSON output and tests:
 
 ```bash
-python support-engineering-lab/scripts/log_triage.py support-engineering-lab/sample-logs/system.log --format json
+python support-engineering-lab/scripts/log_triage.py \
+  support-engineering-lab/sample-logs/system.log --format json
+
 python -m unittest discover -s support-engineering-lab/tests -v
 ```
 
-## Repository map
+### Example finding
 
-- `scripts/log_triage.py` — deterministic log classifier with severity, evidence line and next diagnostic check.
-- `sample-logs/` — generated system, kernel and Nginx logs.
-- `tests/test_log_triage.py` — unit tests for rule matching, ordering and CLI output.
-- [Incident playbooks](docs/incident-playbooks.md) — 10 incident drills.
-- [Incident report template](docs/incident-report-template.md) — reusable incident handover.
+```text
+[HIGH] DNS_FAILURE — DNS or hostname resolution failed
+  evidence: sample.log:12
+  message: Temporary failure in name resolution
+  next: getent hosts <hostname>; dig <hostname>; check resolver configuration...
+```
+
+The exact output depends on the input log. Findings include a rule ID, severity, source file, line number, matched message and suggested next check.
 
 ## Investigation workflow
 
-1. Confirm impact, affected endpoint and start time.
-2. Check service state, recent journal entries and restart history.
-3. Check disk, inodes, memory, processes and open file descriptors.
-4. Check DNS, network path, upstream, database and TLS.
-5. Correlate timestamps and request IDs; distinguish symptoms from root cause.
-6. Preserve evidence and change one thing at a time.
-7. Verify health endpoint, business request, logs and monitoring.
-8. Record impact, timeline, mitigation, recovery and remaining risk.
+1. **Scope:** who/what is affected, endpoint, start time, business impact.
+2. **Service:** status, restart history, recent journal and deployment/config changes.
+3. **Host:** CPU, memory, disk, inodes, processes and file descriptors.
+4. **Connectivity:** DNS, route, TCP listener, TLS, proxy and upstream.
+5. **Dependencies:** database, connection pools, queues and external services.
+6. **Evidence:** correlate timestamps/request IDs; test hypotheses rather than assume.
+7. **Recovery:** use an approved, minimal change; preserve relevant evidence.
+8. **Verification:** service health, representative request, logs and monitoring.
+9. **Handover:** impact, timeline, root cause (if confirmed), mitigation, recovery and remaining risk.
 
-## Practice scenarios
+## Repository map
 
-systemd failure · disk/inode exhaustion · Nginx 502 · Nginx 504 · DNS failure · expired TLS · OOM kill · PostgreSQL pool exhaustion · permission denied · port conflict.
+- `scripts/log_triage.py` — log-pattern classifier and CLI (text/JSON).
+- `sample-logs/` — generated Linux, kernel and Nginx log samples.
+- `tests/test_log_triage.py` — rule ordering, evidence, JSON and input-error checks.
+- `docs/incident-playbooks.md` — command-level troubleshooting and verification steps.
+- `docs/incident-report-template.md` — reusable incident notes/handover.
 
 ## Quality checks
 
-GitHub Actions runs the analyzer unit tests and produces a JSON triage artifact on relevant pushes and pull requests. A configured workflow is not represented as a passing run until GitHub Actions confirms it.
+GitHub Actions runs unit tests and publishes a JSON triage artifact. The workflow definition is not itself evidence of a passing run; check the linked Actions status for the latest result.
 
-## Skills demonstrated
+## Skills shown
 
-Linux operations · systemd · journalctl · Nginx · HTTP · DNS · TCP/IP · TLS · Python · log analysis · incident triage · root-cause investigation · recovery verification · technical documentation
+Linux · systemd · journalctl · Nginx · HTTP · DNS · TCP/IP · TLS · PostgreSQL · Python · log analysis · incident triage · RCA · recovery verification · technical documentation
