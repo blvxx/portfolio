@@ -49,6 +49,8 @@ docker compose up --build
 
 Open the demo UI at http://localhost:8080.
 
+For safety, the published host ports bind to `127.0.0.1` by default. The UI, APIs, Prometheus and Grafana are intended for local evaluation; do not expose this demo stack directly to the public internet.
+
 Services:
 - Payment UI: http://localhost:8080
 - Payment API docs: http://localhost:8000/docs
