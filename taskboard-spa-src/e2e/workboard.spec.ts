@@ -20,9 +20,7 @@ async function createTask(
 }
 
 function taskCard(page: Page, title: string): Locator {
-  return page.locator(".task-card").filter({
-    has: page.getByRole("button", { name: title, exact: true }),
-  });
+  return page.locator(".task-card").filter({ hasText: title });
 }
 
 test("renders the demo workspace and four workflow columns", async ({ page }) => {
@@ -45,7 +43,7 @@ test("creates, searches, edits, advances, deletes and resets a task", async ({ p
   await page.getByRole("textbox", { name: "Search tasks, people or tags" }).fill("");
   await expect(page.locator(".task-card")).toHaveCount(7);
 
-  await taskCard(page, smokeTask).getByRole("button", { name: smokeTask }).click();
+  await taskCard(page, smokeTask).locator(".task-title-heading button").click();
   const editDialog = page.getByRole("dialog");
   await expect(editDialog).toBeVisible();
   await editDialog.getByLabel(/Task title/).fill(editedTask);
@@ -58,7 +56,7 @@ test("creates, searches, edits, advances, deletes and resets a task", async ({ p
   const inProgressColumn = page
     .locator(".board-column")
     .filter({ has: page.getByRole("heading", { name: "In progress", exact: true }) });
-  await expect(inProgressColumn.getByRole("button", { name: editedTask })).toHaveCount(1);
+  await expect(inProgressColumn.locator(".task-title-heading button", { hasText: editedTask })).toHaveCount(1);
 
   await page.getByRole("button", { name: /List/ }).click();
   const editedRow = page.getByRole("row").filter({ hasText: editedTask });
@@ -66,9 +64,9 @@ test("creates, searches, edits, advances, deletes and resets a task", async ({ p
   await expect(editedRow.getByText("In progress")).toBeVisible();
 
   await page.getByRole("button", { name: /Board/ }).click();
-  await taskCard(page, editedTask).getByRole("button", { name: editedTask }).click();
+  await taskCard(page, editedTask).locator(".task-title-heading button").click();
   await page.getByRole("dialog").getByRole("button", { name: "Delete task" }).click();
-  await expect(page.getByRole("button", { name: editedTask })).toHaveCount(0);
+  await expect(taskCard(page, editedTask)).toHaveCount(0);
 
   await page.getByRole("button", { name: "Reset demo" }).click();
   await expect(page.locator(".task-card")).toHaveCount(6);
