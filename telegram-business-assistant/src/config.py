@@ -48,7 +48,19 @@ class Settings:
         if bot_mode not in {"polling", "webhook"}:
             raise ValueError("BOT_MODE must be either 'polling' or 'webhook'")
 
-        webhook_base_url = os.getenv("WEBHOOK_BASE_URL", "").strip().rstrip("/") or None
+        configured_webhook_url = os.getenv("WEBHOOK_BASE_URL", "").strip().rstrip("/")
+        koyeb_public_domain = os.getenv("KOYEB_PUBLIC_DOMAIN", "").strip().rstrip("/")
+        if configured_webhook_url:
+            webhook_base_url = configured_webhook_url
+        elif koyeb_public_domain:
+            # Koyeb exposes its generated public domain without a URL scheme.
+            webhook_base_url = (
+                koyeb_public_domain
+                if koyeb_public_domain.startswith(("http://", "https://"))
+                else f"https://{koyeb_public_domain}"
+            )
+        else:
+            webhook_base_url = None
         webhook_secret = os.getenv("WEBHOOK_SECRET", "").strip() or None
         webhook_path = os.getenv("WEBHOOK_PATH", "/telegram/webhook").strip()
         if not webhook_path.startswith("/"):
@@ -68,7 +80,7 @@ class Settings:
             ):
                 raise ValueError("WEBHOOK_SECRET must use only letters, digits, '_' or '-'")
 
-        port = int(os.getenv("WEB_SERVER_PORT", "8080"))
+        port = int(os.getenv("WEB_SERVER_PORT", "").strip() or os.getenv("PORT", "8080").strip())
         if not 1 <= port <= 65535:
             raise ValueError("WEB_SERVER_PORT must be between 1 and 65535")
 
