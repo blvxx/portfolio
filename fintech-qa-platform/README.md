@@ -131,6 +131,16 @@ The GitHub Actions workflow publishes:
 - Allure HTML report.
 - Raw Allure results, including data needed to preserve history/trends across runs.
 
+## Latest CI evidence
+
+The latest reviewed run on **23 November 2026** completed successfully across all three jobs:
+
+- **Quality:** Ruff lint and automated API tests passed.
+- **Compose smoke:** the payment-to-ledger transaction, idempotent replay, account-balance invariant, Prometheus/Grafana readiness and guarded local Ledger outage/recovery drill passed.
+- **UI E2E:** the Docker stack started, Playwright browser tests passed, the Allure HTML report and screenshots were generated, and the evidence bundle was uploaded.
+
+[Open the successful GitHub Actions run](https://github.com/blvxx/portfolio/actions/runs/45100258032) · [JUnit report artifact](https://github.com/blvxx/portfolio/actions/runs/45100258032/artifacts/14784877944) · [Operational drill evidence](https://github.com/blvxx/portfolio/actions/runs/45100258032/artifacts/14784644214) · [Allure report and screenshots](https://github.com/blvxx/portfolio/actions/runs/45100258032/artifacts/14784194837)
+
 ## Known limitations
 
 - Both services use one PostgreSQL instance in this demonstration, but own separate tables.
