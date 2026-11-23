@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
   createTask,
   deleteTask,
   filterTasks,
   moveTaskForward,
+  parseTasks,
   reopenTask,
   summarizeTasks,
   updateTask,
@@ -133,33 +134,6 @@ function loadTasks(): Task[] {
   }
 }
 
-function parseTasks(raw: string | null): Task[] {
-  if (!raw) return seedTasks;
-  try {
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return seedTasks;
-    return parsed.filter((item): item is Task => {
-      if (!item || typeof item !== "object") return false;
-      const task = item as Record<string, unknown>;
-      return (
-        typeof task.id === "string" &&
-        typeof task.title === "string" &&
-        typeof task.description === "string" &&
-        typeof task.project === "string" &&
-        typeof task.assignee === "string" &&
-        ["backlog", "in-progress", "review", "done"].includes(String(task.status)) &&
-        ["urgent", "high", "medium", "low"].includes(String(task.priority)) &&
-        typeof task.dueDate === "string" &&
-        Array.isArray(task.tags) &&
-        task.tags.every((tag) => typeof tag === "string") &&
-        typeof task.createdAt === "string"
-      );
-    });
-  } catch {
-    return seedTasks;
-  }
-}
-
 function initials(name: string): string {
   return name
     .split(" ")
@@ -207,9 +181,9 @@ function TaskCard({ task, onEdit, onAdvance }: TaskCardProps) {
           <span aria-hidden="true" />{priorityLabels[task.priority]}
         </span>
       </div>
-      <button className="task-title-button" type="button" onClick={() => onEdit(task)}>
-        <h3>{task.title}</h3>
-      </button>
+      <h3 className="task-title-heading">
+        <button type="button" onClick={() => onEdit(task)}>{task.title}</button>
+      </h3>
       <p className="task-description">{task.description}</p>
       <div className="task-tags">
         {task.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}
@@ -246,10 +220,39 @@ interface TaskModalProps {
 }
 
 function TaskModal({ task, draft, setDraft, onClose, onSave, onDelete }: TaskModalProps) {
+  const dialogRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
+    const dialog = dialogRef.current;
+    const getFocusable = () =>
+      Array.from(
+        dialog?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((element) => element.offsetParent !== null);
+
+    getFocusable()[0]?.focus();
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = getFocusable();
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [onClose]);
@@ -262,11 +265,12 @@ function TaskModal({ task, draft, setDraft, onClose, onSave, onDelete }: TaskMod
     <div className="modal-backdrop" onMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose();
     }}>
-      <section className="task-modal" role="dialog" aria-modal="true" aria-labelledby="task-modal-title">
+      <section ref={dialogRef} className="task-modal" role="dialog" aria-modal="true" aria-labelledby="task-modal-title" aria-describedby="task-modal-description">
         <div className="modal-heading">
           <div>
             <span className="eyebrow">{task ? "TASK DETAILS" : "NEW WORK ITEM"}</span>
             <h2 id="task-modal-title">{task ? "Edit task" : "Create a task"}</h2>
+            <p id="task-modal-description" className="modal-description">Keep the task details, owner and next step up to date.</p>
           </div>
           <button className="icon-button modal-close" type="button" onClick={onClose} aria-label="Close dialog">×</button>
         </div>
@@ -336,6 +340,23 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [draft, setDraft] = useState<TaskDraft>(emptyDraft);
   const [notice, setNotice] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const onShortcut = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onShortcut);
+    return () => window.removeEventListener("keydown", onShortcut);
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) previousFocusRef.current?.focus();
+  }, [isModalOpen]);
 
   useEffect(() => {
     try {
@@ -351,13 +372,19 @@ export default function App() {
   );
   const summary = useMemo(() => summarizeTasks(tasks), [tasks]);
 
+  const rememberFocus = () => {
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  };
+
   const openNewTask = () => {
+    rememberFocus();
     setEditingTask(null);
     setDraft(emptyDraft());
     setIsModalOpen(true);
   };
 
   const openEditTask = (task: Task) => {
+    rememberFocus();
     setEditingTask(task);
     setDraft({
       title: task.title,
@@ -381,7 +408,8 @@ export default function App() {
         setTasks((current) => updateTask(current, editingTask.id, draft));
         setNotice("Task updated successfully.");
       } else {
-        const newId = `WB-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+        const uuid = globalThis.crypto?.randomUUID?.();
+        const newId = `WB-${(uuid ?? Date.now().toString(36)).replaceAll("-", "").slice(0, 8).toUpperCase()}`;
         const created = createTask(draft, newId);
         setTasks((current) => [created, ...current]);
         setNotice("New task added to the workspace.");
@@ -535,7 +563,7 @@ export default function App() {
             <div className="toolbar">
               <label className="search-box">
                 <span aria-hidden="true">⌕</span>
-                <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tasks, people or tags..." aria-label="Search tasks, people or tags" />
+                <input ref={searchInputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search tasks, people or tags..." aria-label="Search tasks, people or tags" />
                 <kbd>⌘ K</kbd>
               </label>
               <label className="filter-select">
