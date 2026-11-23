@@ -59,7 +59,9 @@ export function createTask(
 }
 
 export function updateTask(tasks: Task[], id: string, draft: TaskDraft): Task[] {
-  return tasks.map((task) => (task.id === id ? { ...task, ...draft, title: draft.title.trim() } : task));
+  return tasks.map((task) =>
+    task.id === id ? createTask(draft, task.id, task.createdAt) : task,
+  );
 }
 
 export function moveTask(tasks: Task[], id: string, status: TaskStatus): Task[] {
