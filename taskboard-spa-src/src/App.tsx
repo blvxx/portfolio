@@ -544,7 +544,7 @@ export default function App() {
               <small><span className="trend-up">↑</span> Across all projects</small>
             </article>
             <article className="stat-card">
-              <div className="stat-top"><span>In progress</span><span className="stat-icon blue">◴</span></div>
+              <div className="stat-top"><span>Active tasks</span><span className="stat-icon blue">◴</span></div>
               <strong>{summary.active.toString().padStart(2, "0")}</strong>
               <small>Tasks not yet completed</small>
             </article>
