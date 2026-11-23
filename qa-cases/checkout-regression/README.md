@@ -59,7 +59,7 @@ The suite loads repository HTML, CSS and JavaScript into an isolated browser pag
 
 ## CI evidence
 
-GitHub Actions runs the browser regression suite on relevant pushes and pull requests. The latest verified suite completed with **24 passed in Chromium (35 seconds)**: [GitHub Actions run](https://github.com/blvxx/portfolio/actions/runs/44993648165). The workflow uploaded the JUnit report and per-test Playwright traces as an evidence bundle: [download CI artifact](https://github.com/blvxx/portfolio/actions/runs/44993648165/artifacts/14743221054). Failure screenshots are also captured and uploaded when a test fails.
+GitHub Actions runs the browser regression suite on relevant pushes and pull requests. The latest verified suite completed with **24 passed in Chromium (35 seconds)**: [GitHub Actions run](https://github.com/blvxx/portfolio/actions/runs/44993763830). The workflow uploaded the JUnit report and per-test Playwright traces as an evidence bundle: [download CI artifact](https://github.com/blvxx/portfolio/actions/runs/44993763830/artifacts/14742947149). Failure screenshots are also captured and uploaded when a test fails.
 
 ## Limitations
 
