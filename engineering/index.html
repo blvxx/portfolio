@@ -355,16 +355,19 @@
         document.title = isRu ? translations.ru.title : english.title;
         document.querySelector('meta[name="description"]').content = isRu ? translations.ru.description : english.description;
         document.querySelector('meta[property="og:title"]').content = isRu ? translations.ru.title : english.title;
-        document.querySelector('meta[property="og:description"]').content = isRu ? translations.ru.description : "Incident investigation, QA automation, API testing and analytics — practical case studies with code and reproducible evidence.";
+        document.querySelector('meta[property="og:description"]').content = isRu ? translations.ru.description : english.description;
         document.querySelector('.nav').setAttribute("aria-label", isRu ? "Основная навигация" : "Main navigation");
         document.querySelector('#mobile-nav').setAttribute("aria-label", isRu ? "Мобильная навигация" : "Mobile navigation");
         document.querySelector('.language-switch').setAttribute("aria-label", isRu ? "Язык" : "Language");
         document.querySelectorAll("[data-language]").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.language === language)));
-        if (isRu) Object.entries(translations.ru).forEach(([selector, value]) => {
+        try { localStorage.setItem("engineering-portfolio-language", language); } catch (error) {}
+        if (!isRu) {
+          location.reload();
+          return;
+        }
+        Object.entries(translations.ru).forEach(([selector, value]) => {
           if (selector !== "title" && selector !== "description") setText(selector, value);
         });
-        else location.reload();
-        try { localStorage.setItem("engineering-portfolio-language", language); } catch (error) {}
       };
       const toggle = document.querySelector(".menu-toggle");
       const mobileNav = document.querySelector("#mobile-nav");
