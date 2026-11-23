@@ -87,6 +87,8 @@ The former Dada Cloud demo ran as one background worker using Telegram long poll
 
 The current source has CI evidence for PostgreSQL and Redis integration, a disposable-database backup/restore drill, Prometheus rule validation and a Docker image build. These checks do not prove that a particular host has persistent storage, scheduled off-host backups, working alert notifications or a successful host-level restore.
 
+For a low-volume evaluation deployment on a free web-hosting stack, see the [Koyeb + Neon + Upstash guide](docs/deploy-koyeb-neon-upstash.md). The guide uses webhook mode and explicitly documents scale-to-zero, free-tier limits and the non-production boundary. No public host deployment is claimed until the runbook's smoke test is completed.
+
 Do not collect real customer enquiries through an unverified deployment. Use the Docker Compose instructions below for local evaluation. Before using a new host with real data, provision persistent PostgreSQL and Redis, configure secrets and HTTPS webhook delivery, then complete the smoke, restart, backup and restore checks in the operations runbook.
 
 ## Docker deployment
