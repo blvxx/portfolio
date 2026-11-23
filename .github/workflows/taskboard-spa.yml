@@ -62,17 +62,36 @@ jobs:
 
       - name: Publish static SPA to GitHub Pages branch content
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          rm -rf taskboard-spa
-          mkdir -p taskboard-spa
-          cp -R taskboard-spa-src/dist/. taskboard-spa/
-          touch taskboard-spa/.nojekyll
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add taskboard-spa taskboard-spa-src/package-lock.json
-          if git diff --cached --quiet; then
-            echo "Published bundle is already up to date."
-          else
+
+          # Rebase the generated bundle onto the latest main revision. Other
+          # profile/README commits may land while the build is running.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git reset --hard origin/main
+            rm -rf taskboard-spa
+            mkdir -p taskboard-spa
+            cp -R taskboard-spa-src/dist/. taskboard-spa/
+            touch taskboard-spa/.nojekyll
+            git add taskboard-spa taskboard-spa-src/package-lock.json
+
+            if git diff --cached --quiet; then
+              echo "Published bundle is already up to date."
+              exit 0
+            fi
+
             git commit -m "chore(taskboard): publish SPA build [skip ci]"
-            git push origin HEAD:main
-          fi
+            if git push origin HEAD:main; then
+              echo "Published Taskboard SPA successfully."
+              exit 0
+            fi
+
+            echo "main moved during push attempt ${attempt}; refreshing and retrying."
+          done
+
+          echo "Could not publish after five concurrent-update retries."
+          exit 1
