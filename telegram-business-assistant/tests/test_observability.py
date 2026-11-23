@@ -1,5 +1,7 @@
 """HTTP endpoint tests for health, readiness and metrics."""
 
+import re
+
 import pytest
 from aiohttp.test_utils import TestClient, TestServer
 
@@ -58,5 +60,33 @@ async def test_readiness_returns_503_when_dependency_is_unavailable() -> None:
         ready = await client.get("/readyz")
         assert ready.status == 503
         assert (await ready.json()) == {"status": "not_ready"}
+    finally:
+        await client.close()
+
+
+@pytest.mark.asyncio
+async def test_request_id_is_preserved_and_generated() -> None:
+    client = TestClient(TestServer(create_observability_app(FakeDatabase())))
+    await client.start_server()
+    try:
+        supplied = await client.get("/healthz", headers={"X-Request-ID": "case-42:node_a"})
+        generated = await client.get("/healthz")
+
+        assert supplied.headers["X-Request-ID"] == "case-42:node_a"
+        assert re.fullmatch(r"[A-Za-z0-9._:-]{1,64}", generated.headers["X-Request-ID"])
+    finally:
+        await client.close()
+
+
+@pytest.mark.asyncio
+async def test_invalid_request_id_is_replaced() -> None:
+    client = TestClient(TestServer(create_observability_app(FakeDatabase())))
+    await client.start_server()
+    try:
+        response = await client.get("/healthz", headers={"X-Request-ID": "unsafe value"})
+
+        assert response.status == 200
+        assert response.headers["X-Request-ID"] != "unsafe value"
+        assert re.fullmatch(r"[A-Za-z0-9._:-]{1,64}", response.headers["X-Request-ID"])
     finally:
         await client.close()
