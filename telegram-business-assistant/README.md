@@ -27,7 +27,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 - aiogram 3.x
 - PostgreSQL / asyncpg for shared multi-instance persistence; SQLite / aiosqlite for local fallback
 - Redis for persistent FSM state and cross-instance event isolation
-- aiohttp health/readiness endpoints and Prometheus metrics, plus Prometheus rules for target/dependency failures, dead letters and stalled outbox
+- aiohttp health/readiness endpoints, validated `X-Request-ID` correlation and Prometheus metrics, plus Prometheus rules for target/dependency failures, dead letters and stalled outbox
 - pytest, pytest-asyncio and service-backed integration tests
 - GitHub Actions with PostgreSQL and Redis service containers
 
@@ -58,7 +58,7 @@ This portfolio project demonstrates a lead-capture workflow with consent, valida
 
 The multi-replica deployment profile uses PostgreSQL for shared lead/outbox data and Redis for persistent FSM state plus per-user event isolation. Webhook mode is required for horizontal scaling; Telegram long polling must remain a single active poller. Every replica can run an outbox worker because PostgreSQL row locks with SKIP LOCKED prevent two workers from claiming the same event. SQLite and MemoryStorage remain optional local-development fallbacks only and are not a multi-replica deployment option.
 
-PostgreSQL schema migrations are serialized with a database advisory lock. Lead creation and outbox enqueue are one transaction, repeated Telegram message IDs are replay-safe, and delivery remains at-least-once (a remote send followed by a process crash can still produce a duplicate). The process exposes /healthz, /readyz and /metrics on WEB_SERVER_PORT. The backup and restore scripts verify the dump archive before use; CI restores a dump into a separate disposable database and checks restored data. This is a tested procedure in CI, not proof of a production backup schedule, host-level persistence or a host-level restore.
+PostgreSQL schema migrations are serialized with a database advisory lock. Lead creation and outbox enqueue are one transaction, repeated Telegram message IDs are replay-safe, and delivery remains at-least-once (a remote send followed by a process crash can still produce a duplicate). The process exposes /healthz, /readyz and /metrics on WEB_SERVER_PORT. HTTP requests receive a validated or generated `X-Request-ID` echoed in the response; access logs include only the request ID, method, path and status code, never query strings or request bodies. The backup and restore scripts verify the dump archive before use; CI restores a dump into a separate disposable database and checks restored data. This is a tested procedure in CI, not proof of a production backup schedule, host-level persistence or a host-level restore.
 
 ## Run locally
 
@@ -137,7 +137,7 @@ With REDIS_URL configured, unfinished FSM conversations survive a bot process re
 
        pytest -q
 
-Tests cover lead persistence, application policy, handler/FSM orchestration, outbox transaction atomicity, lease fencing, retries/dead-letter behaviour, migrations and idempotent replay. CI additionally runs service-backed integration tests against PostgreSQL and Redis: concurrent replay, SKIP LOCKED work distribution, shared FSM persistence after reconnect and cross-instance per-user event isolation. CI exercises a PostgreSQL dump/restore to a disposable database. No live Telegram token is required for these tests.
+Tests cover lead persistence, application policy, handler/FSM orchestration, outbox transaction atomicity, lease fencing, retries/dead-letter behaviour, migrations, idempotent replay and request-ID validation/propagation. CI additionally runs service-backed integration tests against PostgreSQL and Redis: concurrent replay, SKIP LOCKED work distribution, shared FSM persistence after reconnect and cross-instance per-user event isolation. CI exercises a PostgreSQL dump/restore to a disposable database. No live Telegram token is required for these tests.
 
 ## Configuration
 
