@@ -152,10 +152,20 @@ def test_transport_timeout_is_not_silently_swallowed():
         client.get_post(1)
 
 
-def test_context_manager_closes_session():
+def test_context_manager_does_not_close_borrowed_session():
     session = make_session()
 
     with PostsApiClient(session=session):
+        pass
+
+    session.close.assert_not_called()
+
+
+def test_context_manager_closes_owned_session(monkeypatch):
+    session = make_session()
+    monkeypatch.setattr(requests, "Session", lambda: session)
+
+    with PostsApiClient():
         pass
 
     session.close.assert_called_once_with()
