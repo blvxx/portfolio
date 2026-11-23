@@ -19,6 +19,7 @@ class PostsApiClient:
     """
 
     DEFAULT_BASE_URL = "https://jsonplaceholder.typicode.com"
+    USER_AGENT = "blvxx-api-automation/1.1"
 
     def __init__(
         self,
@@ -46,7 +47,7 @@ class PostsApiClient:
         self.session.headers.update(
             {
                 "Accept": "application/json",
-                "User-Agent": "blvxx-api-automation/1.1",
+                "User-Agent": self.USER_AGENT,
             }
         )
 
