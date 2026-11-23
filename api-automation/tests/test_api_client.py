@@ -22,7 +22,7 @@ def test_client_sets_default_headers_and_timeout():
     client = PostsApiClient(session=session, timeout=4)
 
     assert session.headers["Accept"] == "application/json"
-    assert session.headers["User-Agent"] == "blvxx-api-automation/1.0"
+    assert session.headers["User-Agent"] == PostsApiClient.USER_AGENT
     assert client.timeout == 4
     assert client.base_url == PostsApiClient.DEFAULT_BASE_URL
 
