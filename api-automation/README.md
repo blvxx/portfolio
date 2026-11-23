@@ -16,7 +16,8 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 | Partial update | `PATCH /posts/{id}`, partial JSON payload and updated resource representation |
 | Delete | `DELETE /posts/{id}`, successful deletion response |
 | Negative | Unknown IDs, invalid filters, incorrect types, missing fields and unexpected request/response properties |
-| Unit | HTTP method, URL, headers, query parameters, JSON body, timeout propagation, environment configuration and session lifecycle |
+| Unit | HTTP method, URL, headers, query parameters, JSON body, timeout propagation, environment configuration and owned/borrowed session lifecycle |
+| Transport | Loopback HTTP fault injection verifies that transient GET failures retry while POST writes are never replayed |
 | Postman | Importable collection with read, CRUD and negative requests plus response assertions |
 
 ## Test design
@@ -31,6 +32,8 @@ Portfolio project demonstrating REST API test automation: a reusable HTTP client
 - Ruff checks the Python code for common errors and unused imports.
 - The Postman collection mirrors the main Posts API scenarios for manual execution.
 - Transport exceptions such as request timeouts are not swallowed by the client.
+- A deterministic local HTTP server verifies real adapter behavior for retryable reads and non-retryable writes without relying on an external API.
+- Injected `requests.Session` objects remain caller-owned; the client closes only sessions it creates.
 
 ## Client resilience features
 
@@ -174,6 +177,7 @@ api-automation/
 └── tests/
     ├── test_api_client.py
     ├── test_client_resilience.py
+    ├── test_http_transport.py
     └── test_posts_api.py
 ```
 
@@ -183,7 +187,7 @@ api-automation/
 - Demo write operations are not persistent and must not be treated as database persistence checks.
 - The project currently focuses on the Posts resource; the optional bearer-token setting demonstrates client configuration, not a verified authorization flow against the public demo API.
 - No database, load, security or production end-to-end coverage is claimed.
-- Future extensions can add a deterministic local mock API, contract drift checks and broader pagination edge cases.
+- Future extensions can add contract drift checks against an owned, versioned API contract and broader pagination edge cases.
 
 ## Maintainer
 
