@@ -25,7 +25,7 @@ const draft: TaskDraft = {
 };
 
 const fixtures: Task[] = [
-  createTask({ ...draft, id: undefined as never }, "WB-101", "2026-11-20T10:00:00.000Z"),
+  createTask(draft, "WB-101", "2026-11-20T10:00:00.000Z"),
   createTask(
     { ...draft, title: "Investigate webhook retries", status: "in-progress", priority: "urgent", project: "Platform" },
     "WB-102",
@@ -62,6 +62,13 @@ describe("task domain", () => {
     expect(updated[0]?.title).toBe("Updated onboarding");
     expect(updated[0]?.id).toBe("WB-101");
     expect(updated[1]?.title).toBe("Investigate webhook retries");
+  });
+
+  it("normalises updated fields and tags through the same validation path", () => {
+    const updated = updateTask(fixtures, "WB-101", { ...draft, title: "  Clean title  ", tags: ["UX", "UX", ""] });
+    expect(updated[0]?.title).toBe("Clean title");
+    expect(updated[0]?.tags).toEqual(["UX"]);
+    expect(updated[0]?.createdAt).toBe(fixtures[0]?.createdAt);
   });
 
   it("moves a task to a selected status", () => {
