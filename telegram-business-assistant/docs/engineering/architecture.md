@@ -123,3 +123,43 @@ Do not collect real customer data on the current hosted demo until its persisten
 - Configure off-host scheduled backups, retention and alert delivery.
 - Run and record a restore drill against the actual host.
 - Establish workload-specific pool limits, SLOs and alert thresholds.
+
+
+## Recorded engineering decisions
+
+### Decision 1 — Transactional outbox with at-least-once delivery
+
+**Context:** enquiry persistence and administrator notification are separate operations. Sending before the database commit can notify about an enquiry that was never stored; sending after commit without a durable event can lose the notification if the process exits.
+
+**Decision:** persist the enquiry and outbox event in one PostgreSQL transaction. Workers claim due rows using `FOR UPDATE SKIP LOCKED`, attach a lease token, and perform the external Telegram send outside the database transaction. Failed sends are retried with bounded exponential backoff; exhausted events are dead-lettered.
+
+**Trade-off:** PostgreSQL cannot atomically commit a remote Telegram send. If Telegram accepts a message and the process crashes before the delivered marker commits, a later retry can send a duplicate. The guarantee is at-least-once, not exactly-once.
+
+**Operational consequence:** dead-letter review, alert delivery, workload-specific lease tuning and a real-host recovery drill remain operational requirements, not claims made by this demo.
+
+### Decision 2 — Enforce replay safety at the persistence boundary
+
+**Context:** Telegram updates can be delivered or processed more than once. In-memory duplicate checks alone would not protect against concurrent handlers or process restarts.
+
+**Decision:** derive a stable idempotency key from the Telegram chat/message identity and pass it through a typed application command. PostgreSQL enforces uniqueness with a unique index. A conflicting insert returns the existing lead identifier and does not enqueue another outbox event.
+
+**Trade-off and scope:** the replay-protection guarantee applies when a non-null key is supplied. Calls without a key do not receive that guarantee. The key is specific to Telegram-originated submissions; it is not a general external-client idempotency API.
+
+### Decision 3 — Keep local and shared runtime profiles explicit
+
+**Context:** SQLite and in-memory FSM storage simplify local development but are not suitable as shared state across multiple replicas.
+
+**Decision:** retain SQLite / long polling as a local single-instance profile and use PostgreSQL / Redis / HTTPS webhook for the shared multi-replica profile. Configuration validation rejects incomplete shared-mode configuration rather than silently falling back to local storage.
+
+**Trade-off:** the shared profile has more operational dependencies. This is deliberate: a deployment must fail visibly when a required shared dependency is unavailable instead of presenting a misleading partially working mode.
+
+## Verification checklist for reviewers
+
+- [ ] Run the application unit tests and service-backed PostgreSQL/Redis integration tests.
+- [ ] Submit the same Telegram chat/message identity twice and verify that one lead and one outbox event exist.
+- [ ] Run more than one outbox worker and verify that row claiming does not intentionally double-claim an active lease.
+- [ ] Simulate a send failure and inspect retry scheduling and terminal dead-letter behavior.
+- [ ] Verify that readiness fails when PostgreSQL or Redis is unavailable in shared mode.
+- [ ] Inspect CI backup/restore evidence, while keeping the distinction between disposable CI restore and a real-host restore.
+
+The checklist is a reviewer guide. Items must not be marked complete unless they have actually been executed and evidence is available.
