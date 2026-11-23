@@ -21,7 +21,7 @@ Portfolio of hands-on engineering projects focused on technical troubleshooting,
 | Direction | Case study | Evidence |
 |---|---|---|
 | **Technical / Application Support** | [Linux Support Engineering Lab](./support-engineering-lab/) · [Incident Investigation Lab](./incident-lab/) | Linux troubleshooting, systemd, Nginx, DNS, TLS, log analysis, HTTP/webhooks, SQL diagnostics, RCA and recovery runbooks |
-| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | API/integration and E2E testing; 24 Playwright checkout scenarios; 31 pytest API cases covering validation, conflicts, idempotency and ownership |
+| **QA Engineering** | [FinTech QA Platform](./fintech-qa-platform/) · [Test Plan & Strategy](./fintech-qa-platform/docs/test-plan.md) · [Checkout Regression QA](./qa-cases/checkout-regression/) · [Booking API QA](./qa-cases/api-contract-negative/) | API/integration and E2E testing; risk-based coverage, payment/ledger invariants, controlled fault injection and CI reporting |
 | **API Automation** | [Python + pytest API suite](./api-automation/) | REST CRUD contracts, JSON Schema, negative cases, mocks, Postman and CI |
 | **Python Application Engineering** | [Telegram Business Assistant](./telegram-business-assistant/) | Async app with SQLite/PostgreSQL profiles, Redis, replay-safe transactions, outbox workers, health endpoints, metrics and backup/restore checks |
 | **AI Support Automation** | [AI Support Triage Agent](./ai-support-triage-agent/) | Runbook retrieval, structured triage, evidence validation, read-only diagnostics and escalation guardrails |
