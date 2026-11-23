@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import {
   createTask,
   deleteTask,
@@ -231,7 +231,7 @@ function TaskModal({ task, draft, setDraft, onClose, onSave, onDelete }: TaskMod
         ) ?? [],
       ).filter((element) => element.offsetParent !== null);
 
-    getFocusable()[0]?.focus();
+    (dialog?.querySelector<HTMLElement>("[autofocus]") ?? getFocusable()[0])?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -399,7 +399,7 @@ export default function App() {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = useCallback(() => setIsModalOpen(false), []);
 
   const saveTask = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -409,7 +409,7 @@ export default function App() {
         setNotice("Task updated successfully.");
       } else {
         const uuid = globalThis.crypto?.randomUUID?.();
-        const newId = `WB-${(uuid ?? Date.now().toString(36)).replaceAll("-", "").slice(0, 8).toUpperCase()}`;
+        const newId = `WB-${(uuid ?? Date.now().toString(36)).replaceAll("-", "").slice(0, 12).toUpperCase()}`;
         const created = createTask(draft, newId);
         setTasks((current) => [created, ...current]);
         setNotice("New task added to the workspace.");
