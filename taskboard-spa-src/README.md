@@ -24,8 +24,8 @@ Workboard demonstrates a small project-management workflow without a backend:
 - **TypeScript** defines task, status, priority, form and filter contracts.
 - `src/domain.ts` contains pure task operations, validation, selectors, summary calculations and storage parsing.
 - `src/App.tsx` composes the workspace, board/list views and task editor.
-- `src/domain.test.ts` covers domain behavior with Vitest.
-- `e2e/workboard.spec.ts` covers six Chromium browser flows: initial render, task lifecycle, filters, persistence, corrupt storage recovery and mobile overflow.
+- `src/domain.test.ts` covers domain behavior with **12 Vitest tests**.
+- `e2e/workboard.spec.ts` covers **six Chromium browser flows**: initial render, task lifecycle, filters, persistence, corrupt storage recovery and mobile overflow.
 - Vite builds a static bundle under `dist/`; GitHub Actions publishes the generated files to the sibling `taskboard-spa/` directory for GitHub Pages.
 
 The task domain is deliberately separated from the UI so validation, transitions and filtering can be tested without a browser or network.
@@ -51,7 +51,7 @@ npm run test:e2e
 
 ## Verification
 
-The GitHub Actions workflow runs strict TypeScript checks, Vitest domain tests, a production Vite build and six Chromium Playwright E2E scenarios. It uploads browser traces on failure. On pushes to `main`, it publishes the generated static site to:
+The GitHub Actions workflow runs strict TypeScript checks, **12 Vitest domain tests**, a production Vite build and **6 Chromium Playwright E2E scenarios**. The latest successful run is [Taskboard SPA CI — 23 November 2026](https://github.com/blvxx/portfolio/actions/runs/45158672646). Browser traces are uploaded on failure. On pushes to `main`, it publishes the generated static site to:
 
 `https://blvxx.github.io/portfolio/taskboard-spa/`
 
