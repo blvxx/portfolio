@@ -72,7 +72,7 @@ A browser-based task tracker and QA case study.
 | Project | Scope |
 |---|---|
 | [Games Support Casebook](./games-support-casebook/) | Synthetic player-support scenarios, response quality, severity, escalation and handover |
-| [Workboard — React + TypeScript SPA](./taskboard-spa-src/) | Internal project/task workspace prototype with Board/List views, CRUD, filters, local persistence, Vitest and CI publication |
+| [Workboard — React + TypeScript SPA](./taskboard-spa-src/) | Internal project/task workspace SPA with Board/List views, CRUD, filters, local persistence, 12 Vitest domain tests and 6 Playwright E2E scenarios |
 | [Telegram Business Assistant](./telegram-business-assistant/) | Async Telegram enquiry workflow, PostgreSQL, Redis FSM, transactional outbox, idempotency, health checks and Docker |
 | [AI Support Triage Agent](./ai-support-triage-agent/) | Runbook retrieval, structured L2 triage, citation validation and human-approval safeguards |
 | [Booking API QA](./qa-cases/api-contract-negative/) | 31 pytest cases for API contracts, pagination, validation, conflicts, idempotency and access control |
