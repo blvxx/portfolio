@@ -38,6 +38,7 @@ class PostsApiClient:
             raise ValueError("backoff_factor cannot be negative")
 
         owns_session = session is None
+        self._owns_session = owns_session
         self.session = session if session is not None else requests.Session()
         self.timeout = timeout
         self.base_url = (
@@ -153,8 +154,9 @@ class PostsApiClient:
         )
 
     def close(self) -> None:
-        """Close the underlying HTTP session."""
-        self.session.close()
+        """Close the HTTP session only when this client created it."""
+        if self._owns_session:
+            self.session.close()
 
     def __enter__(self) -> "PostsApiClient":
         return self
