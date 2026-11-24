@@ -1,17 +1,26 @@
 # QA Engineering Portfolio — Artem Kalinin
 
-**Target roles:** Junior QA Engineer · API Tester · QA Automation Engineer (Python)
+**Target roles:** Middle QA Engineer · Manual QA Engineer · API QA Engineer · QA Automation Engineer (Python) · Mobile QA Engineer
 
-A focused index of independent QA case studies. The projects demonstrate how I translate requirements into risk-based checks, test API contracts and browser workflows, investigate negative and boundary cases, document defects, and retain reproducible CI evidence.
+I combine functional, regression, exploratory and API testing with Python/Playwright automation and hands-on web, mobile and TV application testing. My focus is product risk, data integrity, test strategy, cross-layer investigation and evidence-based release decisions.
 
-> **Portfolio scope:** these are self-directed practice projects and authored test targets. They are not represented as commercial client deliveries or production testing experience. Each project states what is simulated and what its tests actually verify.
+**[GitHub Profile](https://github.com/blvxx)** · [Main Engineering Portfolio](./README.md) · [Email](mailto:blvx8x@gmail.com) · [Telegram](https://t.me/blvlxx)
+
+## What I bring
+
+- **Test ownership:** requirement analysis, scope definition, test planning, risk prioritisation, traceability and release recommendations.
+- **Manual QA:** functional, regression, exploratory, acceptance, negative, boundary and state-transition testing.
+- **Product coverage:** web applications, Android, iOS, Android TV and Smart TV scenarios.
+- **API and integration:** REST, HTTP, Postman, Swagger/OpenAPI, Charles/Proxyman traffic analysis, SQL and PostgreSQL.
+- **Automation:** Python, pytest, requests, JavaScript, Playwright and GitHub Actions.
+- **Diagnostics:** Chrome DevTools, browser storage, network inspection, logs, test traces and Android build/device diagnostics.
 
 ## Evidence at a glance
 
 | Area | Evidence | What it demonstrates |
 |---|---|---|
 | API automation | [Python API Automation](./api-automation/) — 62 tests; CI on Python 3.10 and 3.12 | REST CRUD, JSON Schema, positive/negative cases, pagination, timeouts, safe retry boundaries |
-| API quality / test design | [Booking API QA Sandbox](./qa-cases/api-contract-negative/) — 31 tests; 100% statement coverage for `app.py` and `store.py` | Risk-based coverage, authorization, idempotency, booking invariants, boundary validation and traceability |
+| API quality / test design | [Booking API QA Sandbox](./qa-cases/api-contract-negative/) — 31 tests; 100% statement coverage for app.py and store.py | Risk-based coverage, authorization, idempotency, booking invariants, boundary validation and traceability |
 | Web checkout regression | [Checkout & Cart QA](./qa-cases/checkout-regression/) — 24 Playwright scenarios | Revenue-critical flows, calculations, promotions, stock limits, form validation and duplicate-submit protection |
 | UI automation + manual QA | [Playwright QA Lab](https://github.com/blvxx/playwright-qa-lab) — 11 E2E tests and 20 documented manual cases | Browser regression, accessibility checks, persistence, responsive smoke and defect documentation |
 | Integration / system QA | [FinTech QA Platform](./fintech-qa-platform/) | API and service integration, PostgreSQL, Docker Compose, ledger invariants, browser flows and observability |
@@ -42,7 +51,7 @@ A reusable REST client and automated suite against the public JSONPlaceholder de
 A self-contained API and test suite for a fictional booking service.
 
 - 31 automated test cases.
-- 100% statement coverage for the authored `app.py` and `store.py` modules in the verified run.
+- 100% statement coverage for the authored app.py and store.py modules in the verified run.
 - Contract checks for status codes, response fields and pagination.
 - Boundary and negative scenarios for dates, capacity and invalid payloads.
 - Authorization and cross-user access checks.
@@ -106,40 +115,64 @@ A fictional payment and ledger sandbox used to exercise API and service-integrat
 
 **Boundary:** payment providers and business transactions are simulated. This is a QA sandbox, not a deployed financial product or production certification.
 
-## Test design and quality practices
+## Mobile, Android TV and Smart TV testing
 
-| Practice | Portfolio evidence |
-|---|---|
-| Requirement decomposition and risk prioritisation | [Booking API test matrix](./qa-cases/api-contract-negative/test-matrix.md) · [Checkout test plan](./qa-cases/checkout-regression/test-plan.md) |
-| Positive, negative and boundary testing | API Automation · Booking API · Checkout Regression |
-| State-transition and business-rule testing | Booking lifecycle · Cart / promo / fulfilment transitions |
-| API contract validation | HTTP status, headers, JSON Schema, response shape and pagination |
-| UI regression and accessibility | Playwright QA Lab · Checkout Regression |
-| Defect reporting | [Booking API examples](./qa-cases/api-contract-negative/bug-reports.md) · [Checkout examples](./qa-cases/checkout-regression/bug-reports.md) · [Playwright examples](https://github.com/blvxx/playwright-qa-lab/blob/main/docs/sample-bug-reports.md) |
-| CI evidence | GitHub Actions, JUnit XML, coverage reports, Playwright traces and failure screenshots |
+I also work with mobile and television application scenarios. The device-specific approach is documented in the [Mobile / Android TV / Smart TV QA Checklist](./qa-mobile-tv-checklist.md), which covers:
 
-**Defect-report transparency:** examples marked hypothetical are test-design illustrations, not claims that a real customer or production system experienced those defects.
+- Installation, first launch, updates and clean-data behavior.
+- Android and iOS lifecycle, permissions, notifications and deep links.
+- Network changes, offline states, timeouts and safe retries.
+- Android TV / Smart TV D-pad navigation, focus order, Back behavior and remote key handling.
+- Media playback, buffering, seek, audio tracks and subtitles.
+- Device/OS/firmware matrix, build identification and defect evidence.
+
+Compatibility claims should always identify the exact models, OS/firmware and builds actually tested.
+
+## QA strategy and release ownership
+
+The [QA Engineering Strategy](./qa-engineering-strategy.md) describes my approach to:
+
+- Risk-based test prioritisation and test pyramid.
+- Requirements decomposition and traceability.
+- API, integration, web and device test design.
+- Test data, defect lifecycle and fix verification.
+- CI quality gates, release readiness and residual-risk reporting.
+
+## Business-oriented QA and commercial ideas
+
+The [QA & Commercial Problem-Solving Casebook](./qa-commercial-casebook.md) connects quality work to business outcomes and records solution concepts around:
+
+- E-commerce checkout and order correctness.
+- Financial transaction and ledger integrity.
+- Wholesale Excel/CSV order-intake validation.
+- AI-assisted support triage and runbook retrieval.
+
+The casebook separates implemented portfolio prototypes from commercial concepts and identifies the metrics needed to validate business value in a real pilot. It does not claim unverified revenue, paid client delivery or customer savings.
 
 ## Tools
 
-**Automation:** Python · pytest · requests · Playwright · JavaScript · Postman  
-**API / data:** HTTP · REST · JSON · JSON Schema · SQL · PostgreSQL  
-**Test engineering:** test plans · test cases · traceability · risk-based testing · equivalence / boundary scenarios · negative testing · regression · exploratory checks · bug reports  
-**Delivery:** Git · GitHub Actions · Docker Compose · Allure · JUnit XML · Playwright traces
+**Manual and product QA:** functional · regression · exploratory · acceptance · mobile · Android TV / Smart TV · test plans · test cases · defect management  
+**Web and device diagnostics:** Chrome DevTools · Elements · Console · Network · Application · Device Toolbar · ADB  
+**API and data:** HTTP · REST · Postman · Swagger / OpenAPI · JSON · JSON Schema · Charles · Proxyman · SQL · PostgreSQL  
+**Automation:** Python · pytest · requests · Playwright · JavaScript  
+**Delivery:** Git · GitHub Actions · Docker Compose · Allure · JUnit XML · Playwright traces · logs · metrics
 
-## How I approach testing
+## CI evidence
 
-1. Clarify expected behavior, scope, dependencies and business impact.
-2. Identify the highest-risk paths and failure modes.
-3. Derive positive, negative, boundary and state-transition scenarios.
-4. Prepare isolated test data and repeatable setup.
-5. Execute checks at the appropriate API, integration or UI level.
-6. Record evidence, report reproducible defects and verify fixes.
-7. Summarise coverage, limitations and residual risk.
+Selected runs reviewed on 23 November 2026:
+
+- [API Automation](https://github.com/blvxx/portfolio/actions/runs/45102695248) — 62 tests passed on Python 3.10 and 3.12.
+- [Booking API QA](https://github.com/blvxx/portfolio/actions/runs/44993766677) — 31 tests; 100% statement coverage on app.py and store.py.
+- [Checkout Regression](https://github.com/blvxx/portfolio/actions/runs/44993763830) — 24 browser scenarios passed.
+- [FinTech QA Platform](https://github.com/blvxx/portfolio/actions/runs/45100258032) — quality, Compose smoke and UI E2E jobs passed.
+- [Playwright QA Lab](https://github.com/blvxx/playwright-qa-lab/actions/runs/45155361776) — 11 browser E2E tests passed.
 
 ## Additional engineering background
 
-For roles combining QA with production troubleshooting, see the [Linux Support Engineering Lab](./support-engineering-lab/) and [Incident Investigation Lab](./incident-lab/). They demonstrate log analysis, SQL reconciliation, incident timelines, RCA and recovery verification.
+For QA roles close to support and production troubleshooting:
+- [Linux Support Engineering Lab](./support-engineering-lab/) — 10 troubleshooting playbooks, log triage and evidence capture.
+- [Incident Investigation Lab](./incident-lab/) — simulated incident timeline, SQL reconciliation, RCA and recovery runbooks.
+- [Support Operations Analytics](./support-operations-analytics/) — ticket, SLA and workload analysis.
 
 ---
 
