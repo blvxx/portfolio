@@ -1,3 +1,17 @@
+# Artem Kalinin — Engineering Portfolio Archive
+
+> This repository is retained as the original source/archive workspace. For job applications, use the dedicated portfolio matching the role:
+
+| Resume / target role | Dedicated portfolio |
+|---|---|
+| QA Engineer / QA Automation / API Tester | [QA Engineering Portfolio](https://github.com/blvxx/qa-engineering-portfolio) |
+| Python Developer / Backend Developer | [Python Backend Portfolio](https://github.com/blvxx/python-backend-portfolio) |
+| Application Support L2 / Production Support | [Application Support Portfolio](https://github.com/blvxx/application-support-portfolio) |
+
+The separate repositories contain role-specific copies of the projects, documentation and CI workflows. The original files here are kept as a backup/reference; project changes should be made in the relevant dedicated repository going forward.
+
+---
+
 # Artem Kalinin — QA Engineering Portfolio
 
 **QA Engineer · API / Web / Mobile Testing · Android TV / Smart TV · Python Automation**
