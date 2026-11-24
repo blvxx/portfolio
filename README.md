@@ -12,7 +12,7 @@ The separate repositories contain role-specific copies of the projects, document
 
 ---
 
-# Artem Kalinin — QA Engineering Portfolio
+## Legacy QA engineering overview
 
 **QA Engineer · API / Web / Mobile Testing · Android TV / Smart TV · Python Automation**
 
