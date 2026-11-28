@@ -1,3 +1,0 @@
-2026/11/22 08:44:10 [error] 212#212: *51 connect() failed (111: Connection refused) while connecting to upstream, client: 192.0.2.10, server: demo.local, request: "POST /api/payments HTTP/1.1", upstream: "http://127.0.0.1:8000/payments"
-2026/11/22 08:45:18 [error] 212#212: *52 upstream timed out (110: Connection timed out) while reading response header from upstream, client: 192.0.2.11, server: demo.local, request: "GET /api/orders HTTP/1.1", upstream: "http://127.0.0.1:8000/orders"
-2026/11/22 08:49:30 [warn] 212#212: *53 upstream response is buffered to a temporary file
