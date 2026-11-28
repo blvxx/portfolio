@@ -16,7 +16,7 @@ The portfolio links to supporting technical evidence repositories without presen
 
 Commercial services and client-facing work are kept separate:
 
-- **Web Development & SMM:** https://blvxx.github.io/web-development-portfolio/
+- **Web Development & SMM:** https://blvxx.github.io/Web-Development-Services/
 
 ## Updating the profile
 
