@@ -21,21 +21,21 @@ Application Support L2 · Technical Support · Support Engineering
 | [Incident Investigation Lab](./incident-lab/) | Симулированный webhook-инцидент, логи, SQL-сверка, RCA и recovery |
 | [HookStorm](https://github.com/blvxx/HookStorm) | Самостоятельный open-source CLI; [публичная Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1) |
 | [Booking API QA](./qa-cases/api-contract-negative/) | 31 pytest-кейс для API-контрактов, валидации, авторизации и идемпотентности |
-| [Playwright QA Lab](https://github.com/blvxx/playwright-qa-lab) | 11 E2E-сценариев и 20 документированных ручных проверок |
+| [Playwright QA Lab](https://github.com/blvxx/E2E-Automation) | 11 E2E-сценариев и 20 документированных ручных проверок |
 | [Telegram Business Assistant](./telegram-business-assistant/) | Python, PostgreSQL, Redis, идемпотентность, transactional outbox и CI |
 
 ## Другие инженерные репозитории
 
 Эти репозитории содержат исходный код и подробные доказательства отдельных компетенций. Это не дополнительные карьерные портфолио — это технические материалы, на которые ссылается единая главная страница.
 
-- [Application Support Evidence](https://github.com/blvxx/application-support-portfolio) — лаборатории поддержки, инциденты, диагностика и операционная аналитика.
-- [QA Engineering Evidence](https://github.com/blvxx/qa-engineering-portfolio) — API, checkout, FinTech, DWH и тестовая документация.
-- [Python Backend Projects](https://github.com/blvxx/python-backend-portfolio) — FastAPI, Telegram-интеграции, автоматизация и AI-support case.
-- [Analytics Projects](https://github.com/blvxx/analyst-portfolio) — открытые данные, SQL/Python-пайплайны и дашборды.
+- [Application Support Evidence](https://github.com/blvxx/application-support-labs) — лаборатории поддержки, инциденты, диагностика и операционная аналитика.
+- [QA Engineering Evidence](https://github.com/blvxx/qa-engineering-labs) — API, checkout, FinTech, DWH и тестовая документация.
+- [Python Backend Projects](https://github.com/blvxx/python-backend-projects) — FastAPI, Telegram-интеграции, автоматизация и AI-support case.
+- [Analytics Projects](https://github.com/blvxx/Data-Analytics-Projects-Dashboards) — открытые данные, SQL/Python-пайплайны и дашборды.
 
 ## Отдельно: услуги и коммерческие предложения
 
-[Web Development & SMM](https://blvxx.github.io/web-development-portfolio/) — отдельная клиентская витрина сайтов, редизайна, доработок и digital-услуг. Она намеренно отделена от карьерного портфолио.
+[Web Development & SMM](https://blvxx.github.io/Web-Development-Services/) — отдельная клиентская витрина сайтов, редизайна, доработок и digital-услуг. Она намеренно отделена от карьерного портфолио.
 
 Собственные продукты, включая HookStorm, представлены как отдельные проекты, а не как клиентские внедрения.
 
@@ -55,4 +55,4 @@ Application Support L2 · Technical Support · Support Engineering
 
 ---
 
-**[Карьерное портфолио](https://blvxx.github.io/portfolio/)** · [GitHub](https://github.com/blvxx) · [Web Development & SMM](https://blvxx.github.io/web-development-portfolio/)
+**[Карьерное портфолио](https://blvxx.github.io/portfolio/)** · [GitHub](https://github.com/blvxx) · [Web Development & SMM](https://blvxx.github.io/Web-Development-Services/)
