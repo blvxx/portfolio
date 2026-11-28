@@ -1,9 +1,0 @@
-data/raw/*
-!data/raw/.gitkeep
-outputs/*
-!outputs/.gitkeep
-.venv/
-__pycache__/
-.pytest_cache/
-*.py[cod]
-.streamlit/secrets.toml

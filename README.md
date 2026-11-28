@@ -1,58 +1,43 @@
-# Артём Калинин — карьерное портфолио и инженерные проекты
+# Артём Калинин — карьерное портфолио
 
 **[Открыть единое портфолио для работодателей](https://blvxx.github.io/portfolio/)**
 
-Application Support L2 · Technical Support · Support Engineering  
+Application Support L2 · Technical Support · Support Engineer  
 Дополнительные компетенции: QA Engineering · API Testing · Python Automation · SQL
 
-Это основной репозиторий карьерного сайта и части открытых инженерных проектов. Теперь у профиля одна карьерная точка входа: без отдельных сайтов для каждой должности.
+Этот репозиторий содержит только карьерную страницу и навигационные материалы. Исходный код инженерных проектов находится в специализированных репозиториях.
 
 ## Для работодателей
 
-В [едином портфолио](https://blvxx.github.io/portfolio/) собраны основной профессиональный фокус, навыки, избранные проекты и контакты.
+Единственная точка входа — [blvxx.github.io/portfolio](https://blvxx.github.io/portfolio/). На странице собраны профессиональный фокус, опыт клиентской поддержки, технические компетенции, избранные кейсы и контакты.
 
-Основное направление — диагностика приложений и техническая поддержка: Linux, логи, HTTP/REST API, SQL, расследование инцидентов и проверка восстановления. QA и Python automation дополняют это направление практическими примерами.
+## Инженерные доказательства
 
-## Избранные доказательства
+| Направление | Канонический репозиторий | Что можно проверить |
+|---|---|---|
+| Application Support | [application-support-labs](https://github.com/blvxx/application-support-labs) | Linux troubleshooting, incident investigation, SQL, runbooks, log triage и support casebooks |
+| QA Engineering | [qa-engineering-labs](https://github.com/blvxx/qa-engineering-labs) | API, checkout, FinTech, DWH/data-quality, test strategy и evidence index |
+| E2E Automation | [E2E-Automation](https://github.com/blvxx/E2E-Automation) | Playwright, Workboard SPA, Vitest и browser regression |
+| Python Backend | [python-backend-projects](https://github.com/blvxx/python-backend-projects) | FastAPI, Telegram integrations, PostgreSQL, Redis и AI support tooling |
+| Data Analytics | [Data-Analytics-Projects-Dashboards](https://github.com/blvxx/Data-Analytics-Projects-Dashboards) | Marketing, E-commerce, CIS Macro, Customer Retention и Subscription Revenue |
+| Open Source Product | [HookStorm](https://github.com/blvxx/HookStorm) | Webhook reliability testing CLI; [public Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1) |
 
-| Проект | Что можно проверить |
-|---|---|
-| [Linux Support Engineering Lab](https://github.com/blvxx/application-support-labs/tree/main/support-engineering-lab) | 10 сценариев диагностики, runbooks и Python log-triage CLI |
-| [Incident Investigation Lab](https://github.com/blvxx/application-support-labs/tree/main/incident-lab) | Симулированный webhook-инцидент, логи, SQL-сверка, RCA и recovery |
-| [HookStorm](https://github.com/blvxx/HookStorm) | Самостоятельный open-source CLI; [публичная Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1) |
-| [Booking API QA](https://github.com/blvxx/qa-engineering-labs/tree/main/qa-cases/api-contract-negative) | 31 pytest-кейс для API-контрактов, валидации, авторизации и идемпотентности |
-| [Playwright QA Lab](https://github.com/blvxx/E2E-Automation) | 11 E2E-сценариев и 20 документированных ручных проверок |
-| [Telegram Business Assistant](./telegram-business-assistant/) | Python, PostgreSQL, Redis, идемпотентность, transactional outbox и CI |
+## Отдельно для заказчиков
 
-## Другие инженерные репозитории
+[Web Development & SMM Services](https://blvxx.github.io/Web-Development-Services/) — клиентская витрина сайтов, редизайна, digital-услуг и демонстрационных прототипов. Она намеренно отделена от карьерного портфолио.
 
-Эти репозитории содержат исходный код и подробные доказательства отдельных компетенций. Это не дополнительные карьерные портфолио — это технические материалы, на которые ссылается единая главная страница.
+## Содержимое этого репозитория
 
-- [Application Support Evidence](https://github.com/blvxx/application-support-labs) — лаборатории поддержки, инциденты, диагностика и операционная аналитика.
-- [QA Engineering Evidence](https://github.com/blvxx/qa-engineering-labs) — API, checkout, FinTech, DWH и тестовая документация.
-- [Python Backend Projects](https://github.com/blvxx/python-backend-projects) — FastAPI, Telegram-интеграции, автоматизация и AI-support case.
-- [Analytics Projects](https://github.com/blvxx/Data-Analytics-Projects-Dashboards) — открытые данные, SQL/Python-пайплайны и дашборды.
-
-## Отдельно: услуги и коммерческие предложения
-
-[Web Development & SMM](https://blvxx.github.io/Web-Development-Services/) — отдельная клиентская витрина сайтов, редизайна, доработок и digital-услуг. Она намеренно отделена от карьерного портфолио.
-
-Собственные продукты, включая HookStorm, представлены как отдельные проекты, а не как клиентские внедрения.
-
-## Карта репозитория
-
-- `index.html` — единое карьерное портфолио, опубликованное на GitHub Pages.
-- `support-engineering-lab/`, `incident-lab/` — практические материалы Application Support.
-- `qa-cases/`, `api-automation/`, `fintech-qa-platform/` — QA и API-инженерия.
-- `telegram-business-assistant/`, `ai-support-triage-agent/` — Python, интеграции и automation.
-- `data-analytics/`, `customer-retention-analytics/`, `subscription-revenue-analytics/` — аналитические проекты.
-- `.github/workflows/` — CI-проверки отдельных проектов.
-- `engineering/` — прежний адрес карьерной страницы; перенаправляет на корень сайта.
+- `index.html` — единственная карьерная страница GitHub Pages.
+- `engineering/index.html` — совместимый старый маршрут, перенаправляющий на корень.
+- `404.html`, `robots.txt`, `sitemap.xml` — страницы и настройки сайта.
+- `github-profile-readme.md` — исходная копия текста профильного README.
+- `docs/publish-github-profile-readme.md` — инструкция по обновлению профиля.
 
 ## Прозрачность
 
-Лаборатории и учебные кейсы — самостоятельные проекты. Платежи, заказы, обращения, логи и инциденты в симуляциях вымышлены. Публичные demo API могут имитировать операции записи. Результаты тестов относятся только к указанному тестовому окружению и не являются доказательством коммерческого внедрения или эксплуатации в production.
+Учебные лаборатории и симуляции обозначены в своих канонических репозиториях. Синтетические инциденты, клиенты, платежи и данные не выдаются за коммерческие внедрения или production-опыт. Результаты тестов относятся только к указанным тестовым наборам и окружениям.
 
 ---
 
-**[Карьерное портфолио](https://blvxx.github.io/portfolio/)** · [GitHub](https://github.com/blvxx) · [Web Development & SMM](https://blvxx.github.io/Web-Development-Services/)
+[Карьерное портфолио](https://blvxx.github.io/portfolio/) · [GitHub profile](https://github.com/blvxx) · [Client services](https://blvxx.github.io/Web-Development-Services/)
