@@ -17,11 +17,11 @@ Application Support L2 · Technical Support · Support Engineer
 
 ## Избранные инженерные доказательства
 
-- **[Linux Support Engineering Lab](https://github.com/blvxx/portfolio/tree/main/support-engineering-lab)** — 10 сценариев диагностики и Python log-triage CLI.
-- **[Incident Investigation Lab](https://github.com/blvxx/portfolio/tree/main/incident-lab)** — симулированный инцидент, анализ логов, SQL reconciliation и RCA.
+- **[Linux Support Engineering Lab](https://github.com/blvxx/application-support-labs/tree/main/support-engineering-lab)** — 10 сценариев диагностики и Python log-triage CLI.
+- **[Incident Investigation Lab](https://github.com/blvxx/application-support-labs/tree/main/incident-lab)** — симулированный инцидент, анализ логов, SQL reconciliation и RCA.
 - **[HookStorm](https://github.com/blvxx/HookStorm)** — самостоятельный open-source CLI для тестирования надёжности вебхуков; [Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1).
 - **[QA Engineering Evidence](https://github.com/blvxx/qa-engineering-labs)** — API, browser, integration и data-quality testing.
-- **[Playwright QA Lab](https://github.com/blvxx/E2E-Automation)** — 11 E2E-сценариев и тестовая документация.
+- **[E2E Automation Lab](https://github.com/blvxx/E2E-Automation)** — 11 E2E-сценариев и тестовая документация.
 - **[Python Backend Projects](https://github.com/blvxx/python-backend-projects)** — FastAPI, Telegram-интеграции и automation.
 - **[Analytics Projects](https://github.com/blvxx/Data-Analytics-Projects-Dashboards)** — SQL/Python-анализ и интерактивные дашборды.
 
