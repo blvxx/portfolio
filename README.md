@@ -1,37 +1,42 @@
-# Артём Калинин — карьерное портфолио
+# Артём Калинин — портфолио
 
-**[Открыть единое портфолио для работодателей](https://blvxx.github.io/portfolio/)**
+**[Открыть единое портфолио](https://blvxx.github.io/portfolio/)**
 
-Application Support L2 · Technical Support · Support Engineer  
-Дополнительные компетенции: QA Engineering · API Testing · Python Automation · SQL
+## Навыки
 
-Этот репозиторий содержит только карьерную страницу и навигационные материалы. Исходный код инженерных проектов находится в специализированных репозиториях.
+**Systems & troubleshooting:** Linux · systemd · Nginx · DNS · TLS · TCP/IP · Docker · incident triage · log analysis
 
-## Для работодателей
+**API & integrations:** HTTP · REST API · Postman · OpenAPI · webhook integrations
 
-Единственная точка входа — [blvxx.github.io/portfolio](https://blvxx.github.io/portfolio/). На странице собраны профессиональный фокус, опыт клиентской поддержки, технические компетенции, избранные кейсы и контакты.
+**QA & testing:** API testing · integration testing · regression testing · pytest · Playwright
 
-## Инженерные доказательства
+**Python & automation:** Python · FastAPI · requests · Bash · Git · GitHub Actions · CI
 
-| Направление | Канонический репозиторий | Что можно проверить |
-|---|---|---|
-| Application Support | [application-support-labs](https://github.com/blvxx/application-support-labs) | Linux troubleshooting, incident investigation, SQL, runbooks, log triage и support casebooks |
-| QA Engineering | [qa-engineering-labs](https://github.com/blvxx/qa-engineering-labs) | API, checkout, FinTech, DWH/data-quality, test strategy и evidence index |
-| E2E Automation | [E2E-Automation](https://github.com/blvxx/E2E-Automation) | Playwright, Workboard SPA, Vitest и browser regression |
-| Python Backend | [python-backend-projects](https://github.com/blvxx/python-backend-projects) | FastAPI, Telegram integrations, PostgreSQL, Redis и AI support tooling |
-| Data Analytics | [Data-Analytics-Projects-Dashboards](https://github.com/blvxx/Data-Analytics-Projects-Dashboards) | Marketing, E-commerce, CIS Macro, Customer Retention и Subscription Revenue |
-| Open Source Product | [HookStorm](https://github.com/blvxx/HookStorm) | Webhook reliability testing CLI; [public Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1) |
+**Data:** SQL · PostgreSQL · SQLite · Redis · Excel · Google Sheets · data validation · reconciliation
+
+Этот репозиторий содержит карьерную страницу и навигационные материалы. Исходный код инженерных проектов находится в специализированных репозиториях.
+
+## Инженерные проекты
+
+| Репозиторий | Что можно проверить |
+|---|---|
+| [application-support-labs](https://github.com/blvxx/application-support-labs) | Linux troubleshooting, incident investigation, SQL, runbooks, log triage и support casebooks |
+| [qa-engineering-labs](https://github.com/blvxx/qa-engineering-labs) | API, checkout, FinTech, DWH/data-quality, test strategy и evidence index |
+| [E2E-Automation](https://github.com/blvxx/E2E-Automation) | Playwright, Workboard SPA, Vitest и browser regression |
+| [python-backend-projects](https://github.com/blvxx/python-backend-projects) | FastAPI, Telegram integrations, PostgreSQL, Redis и AI support tooling |
+| [Data-Analytics-Projects-Dashboards](https://github.com/blvxx/Data-Analytics-Projects-Dashboards) | Marketing, E-commerce, CIS Macro, Customer Retention и Subscription Revenue |
+| [HookStorm](https://github.com/blvxx/HookStorm) | Webhook reliability testing CLI; [public Alpha 0.1.0a1](https://github.com/blvxx/HookStorm/releases/tag/v0.1.0a1) |
 
 ## Отдельно для заказчиков
 
-[Web Development & SMM Services](https://blvxx.github.io/Web-Development-Services/) — клиентская витрина сайтов, редизайна, digital-услуг и демонстрационных прототипов. Она намеренно отделена от карьерного портфолио.
+[Web Development & SMM Services](https://blvxx.github.io/Web-Development-Services/) — клиентская витрина сайтов, редизайна, digital-услуг и демонстрационных прототипов. Она отделена от карьерных материалов.
 
-## Содержимое этого репозитория
+## Содержимое репозитория
 
-- `index.html` — единственная карьерная страница GitHub Pages.
+- `index.html` — карьерная страница GitHub Pages.
 - `engineering/index.html` — совместимый старый маршрут, перенаправляющий на корень.
 - `404.html`, `robots.txt`, `sitemap.xml` — страницы и настройки сайта.
-- `github-profile-readme.md` — исходная копия текста профильного README.
+- `github-profile-readme.md` — исходная копия профильного README.
 - `docs/publish-github-profile-readme.md` — инструкция по обновлению профиля.
 
 ## Прозрачность
@@ -40,4 +45,4 @@ Application Support L2 · Technical Support · Support Engineer
 
 ---
 
-[Карьерное портфолио](https://blvxx.github.io/portfolio/) · [GitHub profile](https://github.com/blvxx) · [Client services](https://blvxx.github.io/Web-Development-Services/)
+[Портфолио](https://blvxx.github.io/portfolio/) · [GitHub profile](https://github.com/blvxx) · [Client services](https://blvxx.github.io/Web-Development-Services/)
